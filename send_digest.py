@@ -1,6 +1,7 @@
 import feedparser
 import requests
 import os
+import time
 from datetime import datetime, timedelta
 from google import genai
 
@@ -80,7 +81,6 @@ else:
 На початку — привітання з датою, коротко погодою в Львові на сьогодні.
 В кінці — одне прикольне речення, або мотивація або якийсь прийом ведуших шоу або афоризм. щось що підніме настрій та зарядить."""
 
-   import time
     client = genai.Client(api_key=GEMINI_API_KEY)
     digest = None
     for attempt in range(5):
