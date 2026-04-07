@@ -80,12 +80,22 @@ else:
 На початку — привітання з датою, коротко погодою в Львові на сьогодні.
 В кінці — одне прикольне речення, або мотивація або якийсь прийом ведуших шоу або афоризм. щось що підніме настрій та зарядить."""
 
+   import time
     client = genai.Client(api_key=GEMINI_API_KEY)
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt,
-    )
-    digest = response.text
+    digest = None
+    for attempt in range(5):
+        try:
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt,
+            )
+            digest = response.text
+            break
+        except Exception as e:
+            if attempt < 4:
+                time.sleep(30)
+            else:
+                digest = f"❌ Gemini недоступний після 5 спроб: {e}"
 
     if len(digest) > 4000:
         for i in range(0, len(digest), 4000):
