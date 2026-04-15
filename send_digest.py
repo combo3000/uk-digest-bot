@@ -1,5 +1,6 @@
 import feedparser
 import requests
+import json
 import os
 import time
 from datetime import datetime, timedelta
@@ -7,10 +8,10 @@ from google import genai
 
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
-TELEGRAM_CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
 
-# Додай chat_id друга сюди (через кому):
-ALL_CHAT_IDS = [TELEGRAM_CHAT_ID]
+# Читаємо підписників з файлу
+with open("subscribers.json", "r") as f:
+    ALL_CHAT_IDS = json.load(f)
 
 RSS_FEEDS = {
     "The Guardian": [
@@ -117,7 +118,7 @@ else:
             break
 
     if not digest:
-        digest = "❌ Gemini недоступний. Спробуй пізніше через кнопку в боті."
+        digest = "❌ Gemini недоступний. Спробуй пізніше."
 
     for cid in ALL_CHAT_IDS:
         if len(digest) > 4000:
