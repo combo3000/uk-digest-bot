@@ -2,8 +2,8 @@ name: UK Morning Digest
 
 on:
   schedule:
-    - cron: '30 6 * * *'  # 06:30 UTC = 09:30 Київ
-  workflow_dispatch:        # кнопка ручного запуску
+    - cron: '15 6 * * *'
+  workflow_dispatch:
 
 jobs:
   send-digest:
