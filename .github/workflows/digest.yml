@@ -3,39 +3,11 @@ name: UK Morning Digest
 on:
   schedule:
     - cron: '15 6 * * *'
-    - cron: '0 * * * *'
   workflow_dispatch:
 
-concurrency:
-  group: digest-bot
-  cancel-in-progress: false
-
 jobs:
-  check-subscribers:
-    runs-on: ubuntu-latest
-    if: github.event.schedule == '0 * * * *'
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - run: pip install requests
-      - run: python check_subscribers.py
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-      - name: Save subscribers
-        run: |
-          git config user.name "bot"
-          git config user.email "bot@bot.com"
-          git add subscribers.json
-          git diff --cached --quiet || git commit -m "update subscribers"
-          git push
-
   send-digest:
     runs-on: ubuntu-latest
-    if: github.event.schedule == '15 6 * * *' || github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
