@@ -11,7 +11,8 @@ TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 
 # Читаємо підписників з файлу
 with open("subscribers.json", "r") as f:
-    ALL_CHAT_IDS = json.load(f)
+    data = json.load(f)
+ALL_CHAT_IDS = data.get("subscribers", data) if isinstance(data, dict) else data
 
 RSS_FEEDS = {
     "The Guardian": [
