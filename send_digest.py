@@ -12,7 +12,7 @@ TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 with open("subscribers.json", "r") as f:
     data = json.load(f)
 ALL_CHAT_IDS = data.get("subscribers", [])
-print(f"Розсилка для {len(ALL_CHAT_IDS)} підписників")
+print(f"Підписників: {len(ALL_CHAT_IDS)}")
 
 RSS_FEEDS = {
     "The Guardian": [
@@ -31,11 +31,9 @@ RSS_FEEDS = {
         "http://feeds.bbci.co.uk/sport/rss.xml",
         "http://feeds.bbci.co.uk/news/science_environment/rss.xml",
     ],
-    "The Times": ["https://www.thetimes.com/rss/world"],
     "Financial Times": ["https://www.ft.com/rss/home"],
 }
 
-# Збираємо статті — фільтруємо дублікати за посиланням
 articles = []
 seen_links = set()
 cutoff = datetime.now() - timedelta(hours=24)
@@ -63,75 +61,51 @@ for source_name, feeds in RSS_FEEDS.items():
         except:
             pass
 
-print(f"Зібрано {len(articles)} унікальних статей")
+print(f"Статей: {len(articles)}")
 
 if not articles:
     for cid in ALL_CHAT_IDS:
-        requests.post(
-            f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage",
-            json={"chat_id": cid, "text": "⚠️ Сьогодні не вдалося зібрати новини з RSS."},
-        )
+        requests.post(f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage",
+            json={"chat_id": cid, "text": "⚠️ Сьогодні не вдалося зібрати новини."})
 else:
-    articles_text = ""
-    for i, art in enumerate(articles, 1):
-        articles_text += f"{i}. [{art['source']}] {art['title']}\n   {art['link']}\n   {art['summary']}\n\n"
+    articles_text = "\n".join([f"{i}. [{a['source']}] {a['title']}\n   {a['link']}" for i, a in enumerate(articles, 1)])
 
-    prompt = f"""Ти — персональний редактор ранкового дайджесту новин. Звертайся "сер".
-Твоя аудиторія — українці, бізнесмени.
-Стиль: стислий, з цифрами де доречно, живий, з елементами гумору. Пишеш українською.
+    prompt = f"""Ти — редактор ранкового дайджесту. Звертайся "сер". Пишеш українською.
 
-Ось {len(articles)} статей з британських ЗМІ за сьогодні:
+{len(articles)} статей:
 
 {articles_text}
 
-Обери рівно 6 РІЗНИХ статей за такою структурою:
-- 3 міжнародні новини (геополітика, економіка, технології) — різні теми, не дублювати
+Обери 6 РІЗНИХ статей:
+- 3 міжнародні (геополітика, економіка, технології)
 - 1 спорт
-- 1 культура або наука
-- 1 щось незвичне або курйозне
+- 1 культура/наука
+- 1 курйоз
 
-ВАЖЛИВО: всі 6 статей мають бути про різні події. Не обирай дві статті про одну й ту саму подію.
+Формат кожної:
+1. Емодзі
+2. Заголовок + суть (1-2 речення)
+3. Посилання
 
-Для кожної напиши:
-1. Емодзі-індикатор теми
-2. Заголовок українською і основний зміст (коротко, 1-2 речення)
-3. ТІЛЬКИ якщо є корисне або цікаве трактування чи наслідок — додай 1 речення. Якщо немає — пропусти.
-4. Посилання
-
-Формат — готове повідомлення для Telegram (простий текст, без Markdown).
-На початку — привітання з датою і коротко погодою в Львові.
-В кінці — одне речення: афоризм, жарт ведучого або мотивація."""
+На початку — привітання з датою і погодою в Львові.
+В кінці — афоризм або мотивація."""
 
     client = genai.Client(api_key=GEMINI_API_KEY)
     digest = None
-    for model_name in ["gemini-2.5-flash", "gemini-2.0-flash"]:
+    for model in ["gemini-2.5-flash", "gemini-2.0-flash"]:
         for attempt in range(3):
             try:
-                response = client.models.generate_content(
-                    model=model_name,
-                    contents=prompt,
-                )
+                response = client.models.generate_content(model=model, contents=prompt)
                 digest = response.text
                 break
-            except Exception as e:
-                print(f"{model_name} attempt {attempt+1}: {e}")
-                if attempt < 2:
-                    time.sleep(60)
+            except:
+                time.sleep(60)
         if digest:
             break
 
     if not digest:
-        digest = "❌ Gemini недоступний сьогодні. Спробуємо завтра!"
+        digest = "❌ Gemini недоступний сьогодні."
 
     for cid in ALL_CHAT_IDS:
-        if len(digest) > 4000:
-            for i in range(0, len(digest), 4000):
-                requests.post(
-                    f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage",
-                    json={"chat_id": cid, "text": digest[i:i+4000], "disable_web_page_preview": True},
-                )
-        else:
-            requests.post(
-                f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage",
-                json={"chat_id": cid, "text": digest, "disable_web_page_preview": True},
-            )
+        requests.post(f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage",
+            json={"chat_id": cid, "text": digest[:4000], "disable_web_page_preview": True})
