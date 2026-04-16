@@ -3,12 +3,15 @@ name: UK Morning Digest
 on:
   schedule:
     - cron: '15 6 * * *'
+    - cron: '0 * * * *'
   workflow_dispatch:
 
 jobs:
   check-subscribers:
     runs-on: ubuntu-latest
-    if: github.event.schedule == '0 * * * *'
+    if: github.event.schedule == '0 * * * *' || github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
