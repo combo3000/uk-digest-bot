@@ -65,6 +65,7 @@ with open("subscribers.json", "w") as f:
 if changed:
     subprocess.run(["git", "config", "user.name", "digest-bot"], check=True)
     subprocess.run(["git", "config", "user.email", "bot@digest.com"], check=True)
+    subprocess.run(["git", "pull", "--rebase"], check=True)
     subprocess.run(["git", "add", "subscribers.json"], check=True)
     subprocess.run(["git", "commit", "-m", f"subscribers: {len(subscribers)}"], check=True)
     subprocess.run(["git", "push"], check=True)
