@@ -92,7 +92,7 @@ else:
 
     client = genai.Client(api_key=GEMINI_API_KEY)
     digest = None
-    for model in ["gemini-2.0-flash", "gemini-1.5-flash", "gemini-2.5-flash"]:
+    for model in ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]:
         for attempt in range(3):
             try:
                 response = client.models.generate_content(model=model, contents=prompt)
