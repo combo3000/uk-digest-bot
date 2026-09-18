@@ -7,7 +7,12 @@ import random
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from google import genai
-import yfinance as yf
+try:
+    import yfinance as yf
+    HAS_YFINANCE = True
+except ImportError:
+    HAS_YFINANCE = False
+    print("⚠️ yfinance не встановлено")
 
 GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
@@ -65,6 +70,8 @@ print(f"Київ: {weather_kyiv} | Барселона: {weather_barcelona}")
 
 # ─── АКЦІЇ ───────────────────────────────────────────────────────────────────
 def get_stock(ticker, name, currency=""):
+    if not HAS_YFINANCE:
+        return f"{name}: н/д (yfinance не встановлено)"
     try:
         t = yf.Ticker(ticker)
         hist = t.history(period="5d")
@@ -192,20 +199,29 @@ else:
 СТАТТІ ДЛЯ ВИБОРУ:
 {articles_text}"""
 
+    import concurrent.futures
+
     client = genai.Client(api_key=GEMINI_API_KEY)
     digest = None
+
+    def call_gemini(model, prompt):
+        response = client.models.generate_content(model=model, contents=prompt)
+        return response.text
 
     for model in ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]:
         for attempt in range(2):
             try:
                 print(f"Спроба {attempt + 1} з моделлю {model}...")
-                response = client.models.generate_content(model=model, contents=prompt)
-                digest = response.text
+                with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+                    future = executor.submit(call_gemini, model, prompt)
+                    digest = future.result(timeout=90)  # максимум 90 секунд
                 print(f"✅ Успішно: {model}")
                 break
+            except concurrent.futures.TimeoutError:
+                print(f"⏱️ Timeout {model} спроба {attempt + 1}")
             except Exception as e:
                 print(f"❌ Помилка {model} спроба {attempt + 1}: {e}")
-                time.sleep(15)
+            time.sleep(5)
         if digest:
             break
 
