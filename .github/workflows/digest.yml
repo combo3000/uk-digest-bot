@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install google-genai feedparser requests
+      - run: pip install google-genai feedparser requests yfinance
       - run: python send_digest.py
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
