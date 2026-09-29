@@ -2,7 +2,7 @@ name: UK Morning Digest
 
 on:
   schedule:
-    - cron: '0 6 * * *'   # 09:00 Kyiv (UTC+3); GitHub delay ~15 min → arrives ~09:15-09:30
+    - cron: '45 4 * * *'  # 04:45 UTC = 07:45 Kyiv; GitHub delay ~15 min → arrives ~08:00 Kyiv
   workflow_dispatch:
 
 permissions:
