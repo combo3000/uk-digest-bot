@@ -1,18 +1,22 @@
 {
   "ua_words": [
     "Непереливки",
-    "Зібгати"
+    "Зібгати",
+    "Шарварок"
   ],
   "en_words": [
     "Pernicious",
-    "Ubiquitous"
+    "Ubiquitous",
+    "Esoteric"
   ],
   "es_words": [
     "Acogedor",
-    "Añorar"
+    "Añorar",
+    "Sobremesa"
   ],
   "jokes": [
     "Why did the scarecrow win an award? Because he was outstanding",
-    "Why don't scientists trust atoms? Because they make up everyth"
+    "Why don't scientists trust atoms? Because they make up everyth",
+    "What do you call a fish with no eyes? Fsh!"
   ]
 }
