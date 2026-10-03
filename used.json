@@ -2,21 +2,25 @@
   "ua_words": [
     "Непереливки",
     "Зібгати",
-    "Шарварок"
+    "Шарварок",
+    "Витівка"
   ],
   "en_words": [
     "Pernicious",
     "Ubiquitous",
-    "Esoteric"
+    "Esoteric",
+    "Mellifluous"
   ],
   "es_words": [
     "Acogedor",
     "Añorar",
-    "Sobremesa"
+    "Sobremesa",
+    "Atardecer"
   ],
   "jokes": [
     "Why did the scarecrow win an award? Because he was outstanding",
     "Why don't scientists trust atoms? Because they make up everyth",
-    "What do you call a fish with no eyes? Fsh!"
+    "What do you call a fish with no eyes? Fsh!",
+    "What do you call a fake noodle? An impasta."
   ]
 }
