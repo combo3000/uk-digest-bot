@@ -5,7 +5,8 @@
     "Шарварок",
     "Витівка",
     "Веремія",
-    "Супокій"
+    "Супокій",
+    "Розвій"
   ],
   "en_words": [
     "Pernicious",
@@ -13,7 +14,8 @@
     "Esoteric",
     "Mellifluous",
     "Idiosyncratic",
-    "Convivial"
+    "Convivial",
+    "Salient"
   ],
   "es_words": [
     "Acogedor",
@@ -21,7 +23,8 @@
     "Sobremesa",
     "Atardecer",
     "Desván",
-    "Rincón"
+    "Rincón",
+    "Costumbre"
   ],
   "jokes": [
     "Why did the scarecrow win an award? Because he was outstanding",
@@ -29,6 +32,7 @@
     "What do you call a fish with no eyes? Fsh!",
     "What do you call a fake noodle? An impasta.",
     "Why did the bicycle fall over? Because it was two tired.",
-    "I used to be a baker, but I couldn't make enough dough."
+    "I used to be a baker, but I couldn't make enough dough.",
+    "I'm reading a book about anti-gravity. It's impossible to put"
   ]
 }
