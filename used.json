@@ -7,7 +7,8 @@
     "Веремія",
     "Супокій",
     "Розвій",
-    "Кмітливий"
+    "Кмітливий",
+    "Звитяга"
   ],
   "en_words": [
     "Pernicious",
@@ -17,7 +18,8 @@
     "Idiosyncratic",
     "Convivial",
     "Salient",
-    "Surreptitious"
+    "Surreptitious",
+    "Pugnacious"
   ],
   "es_words": [
     "Acogedor",
@@ -27,7 +29,8 @@
     "Desván",
     "Rincón",
     "Costumbre",
-    "Resplandor"
+    "Resplandor",
+    "Sencillo"
   ],
   "jokes": [
     "Why did the scarecrow win an award? Because he was outstanding",
@@ -37,6 +40,7 @@
     "Why did the bicycle fall over? Because it was two tired.",
     "I used to be a baker, but I couldn't make enough dough.",
     "I'm reading a book about anti-gravity. It's impossible to put",
-    "What do you call a belt made out of watches? A waist of time!"
+    "What do you call a belt made out of watches? A waist of time!",
+    "Why did the coffee file a police report? It got mugged."
   ]
 }
