@@ -11,7 +11,8 @@
     "Звитяга",
     "Паморозь",
     "Ошатний",
-    "Звабливий"
+    "Звабливий",
+    "Гайнувати"
   ],
   "en_words": [
     "Pernicious",
@@ -25,7 +26,8 @@
     "Pugnacious",
     "Evanescent",
     "Meticulous",
-    "Plethora"
+    "Plethora",
+    "Capricious"
   ],
   "es_words": [
     "Acogedor",
@@ -39,7 +41,8 @@
     "Sencillo",
     "Madrugada",
     "Hallar",
-    "Lograr"
+    "Lograr",
+    "Coquetear"
   ],
   "jokes": [
     "Why did the scarecrow win an award? Because he was outstanding",
@@ -53,6 +56,7 @@
     "Why did the coffee file a police report? It got mugged.",
     "I told my wife she was drawing her eyebrows too high. She loo",
     "What do you call a snowman with a six-pack? An abdominal snowm",
-    "What do you call a boomerang that won't come back? A stick."
+    "What do you call a boomerang that won't come back? A stick.",
+    "Why did the scarecrow win an award? Because he was outstanding in his field!"
   ]
 }
