@@ -12,7 +12,8 @@
     "Паморозь",
     "Ошатний",
     "Звабливий",
-    "Гайнувати"
+    "Гайнувати",
+    "Підступний"
   ],
   "en_words": [
     "Pernicious",
@@ -27,7 +28,8 @@
     "Evanescent",
     "Meticulous",
     "Plethora",
-    "Capricious"
+    "Capricious",
+    "Disingenuous"
   ],
   "es_words": [
     "Acogedor",
@@ -42,7 +44,8 @@
     "Madrugada",
     "Hallar",
     "Lograr",
-    "Coquetear"
+    "Coquetear",
+    "Anhelo"
   ],
   "jokes": [
     "Why did the scarecrow win an award? Because he was outstanding",
@@ -57,6 +60,7 @@
     "I told my wife she was drawing her eyebrows too high. She loo",
     "What do you call a snowman with a six-pack? An abdominal snowm",
     "What do you call a boomerang that won't come back? A stick.",
-    "Why did the scarecrow win an award? Because he was outstanding in his field!"
+    "Why did the scarecrow win an award? Because he was outstanding in his field!",
+    "Why don't scientists trust atoms? Because they make up everything!"
   ]
 }
