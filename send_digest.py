@@ -106,6 +106,17 @@ en_words_used = en_words_used[-MAX_HISTORY:]
 es_words_used = es_words_used[-MAX_HISTORY:]
 jokes_used    = jokes_used[-MAX_HISTORY:]
 
+# Normalize helper — used for dedup comparison
+import re as _re
+def _norm(s: str) -> str:
+    return _re.sub(r"[^\w\s]", "", s.lower()).strip()
+
+# Deduplicate jokes list itself (in case of duplicates from previous runs)
+_seen_j: dict = {}
+for _j in jokes_used:
+    _seen_j[_norm(_j[:60])] = _j
+jokes_used = list(_seen_j.values())
+
 print(f"Історія: UA={len(ua_words_used)}, EN={len(en_words_used)}, ES={len(es_words_used)}, жарти={len(jokes_used)}")
 
 # ── Weather ────────────────────────────────────────────────────────────────────
