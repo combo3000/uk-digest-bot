@@ -111,10 +111,10 @@ import re as _re
 def _norm(s: str) -> str:
     return _re.sub(r"[^\w\s]", "", s.lower()).strip()
 
-# Deduplicate jokes list itself (in case of duplicates from previous runs)
+# Deduplicate jokes list itself and normalize to first-60 chars for consistent comparison
 _seen_j: dict = {}
 for _j in jokes_used:
-    _seen_j[_norm(_j[:60])] = _j
+    _seen_j[_norm(_j[:60])] = _j[:60]
 jokes_used = list(_seen_j.values())
 
 print(f"Історія: UA={len(ua_words_used)}, EN={len(en_words_used)}, ES={len(es_words_used)}, жарти={len(jokes_used)}")
@@ -359,7 +359,9 @@ USED_JOKE: [перші 60 символів жарту]"""
     if new_es:
         es_words_used.append(new_es)
     if new_joke:
-        jokes_used.append(new_joke)
+        new_joke_norm = _norm(new_joke[:60])
+        if not any(_norm(j[:60]) == new_joke_norm for j in jokes_used):
+            jokes_used.append(new_joke[:60])
 
     new_used = {
         "ua_words": ua_words_used[-MAX_HISTORY:],
