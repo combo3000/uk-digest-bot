@@ -13,7 +13,8 @@
     "Ошатний",
     "Звабливий",
     "Гайнувати",
-    "Підступний"
+    "Підступний",
+    "Кремезний"
   ],
   "en_words": [
     "Pernicious",
@@ -29,7 +30,8 @@
     "Meticulous",
     "Plethora",
     "Capricious",
-    "Disingenuous"
+    "Disingenuous",
+    "Obfuscate"
   ],
   "es_words": [
     "Acogedor",
@@ -45,11 +47,12 @@
     "Hallar",
     "Lograr",
     "Coquetear",
-    "Anhelo"
+    "Anhelo",
+    "Desvelarse"
   ],
   "jokes": [
-    "Why did the scarecrow win an award? Because he was outstanding",
-    "Why don't scientists trust atoms? Because they make up everyth",
+    "Why did the scarecrow win an award? Because he was outstanding in his field!",
+    "Why don't scientists trust atoms? Because they make up everything!",
     "What do you call a fish with no eyes? Fsh!",
     "What do you call a fake noodle? An impasta.",
     "Why did the bicycle fall over? Because it was two tired.",
@@ -60,7 +63,6 @@
     "I told my wife she was drawing her eyebrows too high. She loo",
     "What do you call a snowman with a six-pack? An abdominal snowm",
     "What do you call a boomerang that won't come back? A stick.",
-    "Why did the scarecrow win an award? Because he was outstanding in his field!",
     "Why don't scientists trust atoms? Because they make up everything!"
   ]
 }
