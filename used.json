@@ -15,7 +15,8 @@
     "Гайнувати",
     "Підступний",
     "Кремезний",
-    "Гордовитий"
+    "Гордовитий",
+    "Легіт"
   ],
   "en_words": [
     "Pernicious",
@@ -33,7 +34,8 @@
     "Capricious",
     "Disingenuous",
     "Obfuscate",
-    "Ebullient"
+    "Ebullient",
+    "Assiduous"
   ],
   "es_words": [
     "Acogedor",
@@ -51,7 +53,8 @@
     "Coquetear",
     "Anhelo",
     "Desvelarse",
-    "Empuje"
+    "Empuje",
+    "Aprovechar"
   ],
   "jokes": [
     "Why did the scarecrow win an award? Because he was outstandi",
@@ -65,6 +68,7 @@
     "Why did the coffee file a police report? It got mugged.",
     "I told my wife she was drawing her eyebrows too high. She lo",
     "What do you call a snowman with a six-pack? An abdominal sno",
-    "What do you call a boomerang that won't come back? A stick."
+    "What do you call a boomerang that won't come back? A stick.",
+    "What's orange and sounds like a parrot? A carrot."
   ]
 }
