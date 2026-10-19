@@ -8,7 +8,7 @@ import concurrent.futures
 import subprocess
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
-from google import genai
+import anthropic
 
 try:
     import yfinance as yf
@@ -17,7 +17,7 @@ except ImportError:
     HAS_YFINANCE = False
 
 # ── Env ────────────────────────────────────────────────────────────────────────
-GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
+ANTHROPIC_API_KEY = os.environ["ANTHROPIC_API_KEY"]
 TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 
 # ── Subscribers ────────────────────────────────────────────────────────────────
@@ -98,6 +98,7 @@ ua_words_used  = used.get("ua_words", [])
 en_words_used  = used.get("en_words", [])
 es_words_used  = used.get("es_words", [])
 jokes_used     = used.get("jokes", [])
+facts_used     = used.get("facts", [])
 
 # Keep only last 60 entries per list to avoid infinite growth
 MAX_HISTORY = 60
@@ -105,6 +106,7 @@ ua_words_used = ua_words_used[-MAX_HISTORY:]
 en_words_used = en_words_used[-MAX_HISTORY:]
 es_words_used = es_words_used[-MAX_HISTORY:]
 jokes_used    = jokes_used[-MAX_HISTORY:]
+facts_used    = facts_used[-MAX_HISTORY:]
 
 # Normalize helper — used for dedup comparison
 import re as _re
@@ -117,7 +119,7 @@ for _j in jokes_used:
     _seen_j[_norm(_j[:60])] = _j[:60]
 jokes_used = list(_seen_j.values())
 
-print(f"Історія: UA={len(ua_words_used)}, EN={len(en_words_used)}, ES={len(es_words_used)}, жарти={len(jokes_used)}")
+print(f"Історія: UA={len(ua_words_used)}, EN={len(en_words_used)}, ES={len(es_words_used)}, жарти={len(jokes_used)}, факти={len(facts_used)}")
 
 # ── Weather ────────────────────────────────────────────────────────────────────
 def get_weather(lat, lon, tz, city):
@@ -243,24 +245,26 @@ else:
          for i, a in enumerate(articles_short, 1)]
     )
 
-    # Build "already used" hints for Gemini
-    ua_hint = ", ".join(ua_words_used[-20:]) if ua_words_used else "немає"
-    en_hint = ", ".join(en_words_used[-20:]) if en_words_used else "немає"
-    es_hint = ", ".join(es_words_used[-20:]) if es_words_used else "немає"
-    jokes_hint = "; ".join(jokes_used[-10:]) if jokes_used else "немає"
+    # Build "already used" hints for Claude
+    ua_hint    = ", ".join(ua_words_used[-20:]) if ua_words_used else "немає"
+    en_hint    = ", ".join(en_words_used[-20:]) if en_words_used else "немає"
+    es_hint    = ", ".join(es_words_used[-20:]) if es_words_used else "немає"
+    jokes_hint = "; ".join(jokes_used[-15:])    if jokes_used    else "немає"
+    facts_hint = "; ".join(facts_used[-10:])    if facts_used    else "немає"
 
-    prompt = f"""Ти — редактор ранкового дайджесту. Звертайся "{GREETING}". Пишеш українською (крім оригінальних жартів).
+    prompt = f"""Ти — редактор ранкового дайджесту. Звертайся "{GREETING}". Пишеш українською (крім оригінальних жартів та слів дня).
 Сьогодні {date_str}.
 
 НЕ ВИКОРИСТОВУЙ markdown: ніяких **, ##, __, *, ---.
 
-СУВОРО заборонено повторювати вже використані слова і жарти (вони вже були надіслані раніше):
+СУВОРО заборонено повторювати вже використані елементи (вони вже були надіслані раніше):
 • Вже використані українські слова: {ua_hint}
 • Вже використані англійські слова: {en_hint}
 • Вже використані іспанські слова: {es_hint}
 • Вже використані жарти (початок): {jokes_hint}
+• Вже використані теми фактів (початок): {facts_hint}
 
-Обов'язково обери НОВІ, яких немає в списку вище.
+Обов'язково обери НОВІ, яких немає в списках вище.
 
 {len(articles_short)} статей для вибору:
 
@@ -295,30 +299,36 @@ URL
 🇪🇸 [НОВЕ іспанське слово рівня A2-B1, якого немає вище] — переклад | Вимовляється: [транскрипція]
 
 ━━━ ФАКТ ДНЯ 🧠 ━━━
-Один цікавий науковий або історичний факт (2-3 речення).
+Один цікавий науковий або історичний факт (2-3 речення). Тема НЕ повинна збігатися з вже використаними темами фактів вище. Обирай різноманітні теми: тварини, космос, їжа, мова, технології, медицина, географія, фізика тощо.
 
 ━━━ ЖАРТ ДНЯ 😄 ━━━
-Короткий жарт або каламбур (dad joke), якого немає вище. Якщо знайшов англійською — залиш англійською. Якщо українською — залиш українською. Не придумуй — бери реальний відомий жарт.
+Короткий жарт або анекдот, якого немає вище. Може бути будь-який: dad joke, каламбур, ситуаційний анекдот, чорний гумор, абсурд. Якщо оригінал англійською — залиш англійською. Якщо українською — залиш українською.
 
-Після жарту на окремому рядку напиши лише слова яких НЕ БУЛО вище у такому форматі (це потрібно для системи):
+Після жарту на окремому рядку напиши у такому форматі (це потрібно для системи, не показується читачам):
 USED_UA: [точне українське слово яке обрав]
 USED_EN: [точне англійське слово яке обрав]
 USED_ES: [точне іспанське слово яке обрав]
-USED_JOKE: [перші 60 символів жарту]"""
+USED_JOKE: [перші 60 символів жарту]
+USED_FACT: [перші 60 символів факту]"""
 
-    # ── Call Gemini ────────────────────────────────────────────────────────────
-    def call_gemini(mdl, prm):
-        c = genai.Client(api_key=GEMINI_API_KEY)
-        return c.models.generate_content(model=mdl, contents=prm).text
+    # ── Call Claude ────────────────────────────────────────────────────────────
+    def call_claude(mdl, prm):
+        c = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+        msg = c.messages.create(
+            model=mdl,
+            max_tokens=2048,
+            messages=[{"role": "user", "content": prm}],
+        )
+        return msg.content[0].text
 
     digest = None
-    for model in ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]:
+    for model in ["claude-haiku-4-5-20251001", "claude-haiku-4-5"]:
         for attempt in range(2):
             try:
                 with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
-                    future = executor.submit(call_gemini, model, prompt)
+                    future = executor.submit(call_claude, model, prompt)
                     digest = future.result(timeout=90)
-                print(f"✅ Gemini: {model}")
+                print(f"✅ Claude: {model}")
                 break
             except concurrent.futures.TimeoutError:
                 print(f"⏱️ Timeout {model} спроба {attempt + 1}")
@@ -329,10 +339,10 @@ USED_JOKE: [перші 60 символів жарту]"""
             break
 
     if not digest:
-        digest = "❌ Gemini недоступний сьогодні."
+        digest = "❌ Claude недоступний сьогодні."
 
     # ── Parse USED_ lines and update used.json ─────────────────────────────────
-    new_ua = new_en = new_es = new_joke = None
+    new_ua = new_en = new_es = new_joke = new_fact = None
     clean_lines = []
     for line in digest.splitlines():
         if line.startswith("USED_UA:"):
@@ -343,6 +353,8 @@ USED_JOKE: [перші 60 символів жарту]"""
             new_es = line.split(":", 1)[1].strip()
         elif line.startswith("USED_JOKE:"):
             new_joke = line.split(":", 1)[1].strip()
+        elif line.startswith("USED_FACT:"):
+            new_fact = line.split(":", 1)[1].strip()
         else:
             clean_lines.append(line)
 
@@ -362,12 +374,15 @@ USED_JOKE: [перші 60 символів жарту]"""
         new_joke_norm = _norm(new_joke[:60])
         if not any(_norm(j[:60]) == new_joke_norm for j in jokes_used):
             jokes_used.append(new_joke[:60])
+    if new_fact:
+        facts_used.append(new_fact[:60])
 
     new_used = {
         "ua_words": ua_words_used[-MAX_HISTORY:],
         "en_words": en_words_used[-MAX_HISTORY:],
         "es_words": es_words_used[-MAX_HISTORY:],
         "jokes":    jokes_used[-MAX_HISTORY:],
+        "facts":    facts_used[-MAX_HISTORY:],
     }
 
     try:
