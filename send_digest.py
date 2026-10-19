@@ -8,7 +8,7 @@ import concurrent.futures
 import subprocess
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
-import anthropic
+from google import genai
 
 try:
     import yfinance as yf
@@ -17,7 +17,7 @@ except ImportError:
     HAS_YFINANCE = False
 
 # ── Env ────────────────────────────────────────────────────────────────────────
-ANTHROPIC_API_KEY = os.environ["ANTHROPIC_API_KEY"]
+GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
 TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
 
 # ── Subscribers ────────────────────────────────────────────────────────────────
@@ -311,24 +311,19 @@ USED_ES: [точне іспанське слово яке обрав]
 USED_JOKE: [перші 60 символів жарту]
 USED_FACT: [перші 60 символів факту]"""
 
-    # ── Call Claude ────────────────────────────────────────────────────────────
-    def call_claude(mdl, prm):
-        c = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-        msg = c.messages.create(
-            model=mdl,
-            max_tokens=2048,
-            messages=[{"role": "user", "content": prm}],
-        )
-        return msg.content[0].text
+    # ── Call Gemini ────────────────────────────────────────────────────────────
+    def call_gemini(mdl, prm):
+        c = genai.Client(api_key=GEMINI_API_KEY)
+        return c.models.generate_content(model=mdl, contents=prm).text
 
     digest = None
-    for model in ["claude-haiku-4-5-20251001", "claude-haiku-4-5"]:
+    for model in ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]:
         for attempt in range(2):
             try:
                 with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
-                    future = executor.submit(call_claude, model, prompt)
+                    future = executor.submit(call_gemini, model, prompt)
                     digest = future.result(timeout=90)
-                print(f"✅ Claude: {model}")
+                print(f"✅ Gemini: {model}")
                 break
             except concurrent.futures.TimeoutError:
                 print(f"⏱️ Timeout {model} спроба {attempt + 1}")
@@ -339,7 +334,7 @@ USED_FACT: [перші 60 символів факту]"""
             break
 
     if not digest:
-        digest = "❌ Claude недоступний сьогодні."
+        digest = "❌ Gemini недоступний сьогодні."
 
     # ── Parse USED_ lines and update used.json ─────────────────────────────────
     new_ua = new_en = new_es = new_joke = new_fact = None
