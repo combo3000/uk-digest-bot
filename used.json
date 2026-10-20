@@ -18,7 +18,8 @@
     "Гордовитий",
     "Легіт",
     "Бувальщина",
-    "Відлуння"
+    "Відлуння",
+    "Потерчата"
   ],
   "en_words": [
     "Pernicious",
@@ -39,7 +40,8 @@
     "Ebullient",
     "Assiduous",
     "Sagacious",
-    "Ponderous"
+    "Ponderous",
+    "Mendacious"
   ],
   "es_words": [
     "Acogedor",
@@ -60,7 +62,8 @@
     "Empuje",
     "Aprovechar",
     "Merendar",
-    "Rocío"
+    "Rocío",
+    "Desarrollo"
   ],
   "jokes": [
     "Why did the scarecrow win an award? Because he was outstandi",
@@ -75,6 +78,10 @@
     "I told my wife she was drawing her eyebrows too high. She lo",
     "What do you call a snowman with a six-pack? An abdominal sno",
     "What do you call a boomerang that won't come back? A stick.",
-    "What's orange and sounds like a parrot? A carrot."
+    "What's orange and sounds like a parrot? A carrot.",
+    "Why did the invisible man turn down the job offer? He couldn"
+  ],
+  "facts": [
+    "Ворони відомі своїм винятковим інтелектом та вражаючими зд"
   ]
 }
