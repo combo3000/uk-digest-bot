@@ -19,7 +19,8 @@
     "Легіт",
     "Бувальщина",
     "Відлуння",
-    "Потерчата"
+    "Потерчата",
+    "Баламут"
   ],
   "en_words": [
     "Pernicious",
@@ -41,7 +42,8 @@
     "Assiduous",
     "Sagacious",
     "Ponderous",
-    "Mendacious"
+    "Mendacious",
+    "Abstruse"
   ],
   "es_words": [
     "Acogedor",
@@ -63,7 +65,8 @@
     "Aprovechar",
     "Merendar",
     "Rocío",
-    "Desarrollo"
+    "Desarrollo",
+    "Desenvolverse"
   ],
   "jokes": [
     "Why did the scarecrow win an award? Because he was outstandi",
@@ -79,9 +82,11 @@
     "What do you call a snowman with a six-pack? An abdominal sno",
     "What do you call a boomerang that won't come back? A stick.",
     "What's orange and sounds like a parrot? A carrot.",
-    "Why did the invisible man turn down the job offer? He couldn"
+    "Why did the invisible man turn down the job offer? He couldn",
+    "What do you call a pig that does karate? A pork chop!"
   ],
   "facts": [
-    "Ворони відомі своїм винятковим інтелектом та вражаючими зд"
+    "Ворони відомі своїм винятковим інтелектом та вражаючими зд",
+    "Біологічне світіння, або біолюмінесценція, — це виробництво"
   ]
 }
