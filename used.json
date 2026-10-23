@@ -21,7 +21,8 @@
     "Відлуння",
     "Потерчата",
     "Баламут",
-    "Пихатий"
+    "Пихатий",
+    "Знічев'я"
   ],
   "en_words": [
     "Pernicious",
@@ -45,7 +46,8 @@
     "Ponderous",
     "Mendacious",
     "Abstruse",
-    "Lassitude"
+    "Lassitude",
+    "Propitious"
   ],
   "es_words": [
     "Acogedor",
@@ -69,7 +71,8 @@
     "Rocío",
     "Desarrollo",
     "Desenvolverse",
-    "Agradecer"
+    "Agradecer",
+    "Sosiego"
   ],
   "jokes": [
     "Why did the scarecrow win an award? Because he was outstandi",
@@ -87,11 +90,13 @@
     "What's orange and sounds like a parrot? A carrot.",
     "Why did the invisible man turn down the job offer? He couldn",
     "What do you call a pig that does karate? A pork chop!",
-    "What do you call a pile of cats? A meowtain."
+    "What do you call a pile of cats? A meowtain.",
+    "What do you call a sleeping dinosaur? A dino-snore!"
   ],
   "facts": [
     "Ворони відомі своїм винятковим інтелектом та вражаючими зд",
     "Біологічне світіння, або біолюмінесценція, — це виробництво",
-    "Велика тихоокеанська сміттєва пляма — це величезне скупче"
+    "Велика тихоокеанська сміттєва пляма — це величезне скупче",
+    "У Всесвіті більше зірок, ніж піщинок на всіх пляжах Землі. З"
   ]
 }
