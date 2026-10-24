@@ -22,7 +22,8 @@
     "Потерчата",
     "Баламут",
     "Пихатий",
-    "Знічев'я"
+    "Знічев'я",
+    "Обачний"
   ],
   "en_words": [
     "Pernicious",
@@ -47,7 +48,8 @@
     "Mendacious",
     "Abstruse",
     "Lassitude",
-    "Propitious"
+    "Propitious",
+    "Ubiquitous"
   ],
   "es_words": [
     "Acogedor",
@@ -72,7 +74,8 @@
     "Desarrollo",
     "Desenvolverse",
     "Agradecer",
-    "Sosiego"
+    "Sosiego",
+    "Sobremesa"
   ],
   "jokes": [
     "Why did the scarecrow win an award? Because he was outstandi",
@@ -91,12 +94,14 @@
     "Why did the invisible man turn down the job offer? He couldn",
     "What do you call a pig that does karate? A pork chop!",
     "What do you call a pile of cats? A meowtain.",
-    "What do you call a sleeping dinosaur? A dino-snore!"
+    "What do you call a sleeping dinosaur? A dino-snore!",
+    "Why don't scientists trust atoms? Because they make up eve"
   ],
   "facts": [
     "Ворони відомі своїм винятковим інтелектом та вражаючими зд",
     "Біологічне світіння, або біолюмінесценція, — це виробництво",
     "Велика тихоокеанська сміттєва пляма — це величезне скупче",
-    "У Всесвіті більше зірок, ніж піщинок на всіх пляжах Землі. З"
+    "У Всесвіті більше зірок, ніж піщинок на всіх пляжах Землі. З",
+    "Людський мозок генерує близько 20 ват електричної потужн"
   ]
 }
