@@ -26,7 +26,8 @@
     "Обачний",
     "Затишок",
     "Плекати",
-    "Яса"
+    "Яса",
+    "Вишуканий"
   ],
   "en_words": [
     "Pernicious",
@@ -55,7 +56,8 @@
     "Ubiquitous",
     "Serendipity",
     "Quixotic",
-    "Redolent"
+    "Redolent",
+    "Ephemeral"
   ],
   "es_words": [
     "Acogedor",
@@ -84,7 +86,8 @@
     "Sobremesa",
     "Atardecer",
     "Esfuerzo",
-    "Cariño"
+    "Cariño",
+    "Reunir"
   ],
   "jokes": [
     "Why did the scarecrow win an award? Because he was outstandi",
@@ -105,7 +108,8 @@
     "What do you call a pile of cats? A meowtain.",
     "What do you call a sleeping dinosaur? A dino-snore!",
     "Why don't scientists trust atoms? Because they make up eve",
-    "I only know 25 letters of the alphabet. I don't know Y."
+    "I only know 25 letters of the alphabet. I don't know Y.",
+    "What do you call a lazy kangaroo? Pouch potato."
   ],
   "facts": [
     "Ворони відомі своїм винятковим інтелектом та вражаючими зд",
@@ -115,6 +119,7 @@
     "Людський мозок генерує близько 20 ват електричної потужн",
     "Найстаріший живий організм на Землі — це клональна колонія",
     "\"Безсмертна медуза\" (Turritopsis dohrnii) є єдиним відомим в",
-    "Земне ядро складається переважно із заліза та нікелю. Його т"
+    "Земне ядро складається переважно із заліза та нікелю. Його т",
+    "Слони — єдині ссавці, які не можуть стрибати. Це пов'язано"
   ]
 }
