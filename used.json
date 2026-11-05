@@ -31,7 +31,8 @@
     "Незграбний",
     "Гомінкий",
     "Кмітливий",
-    "Наснага"
+    "Наснага",
+    "Вабливий"
   ],
   "en_words": [
     "Pernicious",
@@ -65,7 +66,8 @@
     "Cacophony",
     "Convivial",
     "Deleterious",
-    "Perfunctory"
+    "Perfunctory",
+    "Mellifluous"
   ],
   "es_words": [
     "Acogedor",
@@ -99,7 +101,8 @@
     "Despertar",
     "Añorar",
     "Conducir",
-    "Disfrutar"
+    "Disfrutar",
+    "Destreza"
   ],
   "jokes": [
     "Why did the scarecrow win an award? Because he was outstandi",
@@ -122,7 +125,8 @@
     "Why don't scientists trust atoms? Because they make up eve",
     "I only know 25 letters of the alphabet. I don't know Y.",
     "What do you call a lazy kangaroo? Pouch potato.",
-    "Чому скелети такі спокійні? Бо їх нічого не дістає."
+    "Чому скелети такі спокійні? Бо їх нічого не дістає.",
+    "Why did the tomato turn red? Because it saw the salad dressi"
   ],
   "facts": [
     "Ворони відомі своїм винятковим інтелектом та вражаючими зд",
@@ -137,6 +141,7 @@
     "Восьминоги мають три серця: два менших серця перекачують",
     "Бамбук — одна з найшвидше зростаючих рослин у світі. Деякі в",
     "Метелики відчувають смак за допомогою своїх лапок, а не рото",
-    "Найсильнішим м'язом у людському тілі, відносно його розміру,"
+    "Найсильнішим м'язом у людському тілі, відносно його розміру,",
+    "У Середньовіччі, до винайдення друкарського верстата, книги"
   ]
 }
