@@ -1,41 +1,89 @@
-import feedparser
-import requests
+"""
+UK Morning Digest — щоранковий дайджест у Telegram.
+
+Запуск: GitHub Actions. Основний тригер — cron-job.org о 08:00 за Києвом
+(workflow_dispatch через GitHub API), резервний — schedule у digest.yml.
+
+MODE=normal — всім підписникам, не частіше одного разу на день (last_sent у used.json).
+MODE=test   — тільки першому підписнику зі списку, без збереження історії.
+"""
+
+import difflib
+import html
 import json
 import os
-import time
 import random
-import concurrent.futures
+import re
 import subprocess
-from datetime import datetime, timedelta
+import sys
+import time
+from collections import Counter
+from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
-from google import genai
+
+import feedparser
+import requests
 
 try:
     import yfinance as yf
-    HAS_YFINANCE = True
 except ImportError:
-    HAS_YFINANCE = False
+    yf = None
 
-# ── Env ────────────────────────────────────────────────────────────────────────
-GEMINI_API_KEY = os.environ["GEMINI_API_KEY"]
-TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
+KYIV = ZoneInfo("Europe/Kyiv")
+USED_FILE = "used.json"
+MODELS = ["gemini-flash-latest", "gemini-2.5-flash", "gemini-flash-lite-latest"]
+HISTORY_LIMITS = {"jokes": 200, "facts": 120, "motivations": 60, "numbers": 60}
+PER_SOURCE = 16                 # скільки статей з одного видання показуємо моделі
+FRESH = timedelta(hours=36)     # Economist публікує рідше, тому вікно ширше за 24 год
+MAX_PER_OUTLET = 3              # не більше 3 статей з одного видання в дайджесті
 
-# ── Subscribers ────────────────────────────────────────────────────────────────
-with open("subscribers.json", "r") as f:
-    data = json.load(f)
-ALL_CHAT_IDS = data.get("subscribers", [])
-print(f"Підписників: {len(ALL_CHAT_IDS)}")
+MONTHS = ["січня", "лютого", "березня", "квітня", "травня", "червня",
+          "липня", "серпня", "вересня", "жовтня", "листопада", "грудня"]
+WEEKDAYS = ["Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота", "Неділя"]
 
-# ── Date / Time (Kyiv) ─────────────────────────────────────────────────────────
-kyiv_now = datetime.now(ZoneInfo("Europe/Kyiv"))
-_months = [
-    "січня", "лютого", "березня", "квітня", "травня", "червня",
-    "липня", "серпня", "вересня", "жовтня", "листопада", "грудня",
-]
-date_str = f"{kyiv_now.day} {_months[kyiv_now.month - 1]} {kyiv_now.year}"
+# ── Джерела ───────────────────────────────────────────────────────────────────
+SOURCES = {
+    "The Economist": [
+        ("головне", "https://www.economist.com/latest/rss.xml"),
+        ("світ", "https://www.economist.com/international/rss.xml"),
+        ("бізнес", "https://www.economist.com/business/rss.xml"),
+        ("економіка", "https://www.economist.com/finance-and-economics/rss.xml"),
+        ("наука", "https://www.economist.com/science-and-technology/rss.xml"),
+        ("культура", "https://www.economist.com/culture/rss.xml"),
+    ],
+    "NYT": [
+        ("світ", "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"),
+        ("бізнес", "https://rss.nytimes.com/services/xml/rss/nyt/Business.xml"),
+        ("технології", "https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml"),
+        ("наука", "https://rss.nytimes.com/services/xml/rss/nyt/Science.xml"),
+        ("культура", "https://rss.nytimes.com/services/xml/rss/nyt/Arts.xml"),
+        ("спорт", "https://rss.nytimes.com/services/xml/rss/nyt/Sports.xml"),
+    ],
+    "FT": [
+        ("головне", "https://www.ft.com/rss/home"),
+        ("світ", "https://www.ft.com/world?format=rss"),
+        ("компанії", "https://www.ft.com/companies?format=rss"),
+    ],
+    "The Guardian": [
+        ("світ", "https://www.theguardian.com/world/rss"),
+        ("бізнес", "https://www.theguardian.com/business/rss"),
+        ("наука", "https://www.theguardian.com/science/rss"),
+        ("культура", "https://www.theguardian.com/culture/rss"),
+        ("спорт", "https://www.theguardian.com/sport/rss"),
+    ],
+    "BBC": [
+        ("світ", "https://feeds.bbci.co.uk/news/world/rss.xml"),
+        ("бізнес", "https://feeds.bbci.co.uk/news/business/rss.xml"),
+        ("технології", "https://feeds.bbci.co.uk/news/technology/rss.xml"),
+        ("наука", "https://feeds.bbci.co.uk/news/science_environment/rss.xml"),
+        ("культура", "https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml"),
+        ("спорт", "https://feeds.bbci.co.uk/sport/rss.xml"),
+    ],
+}
+HTTP_HEADERS = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) UKDigestBot/2.0 (+https://github.com/combo3000/uk-digest-bot)"}
 
-# ── Greeting — 100 titles, rotate every 3 days, no repeats until full cycle ────
-_G = [
+# ── Звертання — змінюється кожні 3 дні, без повторів до кінця кола ─────────────
+GREETINGS = [
     # Морські / піратські
     "пірате", "корсаре", "капітане", "боцмане", "контрабандисте",
     "флібустьєре", "морський вовче", "адмірале", "штурмане", "юнге",
@@ -46,7 +94,7 @@ _G = [
     # Воїни
     "самураю", "вікінгу", "гладіаторе", "лицарю", "ніндзя",
     "берсеркере", "спартанцю", "мушкетере", "янічаре", "легіонере",
-    "зрадливий асасине", "ронінe", "конкістадоре", "тамплієре", "мамлюке",
+    "зрадливий асасине", "роніне", "конкістадоре", "тамплієре", "мамлюке",
     # Магія / містика
     "чарівнику", "алхіміку", "некроманте", "друїде", "шамане",
     "астрологе", "ворожбите", "привиде", "демонологе", "оракуле",
@@ -67,346 +115,554 @@ _G = [
     "камікадзе", "трампліне", "регуляторе", "галактичний мандрівниче", "суперзлодію",
 ]
 
-def _get_greeting(dt: datetime) -> str:
-    """Pick greeting: changes every 3 days, cycles through all titles without repeats.
 
-    One fixed deterministic shuffle of the whole list, then we walk through it by
-    global slot number. A full cycle = len(_G) * 3 days (≈10.5 months) with zero
-    repeats. After that the same order repeats — intentionally, since a year+ gap
-    makes any repeat feel fresh.
-    """
-    n = len(_G)
-    epoch = datetime(2026, 1, 1, tzinfo=dt.tzinfo)   # fixed reference point
-    slot  = (dt - epoch).days // 3                   # absolute slot (0, 1, 2, …)
-    # One stable shuffle for all time — seed never changes
-    rng = random.Random(0xD19E57)
-    order = list(range(n))
-    rng.shuffle(order)
-    return _G[order[slot % n]]
+def get_greeting(dt):
+    """Одне стабільне перемішування списку; крок — 3 дні; повне коло без повторів."""
+    slot = (dt - datetime(2026, 1, 1, tzinfo=dt.tzinfo)).days // 3
+    order = list(range(len(GREETINGS)))
+    random.Random(0xD19E57).shuffle(order)
+    return GREETINGS[order[slot % len(GREETINGS)]]
 
-GREETING = _get_greeting(kyiv_now)
 
-# ── used.json ──────────────────────────────────────────────────────────────────
-USED_FILE = "used.json"
-try:
-    with open(USED_FILE, "r", encoding="utf-8") as f:
-        used = json.load(f)
-except Exception:
-    used = {}
+# ── Креативні «замовлення» на день: різноманітність замість топ-25 dad jokes ──
+JOKE_FORMATS = [
+    "анекдот-діалог на 3–8 реплік",
+    "міні-історія з несподіваним фіналом (4–8 речень)",
+    "сухий британський однорядковий гумор",
+    "абсурдний анекдот",
+    "одеський анекдот",
+    "жарт-спостереження в стилі стендапу (3–6 речень)",
+    "чорний гумор без жорстокості й образ груп людей",
+    "офісний або бюрократичний анекдот",
+    "розумний каламбур, якого немає в топ-списках інтернету",
+    "жарт у формі оголошення, листа або інструкції",
+    "анекдот про Шерлока Холмса і доктора Ватсона",
+    "анекдот формату «приходить … до …»",
+    "жарт про переговори або контракт",
+    "інтелектуальний жарт для тих, хто читає The Economist",
+]
+JOKE_TOPICS = [
+    "кіт", "економіст", "бухгалтер", "фармацевт", "лікар", "митниця", "логістика",
+    "бабуся", "програміст", "штучний інтелект", "філософ", "рибалка", "теща",
+    "футбол", "вино", "ресторан і офіціант", "студент та іспит", "професор",
+    "британці та погода", "іспанська сієста", "ремонт квартири", "сусіди", "таксист",
+    "авіапереліт", "готель", "банк", "податкова", "космос", "динозаври", "собака",
+    "папуга", "бджоли", "бізнес-план", "стартап", "дієта", "спортзал", "весілля",
+    "діти та батьки", "хімія", "фізика", "історики", "археологи", "музей", "оркестр",
+    "шахи", "кава", "понеділок", "відпустка", "Excel", "наради в Zoom",
+]
+FACT_THEMES = [
+    "тварини", "космос", "їжа та її історія", "мови й слова", "медицина",
+    "кров і імунітет", "географія", "фізика", "хімія", "історія торгівлі",
+    "мореплавство", "винаходи", "архітектура", "математика", "рослини",
+    "океан", "людський мозок", "музика", "давній світ", "погода і клімат",
+]
+MOTIVATION_ANGLES = [
+    "стоїчний — у дусі Сенеки чи Марка Аврелія, але своїми словами і з сучасним образом",
+    "смішний — абсурдний поворот, після якого хочеться посміхнутись і піти робити справи",
+    "дивовижний — через реальний вражаючий факт з природи, космосу чи історії",
+    "бенгер — коротко й різко, як удар у гонг, до 12 слів",
+    "тонка самоіронія ділової людини",
+    "порада старого капітана, який бачив усі шторми",
+    "інструкція з техніки безпеки для амбітних",
+    "репліка спортивного коментатора в кульмінацію матчу",
+    "метафора з кухні, вина або кави",
+    "філософський парадокс, що перевертає звичну думку",
+    "прогноз погоди, але для справ на сьогодні",
+    "що сказала б тварина — восьминіг, ворона, бобер чи мураха",
+    "через реальний історичний епізод і несподіваний висновок",
+    "фраза, яку хочеться написати маркером на дошці в переговорній",
+]
+BANNED_JOKE_MARKERS = [
+    "scarecrow", "outstanding in his field", "опудал", "make up everything", "impasta",
+    "two tired", "two-tired", "anti-gravity", "антигравітац", "fsh", "nacho cheese",
+    "dino-snore", "meowtain", "waist of time", "pouch potato", "salad dressing",
+    "no atmosphere", "abdominal snowman", "don't know y", "eyebrows too high",
+    "skeleton", "скелет", "pork chop", "got mugged", "enough dough", "boomerang",
+    "orange and sounds like a parrot", "invisible man",
+]
+BANNED_MOTIVATION = [
+    "кожен день — новий шанс", "вір у себе", "ти все зможеш", "не здавайся",
+    "крок за кроком", "найкращий час", "рухайся вперед", "твій потенціал",
+]
 
-ua_words_used  = used.get("ua_words", [])
-en_words_used  = used.get("en_words", [])
-es_words_used  = used.get("es_words", [])
-jokes_used     = used.get("jokes", [])
-facts_used     = used.get("facts", [])
 
-# Keep only last 60 entries per list to avoid infinite growth
-MAX_HISTORY = 60
-ua_words_used = ua_words_used[-MAX_HISTORY:]
-en_words_used = en_words_used[-MAX_HISTORY:]
-es_words_used = es_words_used[-MAX_HISTORY:]
-jokes_used    = jokes_used[-MAX_HISTORY:]
-facts_used    = facts_used[-MAX_HISTORY:]
+# ── Допоміжні ─────────────────────────────────────────────────────────────────
+def norm(s):
+    return re.sub(r"\s+", " ", re.sub(r"[^\w\s]", "", str(s).lower())).strip()
 
-# Normalize helper — used for dedup comparison
-import re as _re
-def _norm(s: str) -> str:
-    return _re.sub(r"[^\w\s]", "", s.lower()).strip()
 
-# Deduplicate jokes list itself and normalize to first-60 chars for consistent comparison
-_seen_j: dict = {}
-for _j in jokes_used:
-    _seen_j[_norm(_j[:60])] = _j[:60]
-jokes_used = list(_seen_j.values())
+def clean_text(s):
+    s = re.sub(r"<[^>]+>", " ", s or "")
+    return re.sub(r"\s+", " ", html.unescape(s)).strip()
 
-print(f"Історія: UA={len(ua_words_used)}, EN={len(en_words_used)}, ES={len(es_words_used)}, жарти={len(jokes_used)}, факти={len(facts_used)}")
 
-# ── Weather ────────────────────────────────────────────────────────────────────
-def get_weather(lat, lon, tz, city):
+def esc(s):
+    return html.escape(str(s).strip(), quote=False)
+
+
+def tg_len(s):
+    """Довжина видимого тексту так, як її рахує Telegram (UTF-16)."""
+    visible = html.unescape(re.sub(r"<[^>]+>", "", s))
+    return len(visible.encode("utf-16-le")) // 2
+
+
+def load_json(path, default):
     try:
-        url = (
-            f"https://api.open-meteo.com/v1/forecast"
-            f"?latitude={lat}&longitude={lon}"
-            f"&current=temperature_2m,weathercode"
-            f"&timezone={tz}"
-        )
-        r = requests.get(url, timeout=10)
-        d = r.json()["current"]
-        temp = round(d["temperature_2m"])
-        code = d["weathercode"]
-        if code == 0:
-            icon = "☀️"
-        elif code in (1, 2, 3):
-            icon = "⛅" if code < 3 else "☁️"
-        elif code in range(51, 68):
-            icon = "🌧️"
-        elif code in range(71, 78):
-            icon = "❄️"
-        elif code in range(80, 83):
-            icon = "🌦️"
-        elif code in range(95, 100):
-            icon = "⛈️"
-        else:
-            icon = "🌡️"
-        return f"🌍 {city}: {temp}°C {icon}"
-    except Exception as e:
-        return f"🌍 {city}: недоступно"
-
-weather_kyiv      = get_weather(50.4501, 30.5234, "Europe%2FKiev",   "Київ")
-weather_barcelona = get_weather(41.3851,  2.1734, "Europe%2FMadrid", "Барселона")
-
-# ── Stocks ─────────────────────────────────────────────────────────────────────
-def get_stock(ticker, label, currency):
-    if not HAS_YFINANCE:
-        return f"{label}: н/д"
-    try:
-        tk = yf.Ticker(ticker)
-        hist = tk.history(period="2d")
-        if hist.empty:
-            return f"{label}: н/д"
-        close = hist["Close"]
-        price = close.iloc[-1]
-        prev  = close.iloc[-2] if len(close) >= 2 else price
-        chg   = price - prev
-        pct   = (chg / prev * 100) if prev else 0
-        arrow = "📈" if chg >= 0 else "📉"
-        sign  = "+" if chg >= 0 else ""
-        return f"{label}: {price:.2f}{currency} ({sign}{pct:.2f}%) {arrow}"
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
     except Exception:
+        return default
+
+
+# ── Погода і ринки ────────────────────────────────────────────────────────────
+def weather_icon(code):
+    if code == 0:
+        return "☀️"
+    if code in (1, 2):
+        return "⛅"
+    if code == 3:
+        return "☁️"
+    if code in (45, 48):
+        return "🌫️"
+    if 51 <= code <= 67:
+        return "🌧️"
+    if 71 <= code <= 77 or code in (85, 86):
+        return "❄️"
+    if 80 <= code <= 82:
+        return "🌦️"
+    if code >= 95:
+        return "⛈️"
+    return "🌡️"
+
+
+def get_weather(lat, lon, city):
+    try:
+        r = requests.get(
+            "https://api.open-meteo.com/v1/forecast",
+            params={"latitude": lat, "longitude": lon, "current": "temperature_2m,weathercode",
+                    "daily": "temperature_2m_max", "forecast_days": 1, "timezone": "auto"},
+            timeout=10,
+        )
+        d = r.json()
+        temp = round(d["current"]["temperature_2m"])
+        tmax = round(d["daily"]["temperature_2m_max"][0])
+        return f"{city}: {temp}°C {weather_icon(d['current']['weathercode'])} (вдень до {tmax}°)"
+    except Exception as e:
+        print(f"⚠️ Погода {city}: {e}")
+        return f"{city}: недоступно"
+
+
+def get_stock(ticker, label, currency):
+    if yf is None:
+        return f"{label}: н/д"
+    try:
+        close = yf.Ticker(ticker).history(period="5d")["Close"].dropna()
+        if close.empty:
+            return f"{label}: н/д"
+        price = close.iloc[-1]
+        prev = close.iloc[-2] if len(close) >= 2 else price
+        pct = (price - prev) / prev * 100 if prev else 0
+        arrow = "📈" if pct >= 0 else "📉"
+        return f"{label}: {price:.2f} {currency} ({'+' if pct >= 0 else ''}{pct:.2f}%) {arrow}"
+    except Exception as e:
+        print(f"⚠️ Акції {label}: {e}")
         return f"{label}: н/д"
 
-stocks_lines = "\n".join([
-    get_stock("CSL.AX", "CSL",    " AUD"),
-    get_stock("GRF.MC", "Grifols"," EUR"),
-    get_stock("TAK",    "Takeda", " USD"),
-])
 
-# ── RSS feeds ──────────────────────────────────────────────────────────────────
-RSS_FEEDS = {
-    "The Guardian": [
-        "https://www.theguardian.com/world/rss",
-        "https://www.theguardian.com/uk-news/rss",
-        "https://www.theguardian.com/business/rss",
-        "https://www.theguardian.com/culture/rss",
-        "https://www.theguardian.com/sport/rss",
-        "https://www.theguardian.com/science/rss",
-    ],
-    "BBC News": [
-        "http://feeds.bbci.co.uk/news/world/rss.xml",
-        "http://feeds.bbci.co.uk/news/business/rss.xml",
-        "http://feeds.bbci.co.uk/news/technology/rss.xml",
-        "http://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml",
-        "http://feeds.bbci.co.uk/sport/rss.xml",
-        "http://feeds.bbci.co.uk/news/science_environment/rss.xml",
-    ],
-    "Financial Times": ["https://www.ft.com/rss/home"],
-}
-
-articles   = []
-seen_links = set()
-cutoff     = kyiv_now - timedelta(hours=24)
-
-for source_name, feeds in RSS_FEEDS.items():
-    for feed_url in feeds:
-        try:
-            feed = feedparser.parse(feed_url)
-            for entry in feed.entries[:15]:
-                link = entry.get("link", "")
-                if link in seen_links:
-                    continue
-                seen_links.add(link)
-                published = None
-                if hasattr(entry, "published_parsed") and entry.published_parsed:
-                    published = datetime(*entry.published_parsed[:6])
-                    if published < cutoff.replace(tzinfo=None):
-                        continue
-                articles.append({
-                    "source":  source_name,
-                    "title":   entry.get("title", ""),
-                    "link":    link,
-                    "summary": entry.get("summary", "")[:200],
-                })
-        except Exception:
-            pass
-
-print(f"Статей: {len(articles)}")
-
-# ── Gemini prompt ──────────────────────────────────────────────────────────────
-if not articles:
-    for cid in ALL_CHAT_IDS:
-        requests.post(
-            f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage",
-            json={"chat_id": cid, "text": "⚠️ Сьогодні не вдалося зібрати новини."},
-        )
-else:
-    articles_short = articles[:30]
-    articles_text  = "\n".join(
-        [f"{i}. [{a['source']}] {a['title']}\n   {a['link']}"
-         for i, a in enumerate(articles_short, 1)]
-    )
-
-    # Build "already used" hints for Claude
-    ua_hint    = ", ".join(ua_words_used[-20:]) if ua_words_used else "немає"
-    en_hint    = ", ".join(en_words_used[-20:]) if en_words_used else "немає"
-    es_hint    = ", ".join(es_words_used[-20:]) if es_words_used else "немає"
-    jokes_hint = "; ".join(jokes_used[-15:])    if jokes_used    else "немає"
-    facts_hint = "; ".join(facts_used[-10:])    if facts_used    else "немає"
-
-    prompt = f"""Ти — редактор ранкового дайджесту. Звертайся "{GREETING}". Пишеш українською (крім оригінальних жартів та слів дня).
-Сьогодні {date_str}.
-
-НЕ ВИКОРИСТОВУЙ markdown: ніяких **, ##, __, *, ---.
-
-СУВОРО заборонено повторювати вже використані елементи (вони вже були надіслані раніше):
-• Вже використані українські слова: {ua_hint}
-• Вже використані англійські слова: {en_hint}
-• Вже використані іспанські слова: {es_hint}
-• Вже використані жарти (початок): {jokes_hint}
-• Вже використані теми фактів (початок): {facts_hint}
-
-Обов'язково обери НОВІ, яких немає в списках вище.
-
-{len(articles_short)} статей для вибору:
-
-{articles_text}
-
-Склади дайджест у такому форматі (точно такі розділювачі):
-
-Добрий ранок, {GREETING}!
-Сьогодні {date_str}.
-
-━━━ ПОГОДА ━━━
-{weather_kyiv}
-{weather_barcelona}
-
-━━━ НОВИНИ ━━━
-Обери 6 РІЗНИХ статей:
-- 3 міжнародні (геополітика, економіка, технології) — різні теми
-- 1 спорт
-- 1 культура або наука
-- 1 курйоз або незвичайна новина
-
-Формат кожної новини:
-ЕМОДЗІ Заголовок українською — коротке пояснення (1-2 речення).
-URL
-
-━━━ РИНКИ 💹 ━━━
-{stocks_lines}
-
-━━━ СЛОВО ДНЯ 📚 ━━━
-🇺🇦 [НОВЕ рідкісне українське слово, якого немає вище] — переклад/пояснення
-🇬🇧 [НОВЕ англійське слово рівня C1-C2, якого немає вище] — переклад | Приклад: речення
-🇪🇸 [НОВЕ іспанське слово рівня A2-B1, якого немає вище] — переклад | Вимовляється: [транскрипція]
-
-━━━ ФАКТ ДНЯ 🧠 ━━━
-Один цікавий науковий або історичний факт (2-3 речення). Тема НЕ повинна збігатися з вже використаними темами фактів вище. Обирай різноманітні теми: тварини, космос, їжа, мова, технології, медицина, географія, фізика тощо.
-
-━━━ ЖАРТ ДНЯ 😄 ━━━
-Короткий жарт або анекдот, якого немає вище. Може бути будь-який: dad joke, каламбур, ситуаційний анекдот, чорний гумор, абсурд. Якщо оригінал англійською — залиш англійською. Якщо українською — залиш українською.
-
-Після жарту на окремому рядку напиши у такому форматі (це потрібно для системи, не показується читачам):
-USED_UA: [точне українське слово яке обрав]
-USED_EN: [точне англійське слово яке обрав]
-USED_ES: [точне іспанське слово яке обрав]
-USED_JOKE: [перші 60 символів жарту]
-USED_FACT: [перші 60 символів факту]"""
-
-    # ── Call Gemini ────────────────────────────────────────────────────────────
-    def call_gemini(mdl, prm):
-        c = genai.Client(api_key=GEMINI_API_KEY)
-        return c.models.generate_content(model=mdl, contents=prm).text
-
-    digest = None
-    for model in ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]:
-        for attempt in range(2):
+# ── RSS ───────────────────────────────────────────────────────────────────────
+def collect_articles(now_utc):
+    articles, seen = [], set()
+    for source, feeds in SOURCES.items():
+        buckets = []
+        for cat, url in feeds:
+            items = []
             try:
-                with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
-                    future = executor.submit(call_gemini, model, prompt)
-                    digest = future.result(timeout=90)
-                print(f"✅ Gemini: {model}")
-                break
-            except concurrent.futures.TimeoutError:
-                print(f"⏱️ Timeout {model} спроба {attempt + 1}")
+                r = requests.get(url, headers=HTTP_HEADERS, timeout=15)
+                r.raise_for_status()
+                for e in feedparser.parse(r.content).entries[:20]:
+                    link = (e.get("link") or "").strip()
+                    title = clean_text(e.get("title"))
+                    if not link or not title:
+                        continue
+                    key = link.split("?")[0].rstrip("/")
+                    if key in seen:
+                        continue
+                    pp = e.get("published_parsed") or e.get("updated_parsed")
+                    if pp and now_utc - datetime(*pp[:6], tzinfo=timezone.utc) > FRESH:
+                        continue
+                    seen.add(key)
+                    items.append({"source": source, "cat": cat, "title": title, "link": link,
+                                  "summary": clean_text(e.get("summary"))[:240]})
+            except Exception as ex:
+                print(f"⚠️ RSS {source} [{cat}]: {ex}")
+            buckets.append(items)
+        picked = []                      # по черзі з кожної рубрики, щоб спорт не з'їв усе
+        while len(picked) < PER_SOURCE and any(buckets):
+            for b in buckets:
+                if b and len(picked) < PER_SOURCE:
+                    picked.append(b.pop(0))
+        print(f"📰 {source}: {len(picked)} статей")
+        articles.extend(picked)
+    for i, a in enumerate(articles, 1):
+        a["id"] = i
+    return articles
+
+
+# ── Gemini ────────────────────────────────────────────────────────────────────
+def build_prompt(articles, hist, joke_format, joke_topic, fact_theme, angle):
+    arts = "\n".join(f"[{a['id']}] {a['source']} | {a['cat']} | {a['title']}\n     {a['summary']}"
+                     for a in articles)
+    jokes = "\n".join(f"- {j}" for j in hist["jokes"]) or "немає"
+    facts = "; ".join(hist["facts"][-40:]) or "немає"
+    motiv = "\n".join(f"- {m}" for m in hist["motivations"][-20:]) or "немає"
+    numbers = "; ".join(hist["numbers"][-15:]) or "немає"
+    return f"""Ти — редактор ранкового дайджесту для українського бізнесмена (фарма, експорт, геополітика, економіка, технології, наука, культура). Пишеш українською: живо, стисло, з цифрами, без води і канцеляриту. Без markdown.
+
+Нижче {len(articles)} свіжих статей з провідних видань. У кожної є номер [id].
+
+{arts}
+
+Поверни ТІЛЬКИ JSON такої структури:
+{{
+  "top":     [{{"id": 1, "emoji": "🌍", "text": "..."}}],
+  "sport":   [{{"id": 1, "emoji": "⚽", "text": "..."}}],
+  "culture": [{{"id": 1, "emoji": "🎭", "text": "..."}}],
+  "crazy":   [{{"id": 1, "emoji": "🤪", "text": "..."}}],
+  "number":  {{"id": 1, "value": "...", "text": "..."}},
+  "fact": "...",
+  "fact_topic": "...",
+  "joke": "...",
+  "joke_key": "...",
+  "motivation": "..."
+}}
+
+НОВИНИ
+• top — 8 кандидатів у порядку важливості: геополітика, світова економіка, бізнес, технології/AI, фарма і медицина. Різні теми, жодних дублів однієї події. Бери з різних видань (Economist, NYT, FT, Guardian, BBC), не більше 2 з одного.
+• sport — 3 кандидати, culture — 3 кандидати (культура, мистецтво, кіно, книги, наукове відкриття), crazy — 3 кандидати: найдивніша, найкумедніша або найшаленіша новина дня.
+• text — 1–2 речення українською: суть і цифри, якщо є. Якщо є влучний наслідок чи цікаве трактування — додай коротко; якщо немає — нічого не вигадуй. Не згадуй назву видання в тексті.
+• emoji — одне, за темою. id — тільки номери зі списку вище.
+
+ЦИФРА ДНЯ
+• Одна вражаюча або показова цифра зі статистики в СЬОГОДНІШНІХ статтях вище (із заголовка чи опису — не вигадуй і не бери з пам'яті). Бажано зі статті, якої немає серед новин.
+• value — сама цифра з одиницями ("$2,1 трлн", "47%", "1 з 5"); text — одне речення, що вона означає і чому це цікаво; id — стаття-джерело.
+• Не повторюй нещодавні: {numbers}
+
+ФАКТ ДНЯ
+• 2–3 речення: перевірений науковий, історичний або дивовижний факт. Тема сьогодні: {fact_theme}.
+• fact_topic — тема факту у 3–6 словах. Не повторюй уже використані теми: {facts}
+
+ЖАРТ ДНЯ
+• Замовлення на сьогодні: формат — {joke_format}; тема — {joke_topic}.
+• Від 1 до 10 речень. Гра слів не обов'язкова: годяться анекдоти, діалоги, міні-історії, спостереження.
+• Мова: якщо жарт за походженням англійський — залиш англійською; український — українською. Каламбури не перекладай.
+• Заборонено: заїжджені dad jokes з топ-списків інтернету (опудало «outstanding in his field», атоми, що «make up everything», скелети, impasta, two-tired тощо) і все, що вже було (список нижче). Якщо першим спадає на думку відомий жарт — відкинь і шукай далі.
+• joke_key — суть жарту у 5–10 словах українською.
+Вже були:
+{jokes}
+
+МОТИВАЦІЯ НА ДЕНЬ
+• Рівно одне речення, до 30 слів. Кут сьогодні: {angle}.
+• Це найважливіше: жодних шаблонів і банальностей. Без цитат відомих людей, без фраз на кшталт «кожен день — новий шанс», «вір у себе», «не здавайся», «крок за кроком», «найкращий час — зараз», «твій потенціал». Не починай зі звертання.
+• Має бути свіже, конкретне, з образом або несподіваним поворотом — щоб хотілося переслати другу.
+• Не схоже на попередні:
+{motiv}
+"""
+
+
+def make_client():
+    from google import genai
+    from google.genai import types
+    client = genai.Client(api_key=os.environ["GEMINI_API_KEY"],
+                          http_options=types.HttpOptions(timeout=120_000))
+    config = types.GenerateContentConfig(response_mime_type="application/json")
+    return client, config
+
+
+def parse_json(txt):
+    txt = re.sub(r"^```(?:json)?\s*|\s*```$", "", (txt or "").strip())
+    m = re.search(r"\{.*\}", txt, re.S)
+    return json.loads(m.group(0) if m else txt)
+
+
+def ask_gemini(client, config, prompt, required):
+    for model in MODELS:
+        for attempt in range(1, 3):
+            try:
+                resp = client.models.generate_content(model=model, contents=prompt, config=config)
+                data = parse_json(resp.text)
+                if all(data.get(k) for k in required):
+                    print(f"✅ Gemini: {model}")
+                    return data
+                print(f"⚠️ {model} спроба {attempt}: неповна відповідь")
             except Exception as e:
-                print(f"❌ Помилка {model} спроба {attempt + 1}: {e}")
-            time.sleep(5)
-        if digest:
-            break
+                print(f"❌ {model} спроба {attempt}: {str(e)[:300]}")
+            time.sleep(8)
+    return None
 
-    if not digest:
-        digest = "❌ Gemini недоступний сьогодні."
 
-    # ── Parse USED_ lines and update used.json ─────────────────────────────────
-    new_ua = new_en = new_es = new_joke = new_fact = None
-    clean_lines = []
-    for line in digest.splitlines():
-        if line.startswith("USED_UA:"):
-            new_ua = line.split(":", 1)[1].strip()
-        elif line.startswith("USED_EN:"):
-            new_en = line.split(":", 1)[1].strip()
-        elif line.startswith("USED_ES:"):
-            new_es = line.split(":", 1)[1].strip()
-        elif line.startswith("USED_JOKE:"):
-            new_joke = line.split(":", 1)[1].strip()
-        elif line.startswith("USED_FACT:"):
-            new_fact = line.split(":", 1)[1].strip()
-        else:
-            clean_lines.append(line)
+def joke_is_repeat(joke, key, jokes_used):
+    j = norm(joke)
+    if any(m in j for m in BANNED_JOKE_MARKERS):
+        return True
+    head, k = norm(joke[:60]), norm(key)
+    for old in jokes_used:
+        old_key, _, old_head = old.partition(" | ")
+        if not old_head:                              # старий формат: лише перші 60 символів
+            old_head, old_key = old_key, ""
+        if difflib.SequenceMatcher(None, head, norm(old_head)).ratio() > 0.72:
+            return True
+        if k and old_key and difflib.SequenceMatcher(None, k, norm(old_key)).ratio() > 0.8:
+            return True
+    return False
 
-    # Remove trailing blank lines from digest
-    while clean_lines and not clean_lines[-1].strip():
-        clean_lines.pop()
-    digest_clean = "\n".join(clean_lines)
 
-    # Update history
-    if new_ua:
-        ua_words_used.append(new_ua)
-    if new_en:
-        en_words_used.append(new_en)
-    if new_es:
-        es_words_used.append(new_es)
-    if new_joke:
-        new_joke_norm = _norm(new_joke[:60])
-        if not any(_norm(j[:60]) == new_joke_norm for j in jokes_used):
-            jokes_used.append(new_joke[:60])
-    if new_fact:
-        facts_used.append(new_fact[:60])
-
-    new_used = {
-        "ua_words": ua_words_used[-MAX_HISTORY:],
-        "en_words": en_words_used[-MAX_HISTORY:],
-        "es_words": es_words_used[-MAX_HISTORY:],
-        "jokes":    jokes_used[-MAX_HISTORY:],
-        "facts":    facts_used[-MAX_HISTORY:],
-    }
-
+# ── Збірка повідомлення ───────────────────────────────────────────────────────
+def to_id(v):
     try:
-        with open(USED_FILE, "w", encoding="utf-8") as f:
-            json.dump(new_used, f, ensure_ascii=False, indent=2)
-        print(f"✅ used.json оновлено: UA={len(new_used['ua_words'])}, EN={len(new_used['en_words'])}, ES={len(new_used['es_words'])}, jokes={len(new_used['jokes'])}")
+        return int(v)
+    except (TypeError, ValueError):
+        return None
 
-        # Git push used.json back to repo
-        subprocess.run(["git", "config", "user.email", "digest-bot@github-actions"], check=True)
-        subprocess.run(["git", "config", "user.name",  "Digest Bot"],               check=True)
-        subprocess.run(["git", "add", USED_FILE],                                    check=True)
-        result = subprocess.run(["git", "diff", "--cached", "--quiet"])
-        if result.returncode != 0:
-            subprocess.run(["git", "commit", "-m", f"chore: update used.json [{date_str}]"], check=True)
-            subprocess.run(["git", "push"],                                          check=True)
+
+def select_news(data, by_id):
+    counts, taken = Counter(), set()
+
+    def choose(cands, n, cap):
+        out = []
+        for c in cands or []:
+            if len(out) >= n:
+                break
+            if not isinstance(c, dict):
+                continue
+            i = to_id(c.get("id"))
+            a = by_id.get(i)
+            if not a or i in taken or not str(c.get("text", "")).strip():
+                continue
+            if counts[a["source"]] >= cap:
+                continue
+            out.append({**c, "id": i})
+            taken.add(i)
+            counts[a["source"]] += 1
+        return out
+
+    top = choose(data.get("top"), 5, 2)
+    if len(top) < 5:
+        top += choose(data.get("top"), 5 - len(top), MAX_PER_OUTLET)
+    extra = []
+    for key in ("sport", "culture", "crazy"):
+        extra += choose(data.get(key), 1, MAX_PER_OUTLET)
+    print("📊 Видання в дайджесті:", dict(counts))
+    return top + extra, taken
+
+
+def source_link(a):
+    return f'<a href="{html.escape(a["link"], quote=True)}">{esc(a["source"])}</a>'
+
+
+def news_line(item, by_id):
+    a = by_id[item["id"]]
+    emoji = str(item.get("emoji") or "•").strip()[:4]
+    return f"{esc(emoji)} {source_link(a)}: {esc(item['text'])}"
+
+
+def build_blocks(ctx, data, by_id):
+    blocks = [f"Добрий ранок, {esc(ctx['greeting'])}!\n{esc(ctx['date_line'])}",
+              "━━━ ПОГОДА ━━━\n" + "\n".join(esc(w) for w in ctx["weather"])]
+    news, taken = select_news(data, by_id)
+    if news:
+        blocks.append("━━━ НОВИНИ ━━━\n" + "\n\n".join(news_line(n, by_id) for n in news))
+    blocks.append("━━━ РИНКИ 💹 ━━━\n" + "\n".join(esc(s) for s in ctx["stocks"]))
+
+    num = data.get("number") or {}
+    if isinstance(num, dict) and num.get("value") and num.get("text"):
+        a = by_id.get(to_id(num.get("id")))
+        src = f" ({source_link(a)})" if a else ""
+        blocks.append(f"━━━ ЦИФРА ДНЯ 🔢 ━━━\n<b>{esc(num['value'])}</b> — {esc(num['text'])}{src}")
+    if data.get("fact"):
+        blocks.append("━━━ ФАКТ ДНЯ 🧠 ━━━\n" + esc(data["fact"]))
+    if data.get("joke"):
+        blocks.append("━━━ ЖАРТ ДНЯ 😄 ━━━\n" + esc(data["joke"]))
+    if data.get("motivation"):
+        blocks.append("━━━━━━━━━━━━━━\n⚡ " + esc(data["motivation"]))
+    return blocks
+
+
+def build_fallback_blocks(ctx, articles):
+    """Якщо Gemini не відповів — хоча б заголовки з різних видань, без обробки."""
+    blocks = [f"Добрий ранок, {esc(ctx['greeting'])}!\n{esc(ctx['date_line'])}",
+              "━━━ ПОГОДА ━━━\n" + "\n".join(esc(w) for w in ctx["weather"])]
+    if articles:
+        lines, per = [], Counter()
+        for a in articles:
+            if a["cat"] != "спорт" and per[a["source"]] < 2 and len(lines) < 8:
+                lines.append(f"• {source_link(a)}: {esc(a['title'])}")
+                per[a["source"]] += 1
+        blocks.append("━━━ ЗАГОЛОВКИ ━━━\n🤖 Gemini сьогодні не вийшов на зв'язок, тому без перекладу:\n\n"
+                      + "\n".join(lines))
+    else:
+        blocks.append("⚠️ Сьогодні не вдалося зібрати новини.")
+    blocks.append("━━━ РИНКИ 💹 ━━━\n" + "\n".join(esc(s) for s in ctx["stocks"]))
+    return blocks
+
+
+def split_messages(blocks, limit=3900):
+    msgs, cur = [], ""
+    for b in blocks:
+        cand = f"{cur}\n\n{b}" if cur else b
+        if tg_len(cand) <= limit:
+            cur = cand
+            continue
+        if cur:
+            msgs.append(cur)
+        cur = b
+        while tg_len(cur) > limit:               # дуже довгий блок — ріжемо по рядках
+            lines, part = cur.split("\n"), ""
+            while lines and tg_len(f"{part}\n{lines[0]}" if part else lines[0]) <= limit:
+                part = f"{part}\n{lines.pop(0)}" if part else lines.pop(0)
+            if not part:                         # один рядок довший за ліміт
+                part = lines.pop(0)
+            msgs.append(part)
+            cur = "\n".join(lines)
+    if cur:
+        msgs.append(cur)
+    return msgs
+
+
+# ── Telegram ──────────────────────────────────────────────────────────────────
+def tg_send(chat_id, text):
+    url = f"https://api.telegram.org/bot{os.environ['TELEGRAM_BOT_TOKEN']}/sendMessage"
+    payload = {"chat_id": chat_id, "text": text, "parse_mode": "HTML",
+               "link_preview_options": {"is_disabled": True}}
+    for attempt in range(3):
+        try:
+            r = requests.post(url, json=payload, timeout=20)
+            if r.ok:
+                return True
+            print(f"⚠️ Telegram {chat_id}: {r.status_code} {r.text[:200]}")
+            if r.status_code == 400 and "entit" in r.text.lower():
+                payload = {"chat_id": chat_id, "text": html.unescape(re.sub(r"<[^>]+>", "", text)),
+                           "link_preview_options": {"is_disabled": True}}
+                continue
+            if r.status_code == 403:             # користувач заблокував бота
+                return False
+            time.sleep(r.json().get("parameters", {}).get("retry_after", 3) if r.status_code == 429 else 3)
+        except Exception as e:
+            print(f"⚠️ Telegram {chat_id}: {e}")
+            time.sleep(3)
+    return False
+
+
+# ── Збереження історії ────────────────────────────────────────────────────────
+def save_and_push(used, date_str):
+    with open(USED_FILE, "w", encoding="utf-8") as f:
+        json.dump(used, f, ensure_ascii=False, indent=2)
+    try:
+        run = lambda *c: subprocess.run(list(c), check=True)
+        run("git", "config", "user.email", "digest-bot@github-actions")
+        run("git", "config", "user.name", "Digest Bot")
+        run("git", "add", USED_FILE)
+        if subprocess.run(["git", "diff", "--cached", "--quiet"]).returncode != 0:
+            run("git", "commit", "-m", f"chore: update used.json [{date_str}]")
+            subprocess.run(["git", "pull", "--rebase", "--quiet"])
+            run("git", "push")
             print("✅ used.json збережено в репозиторій")
-        else:
-            print("ℹ️ used.json без змін, пуш не потрібен")
     except Exception as e:
-        print(f"⚠️ Не вдалося оновити used.json: {e}")
+        print(f"⚠️ Не вдалося запушити used.json: {e}")
 
-    # ── Send to Telegram ───────────────────────────────────────────────────────
-    for cid in ALL_CHAT_IDS:
-        requests.post(
-            f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage",
-            json={
-                "chat_id": cid,
-                "text": digest_clean[:4096],
-                "disable_web_page_preview": True,
-            },
-        )
-    print("✅ Дайджест надіслано")
+
+# ── Main ──────────────────────────────────────────────────────────────────────
+def main():
+    mode = (os.environ.get("MODE") or "normal").strip().lower()
+    test = mode == "test"
+    now_kyiv = datetime.now(KYIV)
+    today = now_kyiv.date().isoformat()
+    date_str = f"{now_kyiv.day} {MONTHS[now_kyiv.month - 1]} {now_kyiv.year}"
+    print(f"Режим: {mode} | {now_kyiv:%Y-%m-%d %H:%M} Київ")
+
+    used = load_json(USED_FILE, {})
+    if not test and used.get("last_sent") == today:
+        print(f"ℹ️ Дайджест за {today} вже надіслано — нічого не роблю.")
+        return
+
+    subscribers = [str(x) for x in load_json("subscribers.json", {}).get("subscribers", [])]
+    recipients = subscribers[:1] if test else subscribers
+    hist = {k: list(used.get(k, []))[-n:] for k, n in HISTORY_LIMITS.items()}
+
+    ctx = {
+        "greeting": get_greeting(now_kyiv),
+        "date_line": f"{WEEKDAYS[now_kyiv.weekday()]}, {date_str}",
+        "weather": [get_weather(50.4501, 30.5234, "Київ"), get_weather(41.3851, 2.1734, "Барселона")],
+        "stocks": [get_stock("CSL.AX", "CSL", "AUD"), get_stock("GRF.MC", "Grifols", "EUR"),
+                   get_stock("TAK", "Takeda", "USD")],
+    }
+    articles = collect_articles(datetime.now(timezone.utc))
+    by_id = {a["id"]: a for a in articles}
+    print(f"Всього статей: {len(articles)}")
+
+    data = None
+    if articles:
+        rnd = random.SystemRandom()
+        client, config = make_client()
+        prompt = build_prompt(articles, hist, rnd.choice(JOKE_FORMATS), rnd.choice(JOKE_TOPICS),
+                              rnd.choice(FACT_THEMES), rnd.choice(MOTIVATION_ANGLES))
+        data = ask_gemini(client, config, prompt, required=("top",))
+
+        # Жарт-повтор → окремо просимо новий (до 2 разів), інакше рубрику пропускаємо
+        if data and data.get("joke"):
+            tries = 0
+            while joke_is_repeat(data["joke"], data.get("joke_key", ""), hist["jokes"]) and tries < 2:
+                tries += 1
+                print(f"🔁 Жарт схожий на старий, перегенеровую ({tries}): {data['joke'][:60]}")
+                jp = (f"Придумай один жарт: формат — {rnd.choice(JOKE_FORMATS)}; тема — {rnd.choice(JOKE_TOPICS)}. "
+                      "1–10 речень. Англійський за походженням — англійською, український — українською. "
+                      "Жодних відомих dad jokes з інтернет-топів. Не схожий на ці:\n"
+                      + "\n".join(f"- {j}" for j in hist["jokes"] + [data["joke"][:60]])
+                      + '\nПоверни ТІЛЬКИ JSON: {"joke": "...", "joke_key": "суть у 5–10 словах"}')
+                new = ask_gemini(client, config, jp, required=("joke",))
+                if new:
+                    data["joke"], data["joke_key"] = new["joke"], new.get("joke_key", "")
+            if joke_is_repeat(data["joke"], data.get("joke_key", ""), hist["jokes"]):
+                print("⚠️ Свіжого жарту не вийшло — рубрику пропускаю")
+                data["joke"] = None
+
+        if data and any(m in norm(data.get("motivation", "")) for m in map(norm, BANNED_MOTIVATION)):
+            print(f"⚠️ Мотивація шаблонна, прибираю: {data['motivation']}")
+            data["motivation"] = None
+
+    blocks = build_blocks(ctx, data, by_id) if data else build_fallback_blocks(ctx, articles)
+    messages = split_messages(blocks)
+    print("\n" + "\n\n".join(messages) + "\n")
+
+    sent = 0
+    for cid in recipients:
+        ok = all([tg_send(cid, m) for m in messages])
+        sent += ok
+        print(f"Telegram {cid}: {'✅' if ok else '❌'}")
+        time.sleep(0.5)
+    print(f"Надіслано {sent}/{len(recipients)}")
+
+    if test:
+        print("🧪 Тестовий режим — історію не зберігаю.")
+        return
+    if not sent:
+        sys.exit("❌ Нікому не вдалося надіслати")
+
+    used = {"last_sent": today, **hist}
+    if data:
+        if data.get("joke"):
+            used["jokes"].append(f"{str(data.get('joke_key', '')).strip()} | {data['joke'][:60]}")
+        if data.get("fact_topic") or data.get("fact"):
+            used["facts"].append(str(data.get("fact_topic") or data["fact"][:60]).strip())
+        if data.get("motivation"):
+            used["motivations"].append(str(data["motivation"]).strip())
+        num = data.get("number") or {}
+        if isinstance(num, dict) and num.get("value"):
+            used["numbers"].append(f"{num['value']} — {str(num.get('text', ''))[:60]}")
+    for k, n in HISTORY_LIMITS.items():
+        used[k] = used[k][-n:]
+    save_and_push(used, date_str)
+
+
+if __name__ == "__main__":
+    main()

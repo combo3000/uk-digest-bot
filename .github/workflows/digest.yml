@@ -1,16 +1,31 @@
 name: UK Morning Digest
 
+# Основний запуск: cron-job.org о 08:00 за Києвом викликає workflow_dispatch через GitHub API
+#   (GitHub-овий schedule на безкоштовному тарифі запізнюється на 6-8 годин).
+# Резерв: schedule нижче. Якщо ранковий запуск уже відправив дайджест,
+#   резервний просто завершиться (перевірка last_sent у used.json).
 on:
   schedule:
-    - cron: '30 5 * * *'  # 05:30 UTC = 08:30 Kyiv (GitHub free tier delay is usually <5 min)
+    - cron: '0 6 * * *'
   workflow_dispatch:
+    inputs:
+      mode:
+        description: 'normal — всім підписникам (раз на день); test — тільки тобі, без збереження історії'
+        type: choice
+        options: [normal, test]
+        default: normal
 
 permissions:
-  contents: write          # needed to push used.json back to repo
+  contents: write          # щоб зберігати used.json назад у репозиторій
+
+concurrency:
+  group: digest
+  cancel-in-progress: false
 
 jobs:
   send-digest:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
@@ -20,10 +35,10 @@ jobs:
         with:
           python-version: '3.12'
 
-      - run: pip install --break-system-packages google-genai feedparser requests yfinance
+      - run: pip install google-genai feedparser requests yfinance
 
       - run: python send_digest.py
         env:
+          MODE: ${{ inputs.mode || 'normal' }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
