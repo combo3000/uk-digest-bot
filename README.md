@@ -1,6 +1,6 @@
 # UK Morning Digest Bot
 
-Щоранковий дайджест у Telegram: погода, 5 головних новин (Economist, NYT, FT, Guardian, BBC) + спорт, культура, шалена новина, ринки, цифра дня, факт дня, жарт і мотивація.
+Щоранковий дайджест у Telegram: погода, 5 головних новин (Economist, NYT, FT, Guardian, BBC, Der Spiegel, Le Monde, Wired, Nature, The Atlantic, El País) + спорт, культура, шалена новина, ринки, цифра дня, факт дня, жарт і мотивація.
 
 ## Як запускається
 - **Основний запуск:** cron-job.org щодня о 08:00 (Europe/Kyiv) робить POST на

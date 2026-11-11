@@ -33,7 +33,7 @@ KYIV = ZoneInfo("Europe/Kyiv")
 USED_FILE = "used.json"
 MODELS = ["gemini-flash-latest", "gemini-2.5-flash", "gemini-flash-lite-latest"]
 HISTORY_LIMITS = {"jokes": 200, "facts": 120, "motivations": 60, "numbers": 60}
-PER_SOURCE = 16                 # скільки статей з одного видання показуємо моделі
+PER_SOURCE = 12                 # скільки статей з одного видання показуємо моделі
 FRESH = timedelta(hours=36)     # Economist публікує рідше, тому вікно ширше за 24 год
 MAX_PER_OUTLET = 3              # не більше 3 статей з одного видання в дайджесті
 
@@ -78,6 +78,28 @@ SOURCES = {
         ("наука", "https://feeds.bbci.co.uk/news/science_environment/rss.xml"),
         ("культура", "https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml"),
         ("спорт", "https://feeds.bbci.co.uk/sport/rss.xml"),
+    ],
+    "Der Spiegel": [
+        ("світ", "https://www.spiegel.de/international/index.rss"),
+    ],
+    "Le Monde": [
+        ("головне", "https://www.lemonde.fr/en/rss/une.xml"),
+        ("культура", "https://www.lemonde.fr/en/culture/rss_full.xml"),
+    ],
+    "Wired": [
+        ("технології", "https://www.wired.com/feed/rss"),
+        ("наука", "https://www.wired.com/feed/category/science/latest/rss"),
+    ],
+    "Nature": [
+        # у стрічці і новини, і наукові статті — беремо лише новини (адреси з d41586)
+        ("наука", "https://www.nature.com/nature.rss", r"/articles/d41586"),
+    ],
+    "The Atlantic": [
+        ("головне", "https://www.theatlantic.com/feed/all/"),
+        ("культура", "https://www.theatlantic.com/feed/channel/culture/"),
+    ],
+    "El País": [
+        ("Іспанія", "https://feeds.elpais.com/mrss-s/pages/ep/site/english.elpais.com/portada"),
     ],
 }
 HTTP_HEADERS = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) UKDigestBot/2.0 (+https://github.com/combo3000/uk-digest-bot)"}
@@ -275,7 +297,9 @@ def collect_articles(now_utc):
     articles, seen = [], set()
     for source, feeds in SOURCES.items():
         buckets = []
-        for cat, url in feeds:
+        for feed in feeds:
+            cat, url = feed[0], feed[1]
+            link_filter = feed[2] if len(feed) > 2 else None
             items = []
             try:
                 r = requests.get(url, headers=HTTP_HEADERS, timeout=15)
@@ -284,6 +308,8 @@ def collect_articles(now_utc):
                     link = (e.get("link") or "").strip()
                     title = clean_text(e.get("title"))
                     if not link or not title:
+                        continue
+                    if link_filter and not re.search(link_filter, link):
                         continue
                     key = link.split("?")[0].rstrip("/")
                     if key in seen:
@@ -338,7 +364,7 @@ def build_prompt(articles, hist, joke_format, joke_topic, fact_theme, angle):
 }}
 
 НОВИНИ
-• top — 8 кандидатів у порядку важливості: геополітика, світова економіка, бізнес, технології/AI, фарма і медицина. Різні теми, жодних дублів однієї події. Бери з різних видань (Economist, NYT, FT, Guardian, BBC), не більше 2 з одного.
+• top — 8 кандидатів у порядку важливості: геополітика, світова економіка, бізнес, технології/AI, фарма і медицина. Різні теми, жодних дублів однієї події. Бери з різних видань, не більше 2 з одного — що ширша палітра джерел, то краще.
 • sport — 3 кандидати, culture — 3 кандидати (культура, мистецтво, кіно, книги, наукове відкриття), crazy — 3 кандидати: найдивніша, найкумедніша або найшаленіша новина дня.
 • text — 1–2 речення українською: суть і цифри, якщо є. Якщо є влучний наслідок чи цікаве трактування — додай коротко; якщо немає — нічого не вигадуй. Не згадуй назву видання в тексті.
 • emoji — одне, за темою. id — тільки номери зі списку вище.
