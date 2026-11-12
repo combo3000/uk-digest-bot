@@ -35,7 +35,7 @@ MODELS = ["gemini-2.5-flash", "gemini-flash-latest", "gemini-flash-lite-latest"]
 HISTORY_LIMITS = {"jokes": 200, "facts": 120, "motivations": 60, "numbers": 60}
 PER_SOURCE = 12                 # скільки статей з одного видання показуємо моделі
 FRESH = timedelta(hours=36)     # Economist публікує рідше, тому вікно ширше за 24 год
-FRESH_OVERRIDE = {"Der Spiegel": timedelta(hours=96), "Nature": timedelta(hours=72)}  # рідкісні стрічки
+FRESH_OVERRIDE = {"Nature": timedelta(hours=72)}  # рідкісні стрічки
 MAX_PER_OUTLET = 3              # не більше 3 статей з одного видання в дайджесті
 
 MONTHS = ["січня", "лютого", "березня", "квітня", "травня", "червня",
@@ -80,8 +80,11 @@ SOURCES = {
         ("культура", "https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml"),
         ("спорт", "https://feeds.bbci.co.uk/sport/rss.xml"),
     ],
-    "Der Spiegel": [
-        ("світ", "https://www.spiegel.de/international/index.rss"),
+    "Der Spiegel": [  # німецькою — Gemini перекладає; англійська версія виходить раз на 1-2 тижні
+        ("світ", "https://www.spiegel.de/ausland/index.rss"),
+        ("економіка", "https://www.spiegel.de/wirtschaft/index.rss"),
+        ("наука", "https://www.spiegel.de/wissenschaft/index.rss"),
+        ("культура", "https://www.spiegel.de/kultur/index.rss"),
     ],
     "Le Monde": [
         ("головне", "https://www.lemonde.fr/en/rss/une.xml"),
@@ -348,7 +351,7 @@ def build_prompt(articles, hist, joke_format, joke_topic, fact_theme, angle):
     numbers = "; ".join(hist["numbers"][-15:]) or "немає"
     return f"""Ти — редактор ранкового дайджесту для українського бізнесмена (фарма, експорт, геополітика, економіка, технології, наука, культура). Пишеш українською: живо, стисло, з цифрами, без води і канцеляриту. Без markdown.
 
-Нижче {len(articles)} свіжих статей з провідних видань. У кожної є номер [id].
+Нижче {len(articles)} свіжих статей з провідних видань (англійською, німецькою, іспанською — пиши все українською). У кожної є номер [id].
 
 {arts}
 
