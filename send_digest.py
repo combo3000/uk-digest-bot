@@ -31,10 +31,11 @@ except ImportError:
 
 KYIV = ZoneInfo("Europe/Kyiv")
 USED_FILE = "used.json"
-MODELS = ["gemini-flash-latest", "gemini-2.5-flash", "gemini-flash-lite-latest"]
+MODELS = ["gemini-2.5-flash", "gemini-flash-latest", "gemini-flash-lite-latest"]
 HISTORY_LIMITS = {"jokes": 200, "facts": 120, "motivations": 60, "numbers": 60}
 PER_SOURCE = 12                 # скільки статей з одного видання показуємо моделі
 FRESH = timedelta(hours=36)     # Economist публікує рідше, тому вікно ширше за 24 год
+FRESH_OVERRIDE = {"Der Spiegel": timedelta(hours=96), "Nature": timedelta(hours=72)}  # рідкісні стрічки
 MAX_PER_OUTLET = 3              # не більше 3 статей з одного видання в дайджесті
 
 MONTHS = ["січня", "лютого", "березня", "квітня", "травня", "червня",
@@ -75,7 +76,7 @@ SOURCES = {
         ("світ", "https://feeds.bbci.co.uk/news/world/rss.xml"),
         ("бізнес", "https://feeds.bbci.co.uk/news/business/rss.xml"),
         ("технології", "https://feeds.bbci.co.uk/news/technology/rss.xml"),
-        ("наука", "https://feeds.bbci.co.uk/news/science_environment/rss.xml"),
+        ("наука", "https://feeds.bbci.co.uk/news/science_and_environment/rss.xml"),
         ("культура", "https://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml"),
         ("спорт", "https://feeds.bbci.co.uk/sport/rss.xml"),
     ],
@@ -315,11 +316,13 @@ def collect_articles(now_utc):
                     if key in seen:
                         continue
                     pp = e.get("published_parsed") or e.get("updated_parsed")
-                    if pp and now_utc - datetime(*pp[:6], tzinfo=timezone.utc) > FRESH:
+                    if pp and now_utc - datetime(*pp[:6], tzinfo=timezone.utc) > FRESH_OVERRIDE.get(source, FRESH):
                         continue
                     seen.add(key)
                     items.append({"source": source, "cat": cat, "title": title, "link": link,
                                   "summary": clean_text(e.get("summary"))[:240]})
+                if not items:
+                    print(f"⚠️ RSS {source} [{cat}]: HTTP {r.status_code}, записів у стрічці {len(feedparser.parse(r.content).entries)}, свіжих 0")
             except Exception as ex:
                 print(f"⚠️ RSS {source} [{cat}]: {ex}")
             buckets.append(items)
@@ -399,8 +402,9 @@ def build_prompt(articles, hist, joke_format, joke_topic, fact_theme, angle):
 def make_client():
     from google import genai
     from google.genai import types
+    # v1beta обов'язково: у v1 немає JSON-режиму і моделей *-latest (нові версії бібліотеки за замовчуванням беруть v1)
     client = genai.Client(api_key=os.environ["GEMINI_API_KEY"],
-                          http_options=types.HttpOptions(timeout=120_000))
+                          http_options=types.HttpOptions(api_version="v1beta", timeout=120_000))
     config = types.GenerateContentConfig(response_mime_type="application/json")
     return client, config
 
@@ -415,7 +419,9 @@ def ask_gemini(client, config, prompt, required):
     for model in MODELS:
         for attempt in range(1, 3):
             try:
-                resp = client.models.generate_content(model=model, contents=prompt, config=config)
+                # друга спроба — без JSON-режиму (промпт і так просить JSON, parse_json його витягне)
+                cfg = config if attempt == 1 else None
+                resp = client.models.generate_content(model=model, contents=prompt, config=cfg)
                 data = parse_json(resp.text)
                 if all(data.get(k) for k in required):
                     print(f"✅ Gemini: {model}")
