@@ -1,5 +1,5 @@
 {
-  "last_sent": "2026-11-12",
+  "last_sent": "2026-11-13",
   "jokes": [
     "Why did the scarecrow win an award? Because he was outstandi",
     "Why don't scientists trust atoms? Because they make up every",
@@ -23,7 +23,8 @@
     "Чому скелети такі спокійні? Бо їх нічого не дістає.",
     "Why did the tomato turn red? Because it saw the salad dressi",
     "What do you call cheese that isn't yours? Nacho cheese!",
-    "Did you hear about the restaurant on the moon? Great food, n"
+    "Did you hear about the restaurant on the moon? Great food, n",
+    "Студент на іспиті почувається як квантовий стан до спостереження | Професор на іспиті:\n— Ну що, колего, ви готові відповідати н"
   ],
   "facts": [
     "Ворони відомі своїм винятковим інтелектом та вражаючими зд",
@@ -45,8 +46,13 @@
     "Баскська мова, якою розмовляють у регіоні Країни Басків",
     "Мед ніколи не псується. Завдяки унікальному хімічному складу",
     "Людський мозок генерує близько 20 ват електричної енергії п",
-    "На Марсі знаходиться найбільший вулкан у Сонячній системі, О"
+    "На Марсі знаходиться найбільший вулкан у Сонячній системі, О",
+    "Мовне різноманіття та зникнення мов"
   ],
-  "motivations": [],
-  "numbers": []
+  "motivations": [
+    "Не чекай натхнення, поки конкуренти пишуть код."
+  ],
+  "numbers": [
+    "107 000 видів — Стільки видів тварин і рослин, згідно з новим дослідженням, "
+  ]
 }
