@@ -1,6 +1,6 @@
 # UK Morning Digest Bot
 
-Щоранковий дайджест у Telegram: погода, 5 головних новин (Economist, NYT, FT, Guardian, BBC, Der Spiegel, Le Monde, Wired, Nature, The Atlantic, El País) + спорт, культура, шалена новина, ринки, цифра дня, факт дня, жарт і мотивація.
+Щоранковий дайджест у Telegram: погода, 5 головних новин (Economist, NYT, FT, Guardian, BBC, Der Spiegel, Le Monde, Wired, Nature, The Atlantic, El País) + спорт, культура, шалена новина, ринки, цифра дня, факт дня, жарт дня (справжні жарти з boredpanda.com англійською, без повторів; якщо сайт недоступний — жарт від Gemini) і мотивація.
 
 ## Як запускається
 - **Основний запуск:** cron-job.org щодня о 08:00 (Europe/Kyiv) робить POST на
@@ -13,4 +13,4 @@
 ## Файли
 - `send_digest.py` — збір RSS, Gemini, збірка повідомлення, відправка.
 - `subscribers.json` — chat_id підписників (перший — адмін, йому йдуть тести).
-- `used.json` — історія жартів, фактів, цифр і мотивацій, щоб не повторюватись; `last_sent` — дата останньої відправки.
+- `used.json` — історія жартів (`bp_jokes` — id уже надісланих жартів з Bored Panda), фактів, цифр і мотивацій, щоб не повторюватись; `last_sent` — дата останньої відправки.

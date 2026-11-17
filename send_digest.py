@@ -32,7 +32,8 @@ except ImportError:
 KYIV = ZoneInfo("Europe/Kyiv")
 USED_FILE = "used.json"
 MODELS = ["gemini-2.5-flash", "gemini-flash-latest", "gemini-flash-lite-latest"]
-HISTORY_LIMITS = {"jokes": 200, "facts": 120, "motivations": 60, "numbers": 60}
+HISTORY_LIMITS = {"jokes": 200, "facts": 120, "motivations": 60, "numbers": 60,
+                  "bp_jokes": 3000}  # id жартів з Bored Panda, щоб не повторюватись
 PER_SOURCE = 12                 # скільки статей з одного видання показуємо моделі
 FRESH = timedelta(hours=36)     # Economist публікує рідше, тому вікно ширше за 24 год
 FRESH_OVERRIDE = {"Nature": timedelta(hours=72)}  # рідкісні стрічки
@@ -436,6 +437,84 @@ def ask_gemini(client, config, prompt, required):
     return None
 
 
+# ── Жарт дня з Bored Panda ─────────────────────────────────────────────────────
+# Беремо справжні жарти з тематичних добірок boredpanda.com/jokes/ (текст англійською,
+# як в оригіналі). Кожна добірка — сторінки по 20 жартів з рейтингом читачів.
+# Дорослі/«брудні» добірки свідомо не включені.
+BP_BASE = "https://www.boredpanda.com"
+BP_CATEGORIES = [
+    "one-liner-jokes", "dry-humor-jokes", "dark-jokes", "long-jokes",
+    "people-share-funniest-jokes", "funny-hilarious-jokes", "stand-up-comedy-jokes",
+    "self-deprecating-jokes", "jokes-about-office", "boss-jokes", "little-johnny-jokes",
+    "medical-jokes", "travel-jokes", "funny-dad-jokes-puns", "what-do-you-call-jokes",
+]
+BP_PER_PAGE = 20
+BP_MAX_LEN = 900          # довші за це — занадто довгі для дайджесту
+
+
+def bp_parse_page(page_html):
+    """Повертає (жарти, кількість у добірці). Жарт: {"id", "text", "points"}."""
+    from bs4 import BeautifulSoup
+
+    soup = BeautifulSoup(page_html, "html.parser")
+    total = None
+    m = re.search(r"\b(\d{2,4})\b", soup.title.get_text() if soup.title else "")
+    if m:
+        total = int(m.group(1))
+    jokes = []
+    for item in soup.select("[data-list-item-id]"):
+        box = item.select_one(".bordered-description")
+        if not box:
+            continue
+        for br in box.find_all("br"):
+            br.replace_with("\n")
+        text = "\n".join(ln.strip() for ln in box.get_text().splitlines() if ln.strip())
+        if not text:
+            continue
+        points = 0
+        pts = item.find("span", string=re.compile(r"^\s*points\s*$"))
+        if pts and pts.find_previous_sibling("span"):
+            try:
+                points = int(pts.find_previous_sibling("span").get_text().strip())
+            except ValueError:
+                pass
+        jokes.append({"id": item["data-list-item-id"], "text": text, "points": points})
+    return jokes, total
+
+
+def bp_fetch(url):
+    r = requests.get(url, headers=HTTP_HEADERS, timeout=20)
+    r.raise_for_status()
+    return r.text
+
+
+def get_boredpanda_joke(used_ids, rnd, attempts=4):
+    """Новий (ще не надісланий) жарт з Bored Panda або None, якщо сайт недоступний."""
+    used_ids = set(used_ids)
+    cats = rnd.sample(BP_CATEGORIES, k=min(attempts, len(BP_CATEGORIES)))
+    for cat in cats:
+        try:
+            url = f"{BP_BASE}/{cat}/"
+            jokes, total = bp_parse_page(bp_fetch(url))
+            pages = max(1, -(-(total or BP_PER_PAGE) // BP_PER_PAGE))
+            page = rnd.randint(1, min(pages, 8))
+            if page > 1:
+                more, _ = bp_parse_page(bp_fetch(f"{url}?page={page}"))
+                jokes = more + jokes
+            fresh = [j for j in jokes if j["id"] not in used_ids and len(j["text"]) <= BP_MAX_LEN]
+            if not fresh:
+                print(f"ℹ️ Bored Panda /{cat}/ стор. {page}: нових жартів немає")
+                continue
+            fresh.sort(key=lambda j: j["points"], reverse=True)
+            joke = rnd.choice(fresh[:5])          # один з найпопулярніших серед нових
+            joke["url"] = url
+            print(f"😄 Bored Panda /{cat}/ стор. {page}: жарт {joke['id']} ({joke['points']} балів)")
+            return joke
+        except Exception as e:
+            print(f"⚠️ Bored Panda /{cat}/: {str(e)[:200]}")
+    return None
+
+
 def joke_is_repeat(joke, key, jokes_used):
     j = norm(joke)
     if any(m in j for m in BANNED_JOKE_MARKERS):
@@ -517,7 +596,8 @@ def build_blocks(ctx, data, by_id):
     if data.get("fact"):
         blocks.append("━━━ ФАКТ ДНЯ 🧠 ━━━\n" + esc(data["fact"]))
     if data.get("joke"):
-        blocks.append("━━━ ЖАРТ ДНЯ 😄 ━━━\n" + esc(data["joke"]))
+        src = f'\n<i>— <a href="{esc(data["joke_url"])}">Bored Panda</a></i>' if data.get("joke_url") else ""
+        blocks.append("━━━ ЖАРТ ДНЯ 😄 ━━━\n" + esc(data["joke"]) + src)
     if data.get("motivation"):
         blocks.append("━━━━━━━━━━━━━━\n⚡ " + esc(data["motivation"]))
     return blocks
@@ -643,8 +723,16 @@ def main():
                               rnd.choice(FACT_THEMES), rnd.choice(MOTIVATION_ANGLES))
         data = ask_gemini(client, config, prompt, required=("top",))
 
+        # Жарт дня: спершу справжній жарт з Bored Panda; якщо сайт недоступний — жарт від Gemini
+        bp_joke = get_boredpanda_joke(hist["bp_jokes"], rnd) if data else None
+        if bp_joke:
+            data["joke"], data["joke_key"] = bp_joke["text"], "Bored Panda"
+            data["joke_url"], data["joke_bp_id"] = bp_joke["url"], bp_joke["id"]
+        elif data:
+            print("⚠️ Bored Panda недоступна — лишаю жарт від Gemini")
+
         # Жарт-повтор → окремо просимо новий (до 2 разів), інакше рубрику пропускаємо
-        if data and data.get("joke"):
+        if data and data.get("joke") and not bp_joke:
             tries = 0
             while joke_is_repeat(data["joke"], data.get("joke_key", ""), hist["jokes"]) and tries < 2:
                 tries += 1
@@ -687,6 +775,8 @@ def main():
     if data:
         if data.get("joke"):
             used["jokes"].append(f"{str(data.get('joke_key', '')).strip()} | {data['joke'][:60]}")
+        if data.get("joke_bp_id"):
+            used["bp_jokes"].append(str(data["joke_bp_id"]))
         if data.get("fact_topic") or data.get("fact"):
             used["facts"].append(str(data.get("fact_topic") or data["fact"][:60]).strip())
         if data.get("motivation"):
