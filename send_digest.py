@@ -441,6 +441,7 @@ def ask_gemini(client, config, prompt, required):
 # Беремо справжні жарти з тематичних добірок boredpanda.com/jokes/ (текст англійською,
 # як в оригіналі). Кожна добірка — сторінки по 20 жартів з рейтингом читачів.
 # Дорослі/«брудні» добірки свідомо не включені.
+JOKE_QUEUE_FILE = "jokes_queue.json"
 BP_BASE = "https://www.boredpanda.com"
 BP_CATEGORIES = [
     "one-liner-jokes", "dry-humor-jokes", "dark-jokes", "long-jokes",
@@ -596,7 +597,9 @@ def build_blocks(ctx, data, by_id):
     if data.get("fact"):
         blocks.append("━━━ ФАКТ ДНЯ 🧠 ━━━\n" + esc(data["fact"]))
     if data.get("joke"):
-        src = f'\n<i>— <a href="{esc(data["joke_url"])}">Bored Panda</a></i>' if data.get("joke_url") else ""
+        url = data.get("joke_url") or ""
+        label = "TODAY" if "today.com" in url else "Bored Panda"
+        src = f'\n<i>— <a href="{esc(url)}">{label}</a></i>' if url else ""
         blocks.append("━━━ ЖАРТ ДНЯ 😄 ━━━\n" + esc(data["joke"]) + src)
     if data.get("motivation"):
         blocks.append("━━━━━━━━━━━━━━\n⚡ " + esc(data["motivation"]))
@@ -703,6 +706,7 @@ def main():
     subscribers = [str(x) for x in load_json("subscribers.json", {}).get("subscribers", [])]
     recipients = subscribers[:1] if test else subscribers
     hist = {k: list(used.get(k, []))[-n:] for k, n in HISTORY_LIMITS.items()}
+    queue_pos = int(used.get("joke_queue_pos", 0))
 
     ctx = {
         "greeting": get_greeting(now_kyiv),
@@ -723,13 +727,23 @@ def main():
                               rnd.choice(FACT_THEMES), rnd.choice(MOTIVATION_ANGLES))
         data = ask_gemini(client, config, prompt, required=("top",))
 
-        # Жарт дня: спершу справжній жарт з Bored Panda; якщо сайт недоступний — жарт від Gemini
-        bp_joke = get_boredpanda_joke(hist["bp_jokes"], rnd) if data else None
-        if bp_joke:
-            data["joke"], data["joke_key"] = bp_joke["text"], "Bored Panda"
-            data["joke_url"], data["joke_bp_id"] = bp_joke["url"], bp_joke["id"]
+        # Жарт дня: 1) наступний з черги jokes_queue.json; 2) коли черга скінчиться —
+        # свіжий з Bored Panda; 3) якщо сайт недоступний — жарт від Gemini
+        bp_joke = None
+        queue = load_json(JOKE_QUEUE_FILE, {}).get("jokes", [])
+        if data and queue_pos < len(queue):
+            q = queue[queue_pos]
+            data["joke"], data["joke_key"], data["joke_url"] = q["text"], "queue", q.get("source")
+            data["joke_from_queue"] = True
+            bp_joke = q
+            print(f"😄 Жарт з черги: {queue_pos + 1}/{len(queue)}")
         elif data:
-            print("⚠️ Bored Panda недоступна — лишаю жарт від Gemini")
+            bp_joke = get_boredpanda_joke(hist["bp_jokes"], rnd)
+            if bp_joke:
+                data["joke"], data["joke_key"] = bp_joke["text"], "Bored Panda"
+                data["joke_url"], data["joke_bp_id"] = bp_joke["url"], bp_joke["id"]
+            else:
+                print("⚠️ Bored Panda недоступна — лишаю жарт від Gemini")
 
         # Жарт-повтор → окремо просимо новий (до 2 разів), інакше рубрику пропускаємо
         if data and data.get("joke") and not bp_joke:
@@ -771,10 +785,12 @@ def main():
     if not sent:
         sys.exit("❌ Нікому не вдалося надіслати")
 
-    used = {"last_sent": today, **hist}
+    used = {"last_sent": today, "joke_queue_pos": queue_pos, **hist}
     if data:
         if data.get("joke"):
             used["jokes"].append(f"{str(data.get('joke_key', '')).strip()} | {data['joke'][:60]}")
+        if data.get("joke_from_queue"):
+            used["joke_queue_pos"] = queue_pos + 1
         if data.get("joke_bp_id"):
             used["bp_jokes"].append(str(data["joke_bp_id"]))
         if data.get("fact_topic") or data.get("fact"):
