@@ -326,11 +326,41 @@ COMMONS_API = "https://commons.wikimedia.org/w/api.php"
 POTD_CAPTION_MAX = 1000         # Telegram дозволяє до 1024 символів у підписі до фото
 
 
+TG_PHOTO_MAX = 9_500_000         # Telegram приймає фото до 10 МБ
+
+
+def http_get(url, tries=3, **kw):
+    """GET з повторами: Commons іноді відповідає повільно або з тимчасовою помилкою."""
+    for attempt in range(1, tries + 1):
+        try:
+            r = requests.get(url, headers=HTTP_HEADERS, timeout=30, **kw)
+            r.raise_for_status()
+            return r
+        except Exception as e:
+            if attempt == tries:
+                raise
+            print(f"⚠️ {url[:80]}: {e} — повтор через {5 * attempt} с")
+            time.sleep(5 * attempt)
+
+
 def commons_get(**params):
-    r = requests.get(COMMONS_API, params={"format": "json", "formatversion": 2, **params},
-                     headers=HTTP_HEADERS, timeout=20)
-    r.raise_for_status()
-    return r.json()
+    return http_get(COMMONS_API, params={"format": "json", "formatversion": 2, **params}).json()
+
+
+def download_image(info):
+    """Зменшена копія (1280 px, за потреби 960 px): завжди влазить у ліміти Telegram.
+    Повертає (байти, адреса) або (None, адреса), якщо скачати не вдалося."""
+    thumb = info.get("thumburl") or info["url"]
+    urls = [thumb] + ([thumb.replace("/1280px-", "/960px-")] if "/1280px-" in thumb else [])
+    for url in urls:
+        try:
+            content = http_get(url).content
+            if len(content) <= TG_PHOTO_MAX:
+                return content, url
+            print(f"⚠️ Картинка завелика ({len(content) // 1024} КБ), беру меншу")
+        except Exception as e:
+            print(f"⚠️ Не вдалося скачати картинку: {e}")
+    return None, urls[-1]
 
 
 def potd_description(day, lang):
@@ -362,8 +392,7 @@ def get_potd(day):
             print(f"⚠️ Картинка дня — не зображення ({info.get('mime')}), пропускаю")
             return None
         meta = info.get("extmetadata", {})
-        img = requests.get(info.get("thumburl") or info["url"], headers=HTTP_HEADERS, timeout=60)
-        img.raise_for_status()
+        image, image_url = download_image(info)
         potd = {
             "file": filename,
             "page": info.get("descriptionurl") or f"https://commons.wikimedia.org/wiki/File:{filename}",
@@ -371,9 +400,10 @@ def get_potd(day):
             "desc_en": potd_description(day, "en"),
             "artist": clean_text(meta.get("Artist", {}).get("value", "")),
             "license": clean_text(meta.get("LicenseShortName", {}).get("value", "")),
-            "image": img.content,
+            "image": image,          # байти; якщо None — Telegram сам візьме фото за адресою
+            "url": image_url,
         }
-        print(f"🖼 Картинка дня: {filename} ({len(img.content) // 1024} КБ)")
+        print(f"🖼 Картинка дня: {filename} ({len(image or b'') // 1024} КБ)")
         return potd
     except Exception as e:
         print(f"⚠️ Картинка дня: {e}")
@@ -643,29 +673,33 @@ def tg_send(chat_id, text):
 
 
 def tg_send_photo(chat_id, potd, caption):
-    """Надсилає картинку дня. Повертає file_id, щоб іншим підписникам не завантажувати файл знову."""
+    """Надсилає картинку дня: спершу файлом, якщо не вийшло — за адресою, а в крайньому разі
+    текстом з посиланням. Запам'ятовує file_id, щоб іншим підписникам не завантажувати файл знову."""
     url = f"https://api.telegram.org/bot{os.environ['TELEGRAM_BOT_TOKEN']}/sendPhoto"
-    for attempt in range(3):
-        try:
-            data = {"chat_id": chat_id, "caption": caption, "parse_mode": "HTML"}
-            if potd.get("file_id"):
-                r = requests.post(url, data={**data, "photo": potd["file_id"]}, timeout=60)
-            else:
-                r = requests.post(url, data=data, files={"photo": ("potd.jpg", potd["image"])}, timeout=60)
-            if r.ok:
-                sizes = r.json().get("result", {}).get("photo") or []
-                if sizes:
-                    potd["file_id"] = sizes[-1]["file_id"]
-                return True
-            print(f"⚠️ Telegram фото {chat_id}: {r.status_code} {r.text[:200]}")
-            if r.status_code == 403:
-                return False
-            if r.status_code == 400:             # фото не прийняли — далі спробуємо текстом
-                break
-            time.sleep(r.json().get("parameters", {}).get("retry_after", 3) if r.status_code == 429 else 3)
-        except Exception as e:
-            print(f"⚠️ Telegram фото {chat_id}: {e}")
-            time.sleep(3)
+    data = {"chat_id": chat_id, "caption": caption, "parse_mode": "HTML"}
+    ways = ([("file_id", potd["file_id"])] if potd.get("file_id") else []) \
+        + ([("файл", None)] if potd.get("image") else []) + [("адреса", potd["url"])]
+    for how, photo in ways:
+        for attempt in range(3):
+            try:
+                if photo is None:
+                    r = requests.post(url, data=data, files={"photo": ("potd.jpg", potd["image"])}, timeout=60)
+                else:
+                    r = requests.post(url, data={**data, "photo": photo}, timeout=60)
+                if r.ok:
+                    sizes = r.json().get("result", {}).get("photo") or []
+                    if sizes:
+                        potd["file_id"] = sizes[-1]["file_id"]
+                    return True
+                print(f"⚠️ Telegram фото ({how}) {chat_id}: {r.status_code} {r.text[:200]}")
+                if r.status_code == 403:         # користувач заблокував бота
+                    return False
+                if r.status_code == 400:         # цей спосіб не підходить — пробуємо наступний
+                    break
+                time.sleep(r.json().get("parameters", {}).get("retry_after", 3) if r.status_code == 429 else 3)
+            except Exception as e:
+                print(f"⚠️ Telegram фото ({how}) {chat_id}: {e}")
+                time.sleep(3)
     return tg_send(chat_id, caption)             # запасний варіант: підпис з посиланням текстом
 
 
@@ -746,6 +780,8 @@ def main():
 
     blocks = build_blocks(ctx, data, by_id) if data else build_fallback_blocks(ctx, articles)
     messages = split_messages(blocks)
+    if not potd:                                 # ще одна спроба: Commons міг уже «прокинутись»
+        potd = get_potd(today)
     caption = potd_caption(potd, (data or {}).get("potd_caption")) if potd else None
     print("\n" + "\n\n".join(messages + ([caption] if caption else [])) + "\n")
 
