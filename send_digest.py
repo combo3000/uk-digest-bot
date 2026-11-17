@@ -1,5 +1,5 @@
 """
-UK Morning Digest — щоранковий дайджест у Telegram.
+Morning Digest — щоранковий дайджест у Telegram.
 
 Запуск: GitHub Actions. Основний тригер — cron-job.org о 08:00 за Києвом
 (workflow_dispatch через GitHub API), резервний — schedule у digest.yml.
@@ -106,7 +106,7 @@ SOURCES = {
         ("Іспанія", "https://feeds.elpais.com/mrss-s/pages/ep/site/english.elpais.com/portada"),
     ],
 }
-HTTP_HEADERS = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) UKDigestBot/2.0 (+https://github.com/combo3000/uk-digest-bot)"}
+HTTP_HEADERS = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) MorningDigestBot/2.0 (+https://github.com/combo3000/uk-digest-bot)"}
 
 # ── Звертання — змінюється кожні 3 дні, без повторів до кінця кола ─────────────
 GREETINGS = [
