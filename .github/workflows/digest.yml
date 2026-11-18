@@ -35,7 +35,7 @@ jobs:
         with:
           python-version: '3.12'
 
-      - run: pip install google-genai feedparser requests yfinance
+      - run: pip install google-genai feedparser requests yfinance beautifulsoup4
 
       - run: python send_digest.py
         env:
