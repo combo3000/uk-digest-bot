@@ -683,10 +683,7 @@ def build_blocks(ctx, data, by_id):
     if data.get("fact"):
         blocks.append("━━━ ФАКТ ДНЯ 🧠 ━━━\n" + esc(data["fact"]))
     if data.get("joke"):
-        url = data.get("joke_url") or ""
-        label = "TODAY" if "today.com" in url else "Bored Panda"
-        src = f'\n<i>— <a href="{esc(url)}">{label}</a></i>' if url else ""
-        blocks.append("━━━ ЖАРТ ДНЯ 😄 ━━━\n" + esc(data["joke"]) + src)
+        blocks.append("━━━ ЖАРТ ДНЯ 😄 ━━━\n" + esc(data["joke"]))
     return blocks
 
 
@@ -732,10 +729,12 @@ def split_messages(blocks, limit=3900):
 
 
 # ── Telegram ──────────────────────────────────────────────────────────────────
-def tg_send(chat_id, text):
+def tg_send(chat_id, text, preview_url=None):
+    """preview_url — картинка, яку Telegram покаже під текстом (картинка дня); інакше без прев'ю."""
     url = f"https://api.telegram.org/bot{os.environ['TELEGRAM_BOT_TOKEN']}/sendMessage"
-    payload = {"chat_id": chat_id, "text": text, "parse_mode": "HTML",
-               "link_preview_options": {"is_disabled": True}}
+    preview = ({"url": preview_url, "prefer_large_media": True, "show_above_text": False}
+               if preview_url else {"is_disabled": True})
+    payload = {"chat_id": chat_id, "text": text, "parse_mode": "HTML", "link_preview_options": preview}
     for attempt in range(3):
         try:
             r = requests.post(url, json=payload, timeout=20)
@@ -753,37 +752,6 @@ def tg_send(chat_id, text):
             print(f"⚠️ Telegram {chat_id}: {e}")
             time.sleep(3)
     return False
-
-
-def tg_send_photo(chat_id, potd, caption):
-    """Надсилає картинку дня: спершу файлом, якщо не вийшло — за адресою, а в крайньому разі
-    текстом з посиланням. Запам'ятовує file_id, щоб іншим підписникам не завантажувати файл знову."""
-    url = f"https://api.telegram.org/bot{os.environ['TELEGRAM_BOT_TOKEN']}/sendPhoto"
-    data = {"chat_id": chat_id, "caption": caption, "parse_mode": "HTML"}
-    ways = ([("file_id", potd["file_id"])] if potd.get("file_id") else []) \
-        + ([("файл", None)] if potd.get("image") else []) + [("адреса", potd["url"])]
-    for how, photo in ways:
-        for attempt in range(3):
-            try:
-                if photo is None:
-                    r = requests.post(url, data=data, files={"photo": ("potd.jpg", potd["image"])}, timeout=60)
-                else:
-                    r = requests.post(url, data={**data, "photo": photo}, timeout=60)
-                if r.ok:
-                    sizes = r.json().get("result", {}).get("photo") or []
-                    if sizes:
-                        potd["file_id"] = sizes[-1]["file_id"]
-                    return True
-                print(f"⚠️ Telegram фото ({how}) {chat_id}: {r.status_code} {r.text[:200]}")
-                if r.status_code == 403:         # користувач заблокував бота
-                    return False
-                if r.status_code == 400:         # цей спосіб не підходить — пробуємо наступний
-                    break
-                time.sleep(r.json().get("parameters", {}).get("retry_after", 3) if r.status_code == 429 else 3)
-            except Exception as e:
-                print(f"⚠️ Telegram фото ({how}) {chat_id}: {e}")
-                time.sleep(3)
-    return tg_send(chat_id, caption)             # запасний варіант: підпис з посиланням текстом
 
 
 # ── Збереження історії ────────────────────────────────────────────────────────
@@ -881,17 +849,17 @@ def main():
 
 
     blocks = build_blocks(ctx, data, by_id) if data else build_fallback_blocks(ctx, articles)
-    messages = split_messages(blocks)
     if not potd:                                 # ще одна спроба: Commons міг уже «прокинутись»
         potd = get_potd(today)
-    caption = potd_caption(potd, (data or {}).get("potd_caption")) if potd else None
-    print("\n" + "\n\n".join(messages + ([caption] if caption else [])) + "\n")
+    if potd:                                     # картинка дня — в кінці основного повідомлення
+        blocks.append(potd_caption(potd, (data or {}).get("potd_caption")))
+    messages = split_messages(blocks)
+    print("\n" + "\n\n".join(messages) + "\n")
 
     sent = 0
     for cid in recipients:
-        ok = all([tg_send(cid, m) for m in messages])
-        if ok and potd:
-            tg_send_photo(cid, potd, caption)    # картинка — бонус: якщо не пішла, дайджест усе одно надіслано
+        ok = all([tg_send(cid, m, potd["url"] if potd and i == len(messages) - 1 else None)
+                  for i, m in enumerate(messages)])
         sent += ok
         print(f"Telegram {cid}: {'✅' if ok else '❌'}")
         time.sleep(0.5)
