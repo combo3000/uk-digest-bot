@@ -32,7 +32,7 @@ except ImportError:
 KYIV = ZoneInfo("Europe/Kyiv")
 USED_FILE = "used.json"
 MODELS = ["gemini-2.5-flash", "gemini-flash-latest", "gemini-flash-lite-latest"]
-HISTORY_LIMITS = {"jokes": 200, "facts": 120, "motivations": 60, "numbers": 60,
+HISTORY_LIMITS = {"jokes": 200, "facts": 120, "numbers": 60,
                   "bp_jokes": 3000}  # id жартів з Bored Panda, щоб не повторюватись
 PER_SOURCE = 12                 # скільки статей з одного видання показуємо моделі
 FRESH = timedelta(hours=36)     # Economist публікує рідше, тому вікно ширше за 24 год
@@ -184,22 +184,6 @@ FACT_THEMES = [
     "мореплавство", "винаходи", "архітектура", "математика", "рослини",
     "океан", "людський мозок", "музика", "давній світ", "погода і клімат",
 ]
-MOTIVATION_ANGLES = [
-    "стоїчний — у дусі Сенеки чи Марка Аврелія, але своїми словами і з сучасним образом",
-    "смішний — абсурдний поворот, після якого хочеться посміхнутись і піти робити справи",
-    "дивовижний — через реальний вражаючий факт з природи, космосу чи історії",
-    "бенгер — коротко й різко, як удар у гонг, до 12 слів",
-    "тонка самоіронія ділової людини",
-    "порада старого капітана, який бачив усі шторми",
-    "інструкція з техніки безпеки для амбітних",
-    "репліка спортивного коментатора в кульмінацію матчу",
-    "метафора з кухні, вина або кави",
-    "філософський парадокс, що перевертає звичну думку",
-    "прогноз погоди, але для справ на сьогодні",
-    "що сказала б тварина — восьминіг, ворона, бобер чи мураха",
-    "через реальний історичний епізод і несподіваний висновок",
-    "фраза, яку хочеться написати маркером на дошці в переговорній",
-]
 BANNED_JOKE_MARKERS = [
     "scarecrow", "outstanding in his field", "опудал", "make up everything", "impasta",
     "two tired", "two-tired", "anti-gravity", "антигравітац", "fsh", "nacho cheese",
@@ -207,10 +191,6 @@ BANNED_JOKE_MARKERS = [
     "no atmosphere", "abdominal snowman", "don't know y", "eyebrows too high",
     "skeleton", "скелет", "pork chop", "got mugged", "enough dough", "boomerang",
     "orange and sounds like a parrot", "invisible man",
-]
-BANNED_MOTIVATION = [
-    "кожен день — новий шанс", "вір у себе", "ти все зможеш", "не здавайся",
-    "крок за кроком", "найкращий час", "рухайся вперед", "твій потенціал",
 ]
 
 
@@ -342,13 +322,112 @@ def collect_articles(now_utc):
     return articles
 
 
+# ── Картинка дня (Wikimedia Commons) ─────────────────────────────────────────
+COMMONS_API = "https://commons.wikimedia.org/w/api.php"
+POTD_CAPTION_MAX = 1000         # Telegram дозволяє до 1024 символів у підписі до фото
+
+
+TG_PHOTO_MAX = 9_500_000         # Telegram приймає фото до 10 МБ
+
+
+def http_get(url, tries=3, **kw):
+    """GET з повторами: Commons іноді відповідає повільно або з тимчасовою помилкою."""
+    for attempt in range(1, tries + 1):
+        try:
+            r = requests.get(url, headers=HTTP_HEADERS, timeout=30, **kw)
+            r.raise_for_status()
+            return r
+        except Exception as e:
+            if attempt == tries:
+                raise
+            print(f"⚠️ {url[:80]}: {e} — повтор через {5 * attempt} с")
+            time.sleep(5 * attempt)
+
+
+def commons_get(**params):
+    return http_get(COMMONS_API, params={"format": "json", "formatversion": 2, **params}).json()
+
+
+def download_image(info):
+    """Зменшена копія (1280 px, за потреби 960 px): завжди влазить у ліміти Telegram.
+    Повертає (байти, адреса) або (None, адреса), якщо скачати не вдалося."""
+    thumb = info.get("thumburl") or info["url"]
+    urls = [thumb] + ([thumb.replace("/1280px-", "/960px-")] if "/1280px-" in thumb else [])
+    for url in urls:
+        try:
+            content = http_get(url).content
+            if len(content) <= TG_PHOTO_MAX:
+                return content, url
+            print(f"⚠️ Картинка завелика ({len(content) // 1024} КБ), беру меншу")
+        except Exception as e:
+            print(f"⚠️ Не вдалося скачати картинку: {e}")
+    return None, urls[-1]
+
+
+def potd_description(day, lang):
+    """Опис картинки дня потрібною мовою (Template:Potd/РРРР-ММ-ДД (uk)) або None."""
+    try:
+        d = commons_get(action="parse", page=f"Template:Potd/{day} ({lang})", prop="text",
+                        disablelimitreport=1)
+        m = re.search(r"<figcaption>(.*?)</figcaption>", d["parse"]["text"], re.S)
+        return clean_text(m.group(1)) if m else None
+    except Exception:
+        return None
+
+
+def get_potd(day):
+    """Картинка дня з Commons: файл, опис (uk або en), автор, ліцензія і самі байти зображення.
+    Якщо щось пішло не так — None, і дайджест просто йде без картинки."""
+    try:
+        d = commons_get(action="query", titles=f"Template:Potd/{day}", prop="revisions",
+                        rvprop="content", rvslots="main")
+        text = d["query"]["pages"][0]["revisions"][0]["slots"]["main"]["content"]
+        m = re.search(r"\{\{\s*Potd filename\s*\|\s*(?:1\s*=)?\s*([^|<\n}]+)", text, re.I)
+        filename = m.group(1).strip()
+
+        d = commons_get(action="query", titles=f"File:{filename}", prop="imageinfo",
+                        iiprop="url|mime|extmetadata", iiurlwidth=1280,
+                        iiextmetadatafilter="Artist|LicenseShortName")
+        info = d["query"]["pages"][0]["imageinfo"][0]
+        if not str(info.get("mime", "")).startswith("image/"):
+            print(f"⚠️ Картинка дня — не зображення ({info.get('mime')}), пропускаю")
+            return None
+        meta = info.get("extmetadata", {})
+        image, image_url = download_image(info)
+        potd = {
+            "file": filename,
+            "page": info.get("descriptionurl") or f"https://commons.wikimedia.org/wiki/File:{filename}",
+            "desc_uk": potd_description(day, "uk"),
+            "desc_en": potd_description(day, "en"),
+            "artist": clean_text(meta.get("Artist", {}).get("value", "")),
+            "license": clean_text(meta.get("LicenseShortName", {}).get("value", "")),
+            "image": image,          # байти; якщо None — Telegram сам візьме фото за адресою
+            "url": image_url,
+        }
+        print(f"🖼 Картинка дня: {filename} ({len(image or b'') // 1024} КБ)")
+        return potd
+    except Exception as e:
+        print(f"⚠️ Картинка дня: {e}")
+        return None
+
+
+def potd_caption(potd, text=None):
+    """Підпис до фото: опис українською (від Gemini, з Commons або англійський як запасний)."""
+    desc = str(text or potd["desc_uk"] or potd["desc_en"] or "").strip()
+    credit = " · ".join(esc(x) for x in (potd["artist"], potd["license"]) if x)
+    tail = f'\n\n📷 {credit + " · " if credit else ""}<a href="{html.escape(potd["page"], quote=True)}">Wikimedia Commons</a>'
+    room = POTD_CAPTION_MAX - tg_len(tail) - len("🖼 Картинка дня\n")
+    if len(desc) > room:
+        desc = desc[:room - 1].rsplit(" ", 1)[0] + "…"
+    return f"🖼 <b>Картинка дня</b>\n{esc(desc)}{tail}"
+
+
 # ── Gemini ────────────────────────────────────────────────────────────────────
-def build_prompt(articles, hist, joke_format, joke_topic, fact_theme, angle):
+def build_prompt(articles, hist, joke_format, joke_topic, fact_theme, potd):
     arts = "\n".join(f"[{a['id']}] {a['source']} | {a['cat']} | {a['title']}\n     {a['summary']}"
                      for a in articles)
     jokes = "\n".join(f"- {j}" for j in hist["jokes"]) or "немає"
     facts = "; ".join(hist["facts"][-40:]) or "немає"
-    motiv = "\n".join(f"- {m}" for m in hist["motivations"][-20:]) or "немає"
     numbers = "; ".join(hist["numbers"][-15:]) or "немає"
     return f"""Ти — редактор ранкового дайджесту для українського бізнесмена (фарма, експорт, геополітика, економіка, технології, наука, культура). Пишеш українською: живо, стисло, з цифрами, без води і канцеляриту. Без markdown.
 
@@ -367,7 +446,7 @@ def build_prompt(articles, hist, joke_format, joke_topic, fact_theme, angle):
   "fact_topic": "...",
   "joke": "...",
   "joke_key": "...",
-  "motivation": "..."
+  "potd_caption": "..."
 }}
 
 НОВИНИ
@@ -394,12 +473,19 @@ def build_prompt(articles, hist, joke_format, joke_topic, fact_theme, angle):
 Вже були:
 {jokes}
 
-МОТИВАЦІЯ НА ДЕНЬ
-• Рівно одне речення, до 30 слів. Кут сьогодні: {angle}.
-• Це найважливіше: жодних шаблонів і банальностей. Без цитат відомих людей, без фраз на кшталт «кожен день — новий шанс», «вір у себе», «не здавайся», «крок за кроком», «найкращий час — зараз», «твій потенціал». Не починай зі звертання.
-• Має бути свіже, конкретне, з образом або несподіваним поворотом — щоб хотілося переслати другу.
-• Не схоже на попередні:
-{motiv}
+{potd_task(potd)}"""
+
+
+def potd_task(potd):
+    if not potd or not (potd["desc_en"] or potd["desc_uk"]):
+        return 'КАРТИНКА ДНЯ\n• Сьогодні опису немає — поверни "potd_caption": null.\n'
+    src = "\n".join(f"{k}: {v}" for k, v in (("uk", potd["desc_uk"]), ("en", potd["desc_en"]),
+                                             ("файл", potd["file"])) if v)
+    return f"""КАРТИНКА ДНЯ (Wikimedia Commons)
+• potd_caption — підпис до фото українською, 1–2 речення: що саме на картинці і де це. Живою мовою, без канцеляриту.
+• Спирайся ТІЛЬКИ на опис нижче: перекладай і пояснюй, але не вигадуй деталей, яких там немає. Назви місць і творів — як прийнято українською.
+Опис:
+{src}
 """
 
 
@@ -601,8 +687,6 @@ def build_blocks(ctx, data, by_id):
         label = "TODAY" if "today.com" in url else "Bored Panda"
         src = f'\n<i>— <a href="{esc(url)}">{label}</a></i>' if url else ""
         blocks.append("━━━ ЖАРТ ДНЯ 😄 ━━━\n" + esc(data["joke"]) + src)
-    if data.get("motivation"):
-        blocks.append("━━━━━━━━━━━━━━\n⚡ " + esc(data["motivation"]))
     return blocks
 
 
@@ -671,6 +755,37 @@ def tg_send(chat_id, text):
     return False
 
 
+def tg_send_photo(chat_id, potd, caption):
+    """Надсилає картинку дня: спершу файлом, якщо не вийшло — за адресою, а в крайньому разі
+    текстом з посиланням. Запам'ятовує file_id, щоб іншим підписникам не завантажувати файл знову."""
+    url = f"https://api.telegram.org/bot{os.environ['TELEGRAM_BOT_TOKEN']}/sendPhoto"
+    data = {"chat_id": chat_id, "caption": caption, "parse_mode": "HTML"}
+    ways = ([("file_id", potd["file_id"])] if potd.get("file_id") else []) \
+        + ([("файл", None)] if potd.get("image") else []) + [("адреса", potd["url"])]
+    for how, photo in ways:
+        for attempt in range(3):
+            try:
+                if photo is None:
+                    r = requests.post(url, data=data, files={"photo": ("potd.jpg", potd["image"])}, timeout=60)
+                else:
+                    r = requests.post(url, data={**data, "photo": photo}, timeout=60)
+                if r.ok:
+                    sizes = r.json().get("result", {}).get("photo") or []
+                    if sizes:
+                        potd["file_id"] = sizes[-1]["file_id"]
+                    return True
+                print(f"⚠️ Telegram фото ({how}) {chat_id}: {r.status_code} {r.text[:200]}")
+                if r.status_code == 403:         # користувач заблокував бота
+                    return False
+                if r.status_code == 400:         # цей спосіб не підходить — пробуємо наступний
+                    break
+                time.sleep(r.json().get("parameters", {}).get("retry_after", 3) if r.status_code == 429 else 3)
+            except Exception as e:
+                print(f"⚠️ Telegram фото ({how}) {chat_id}: {e}")
+                time.sleep(3)
+    return tg_send(chat_id, caption)             # запасний варіант: підпис з посиланням текстом
+
+
 # ── Збереження історії ────────────────────────────────────────────────────────
 def save_and_push(used, date_str):
     with open(USED_FILE, "w", encoding="utf-8") as f:
@@ -716,6 +831,7 @@ def main():
                    get_stock("TAK", "Takeda", "USD")],
     }
     articles = collect_articles(datetime.now(timezone.utc))
+    potd = get_potd(today)
     by_id = {a["id"]: a for a in articles}
     print(f"Всього статей: {len(articles)}")
 
@@ -724,7 +840,7 @@ def main():
         rnd = random.SystemRandom()
         client, config = make_client()
         prompt = build_prompt(articles, hist, rnd.choice(JOKE_FORMATS), rnd.choice(JOKE_TOPICS),
-                              rnd.choice(FACT_THEMES), rnd.choice(MOTIVATION_ANGLES))
+                              rnd.choice(FACT_THEMES), potd)
         data = ask_gemini(client, config, prompt, required=("top",))
 
         # Жарт дня: 1) наступний з черги jokes_queue.json; 2) коли черга скінчиться —
@@ -763,17 +879,19 @@ def main():
                 print("⚠️ Свіжого жарту не вийшло — рубрику пропускаю")
                 data["joke"] = None
 
-        if data and any(m in norm(data.get("motivation", "")) for m in map(norm, BANNED_MOTIVATION)):
-            print(f"⚠️ Мотивація шаблонна, прибираю: {data['motivation']}")
-            data["motivation"] = None
 
     blocks = build_blocks(ctx, data, by_id) if data else build_fallback_blocks(ctx, articles)
     messages = split_messages(blocks)
-    print("\n" + "\n\n".join(messages) + "\n")
+    if not potd:                                 # ще одна спроба: Commons міг уже «прокинутись»
+        potd = get_potd(today)
+    caption = potd_caption(potd, (data or {}).get("potd_caption")) if potd else None
+    print("\n" + "\n\n".join(messages + ([caption] if caption else [])) + "\n")
 
     sent = 0
     for cid in recipients:
         ok = all([tg_send(cid, m) for m in messages])
+        if ok and potd:
+            tg_send_photo(cid, potd, caption)    # картинка — бонус: якщо не пішла, дайджест усе одно надіслано
         sent += ok
         print(f"Telegram {cid}: {'✅' if ok else '❌'}")
         time.sleep(0.5)
@@ -795,8 +913,6 @@ def main():
             used["bp_jokes"].append(str(data["joke_bp_id"]))
         if data.get("fact_topic") or data.get("fact"):
             used["facts"].append(str(data.get("fact_topic") or data["fact"][:60]).strip())
-        if data.get("motivation"):
-            used["motivations"].append(str(data["motivation"]).strip())
         num = data.get("number") or {}
         if isinstance(num, dict) and num.get("value"):
             used["numbers"].append(f"{num['value']} — {str(num.get('text', ''))[:60]}")
