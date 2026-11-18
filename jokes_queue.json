@@ -1,0 +1,2321 @@
+{
+ "note": "Черга жартів дня, перемішана. Бот бере їх по черзі; позиція — joke_queue_pos у used.json.",
+ "jokes": [
+  {
+   "text": "\"When I told everyone I was gonna become a professional stand up comedian, they all laughed… Well, they’re not laughing now!\"",
+   "source": "https://www.boredpanda.com/stand-up-comedy-jokes/"
+  },
+  {
+   "text": "My buddy got arrested on drug charges and because it was his first offense, he thought he would get off lightly, but it turned out his lawyer was one of the worst in the state and ended up botching his case, so instead of getting a short term, he ended up getting 40 years without parole!!\nMan, that sentence was way too long.",
+   "source": "https://www.boredpanda.com/long-jokes/"
+  },
+  {
+   "text": "Our computers went down at work today, so we had to do everything manually.\nIt took me 20 minutes to shuffle the cards for Solitaire.",
+   "source": "https://www.boredpanda.com/jokes-about-office/"
+  },
+  {
+   "text": "When I see the names of lovers engraved on a tree, I don't find it cute or romantic. I find it weird how many people take knives with them on dates.",
+   "source": "https://www.boredpanda.com/dark-jokes/"
+  },
+  {
+   "text": "Patient says, \"Doctor, I have pain in my eye whenever I drink tea.\"\nDoctor says, \"Take the spoon out of your mug.\"",
+   "source": "https://www.boredpanda.com/medical-jokes/"
+  },
+  {
+   "text": "Why do turkeys play percussion? They have drumsticks.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What’s more unbelievable than a talking dog? A spelling bee.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Boss: \"How is it that you are always sick on weekdays?\"\nMe: \"It’s my weekend immune system.\"",
+   "source": "https://www.boredpanda.com/boss-jokes/"
+  },
+  {
+   "text": "My therapist says I have a preoccupation with vengeance.\nWe’ll see about that.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "A Roman legionnaire walks into a bar, holds up two fingers and says, “Five beers, please.”",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "When's the best time to call your dentist? Tooth-hurty.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call a fibbing cat? A lion.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Did you know the first French fries weren't actually cooked in France? They were cooked in Greece.",
+   "source": "https://www.boredpanda.com/funny-dad-jokes-puns/"
+  },
+  {
+   "text": "Why didn’t the chef season his dish? He ran out of thyme.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Getting paid to sleep would be my dream job.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the thief take a shower before robbing the bank? He wanted to make a clean getaway.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call a cow in an earthquake?\nA milkshake.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "Where do burgers go dancing? At the meatball.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Did you hear about the cheese factory that exploded in France? Apparently, da brie is everywhere.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Two nuns are riding their bicycles around the backstreets of Rome. One nun looks over at the other and says, “You know, I’ve never come this way before.” The other nun replies, “Must be the cobblestones.”",
+   "source": "https://www.boredpanda.com/people-share-funniest-jokes/"
+  },
+  {
+   "text": "What do you call someone who raises hens? A chicken tender.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Dad: \"I was just listening to the radio on my way into town, apparently an actress just killed herself.\"\nMom: \"Oh my! Who?!\"\nDad: \"Uh, I can't remember... I think her name was Reese something?\"\nMom: \"WITHERSPOON?!\"\nDad: \"No, it was with a knife...\"",
+   "source": "https://www.boredpanda.com/funny-dad-jokes-puns/"
+  },
+  {
+   "text": "My boss calls me \"The computer.\" Not because of my calculation skills but because I go to sleep when left unattended for 15 minutes.",
+   "source": "https://www.boredpanda.com/boss-jokes/"
+  },
+  {
+   "text": "What do you call a row of rabbits hopping away?\nA receding hare line!",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "How do celebrities keep cool? They have many fans.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the cowboy adopt a wiener dog? He wanted to get a long little doggie.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How do fish pay for groceries? With sand dollars.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What kind of bird works on a construction site? A crane.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the cow go to Hollywood? To be in the moo-vies.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why do sweaters tend to hang out together? They’re pretty close-knit.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What does a painter do when he gets cold? Puts on another coat.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call an unlucky sheep with no head and no legs?\nA cloud.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "Did you hear about the man who cut off his left leg? He’s all right now.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Despite the high cost of living, it remains popular.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "What is red and extremely bad for your teeth?\nA flying brick.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "Where do elephants store luggage? In their trunk.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Two hunters are in the woods when one of them collapses. His hunting buddy immediately calls 911. \"My friend isn't breathing,\" he shouts into the phone. \"What should I do?\" \"Relax,\" the operator tells him. \"I can help. First, let's make sure he's dead.\" There's silence, and then a gunshot. The guy gets back on the phone and says, \"OK, now what?\"",
+   "source": "https://www.boredpanda.com/dark-jokes/"
+  },
+  {
+   "text": "Did you hear about the octopus that held up a bank? It was an armed robbery.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call an owl that’s a magician?\nWho-dini.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "Why did the employee get fired from the keyboard factory? He wasn’t putting in enough shifts.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the little strawberry cry? His mom was in a jam.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call a teenager that refuses to grow up? Constantine.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "\"How did you find out that doctor was fake?\"\n\"She had good handwriting.\"",
+   "source": "https://www.boredpanda.com/medical-jokes/"
+  },
+  {
+   "text": "Doctor: “You have high blood pressure and amnesia.”\nPatient: “Well, at least I don’t have high blood pressure!”",
+   "source": "https://www.boredpanda.com/medical-jokes/"
+  },
+  {
+   "text": "When is a door not a door? When it’s ajar.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "\"If your coffee shop has one of those passive aggressive \"no wifi, pretend it's the old days\" signs, I'm going to smoke in there and pay 50 cents for coffee.\"",
+   "source": "https://www.boredpanda.com/stand-up-comedy-jokes/"
+  },
+  {
+   "text": "What kind of music do elves listen to? Wrap music.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the boy do his homework on a plane? He wanted a higher education.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What is the leading cause of dry skin?\nTowels.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "What do you call two celebrities fighting?\nStar Wars.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "I’m great at multitasking. I can waste time, be unproductive, and procrastinate all at once.",
+   "source": "https://www.boredpanda.com/jokes-about-office/"
+  },
+  {
+   "text": "Why do hamburgers go south for the winter? So they don’t freeze their buns.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the man bring his watch to the bank? He wanted to save time.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "The man who survived both mustard gas and pepper spray is a seasoned veteran now.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "The problem isn’t that obesity runs in your family. It’s that no one runs in your family.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "What do you call a painting of a cat?\nA paw-trait.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "What gets wetter the more it dries?\nA towel.",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "Turns out a major new study recently found that humans eat more bananas than monkeys. It’s true. I can’t remember the last time I ate a monkey.",
+   "source": "https://www.boredpanda.com/dark-jokes/"
+  },
+  {
+   "text": "I can’t deny that I made a lot of mistakes when I was younger. I’m older now, so I can make different, yet more severe mistakes.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "What do you call someone with no body and no nose? Nobody knows.",
+   "source": "https://www.boredpanda.com/funny-dad-jokes-puns/"
+  },
+  {
+   "text": "People say that I’m creative and I couldn’t agree more because I create most of my own problems.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "What do you call two monkeys that share an Amazon account?\nPrime mates.",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "What do you call a doctor who fixes websites?\nA URL-ologist.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "What do you call a moose with no name? Anonymoose.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I was shocked when I found out my toaster wasn’t waterproof.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "What does a librarian use to go fishing? A bookworm.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why should you never eat a clock?\nIt’s too time-consuming.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "Did you hear about the two rowboats that got into an argument? It was an oar-deal.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Four men are in the hospital waiting room because their wives are having babies. A nurse goes up to the first guy and says, \"Congratulations! You're the father of twins.\"\n\"That's odd,\" answers the man. \"I work for the Minnesota Twins!\"\nA nurse says to the second guy, \"Congratulations! You're the father of triplets!\"\n\"That's weird,\" answers the second man. \"I work for the 3M company!\"\nA nurse tells the third man, \"Congratulations! You're the father of quadruplets!\"\n\"That's strange,\" he answers. \"I work for the Four Seasons hotel!\"\nThe last man is groaning and banging his head against the wall. \"What's wrong?\", the others ask.\n\"I work for 7 Up!\"",
+   "source": "https://www.boredpanda.com/long-jokes/"
+  },
+  {
+   "text": "What do you call a can opener that doesn't work? A can't opener.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "A flat earther’s only fear… is sphere itself.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "5/4 of people admit that they’re bad with fractions.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "A pirate goes to the doctor and says, \"I have moles on me back aaarrrghh.\"\nThe doctor: \"It's ok, they're benign.\"\nPirate: \"Count again, I think there be ten!\"",
+   "source": "https://www.boredpanda.com/medical-jokes/"
+  },
+  {
+   "text": "The rotation of Earth really makes my day.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "I have a few jokes about unemployed people, but none of them work.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "I hate double standards. Burn a body at a crematorium, you're \"being a respectful friend.\" Do it at home and you're \"destroying evidence.\"",
+   "source": "https://www.boredpanda.com/dark-jokes/"
+  },
+  {
+   "text": "Have you ever had a bad sausage? It’s the wurst.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "You’ll never be as lazy as whoever named the fireplace.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "What did the calculator say to the pencil? You can count on me.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "The problem with kleptomaniacs is that they always take things literally.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "What do you call a fly with a sore throat? A hoarse fly.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why couldn’t the toilet paper cross the road? It got stuck in a crack.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call a policeman in bed?\nAn undercover cop.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "Someone has stolen my Microsoft Office, and they are going to pay for it… you have my Word.",
+   "source": "https://www.boredpanda.com/jokes-about-office/"
+  },
+  {
+   "text": "Why should you never use a dull pencil? Because it’s pointless.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call recently-married spiders? Newly-webs.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How did the barber win the race? He knew a shortcut.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Did you hear about the ice cream truck accident? It crashed on a rocky road.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "If I owned a DeLorean… I’d probably only drive it from time to time.",
+   "source": "https://www.boredpanda.com/travel-jokes/"
+  },
+  {
+   "text": "My cat constantly looks at me like I asked her to give me a ride to the airport.",
+   "source": "https://www.boredpanda.com/travel-jokes/"
+  },
+  {
+   "text": "Why should you borrow money from pessimists? They never expect to get it back.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "4 beer company CEOs walked into a bar…\nThe CEO of Budweiser ordered a Bud Light.\nThe CEO of Miller ordered a Miller Light.\nThe CEO of Coors ordered a Coors Light.\nThe CEO of Guinness ordered a Coke.\nThe first three asked the CEO of Guinness why he didn't order a Guinness, to which he replied:\n\"I figured if you 3 weren't ordering beer it would be rude for me to.\"",
+   "source": "https://www.boredpanda.com/funny-hilarious-jokes/"
+  },
+  {
+   "text": "How do you get a mouse to smile? Say “cheese!”",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "My boss told me I intimidate my coworkers, so I just stared at him until he apologized.",
+   "source": "https://www.boredpanda.com/boss-jokes/"
+  },
+  {
+   "text": "Why did the spider go to school? He wanted to be a web designer.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "An Orangutan is sitting in his enclosure in the zoo. In one hand he has the Holy Bible; in the other, Darwin’s On the Origin of Species. “I can’t figure it out” he thinks; “one says I’m my brother’s keeper, and the other says I’m my keeper’s brother!”",
+   "source": "https://www.boredpanda.com/people-share-funniest-jokes/"
+  },
+  {
+   "text": "A blind man walked into a bar… And a table… And a chair…",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "Doctor: \"Sorry sir, but your body has run out of magnesium.\"\nMan: \"OMg.\"",
+   "source": "https://www.boredpanda.com/medical-jokes/"
+  },
+  {
+   "text": "I wanted to take a bath, but decided to leave it where it is.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Sorry, demons! There’s no room inside me because I’m self-possessed.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "What do you call boys who love mathematics?\nAlgebros.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "What did one Frenchman say to the other Frenchman?\nHow on Earth would I know? I don’t speak French.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "Did you hear about the woman who couldn't stop collecting magazines? She had issues.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the coach go to the bank? To get his quarter back.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What did the tree say when spring finally arrived? What a re-leaf.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why are frogs always so happy?\nThey eat whatever bugs them.",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "When is a car not a car? When it turns into a parking lot.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "My wife gave me an envelope with, “Not to be opened until 2027” on it.\nInside was list of reasons why I cannot be trusted to follow simple instructions.",
+   "source": "https://www.boredpanda.com/funny-hilarious-jokes/"
+  },
+  {
+   "text": "What do kids play when they have nothing else to do? Bored games.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What does your boss have in common with a slinky? Both of them are entertaining to watch fall down the stairs.",
+   "source": "https://www.boredpanda.com/boss-jokes/"
+  },
+  {
+   "text": "Roses are dead, violets are dead.\nI am a bad gardener.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "If I got 50 cents for every failed math exam, I’d have $6.30 now.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "Why do golfers always bring two pairs of pants? In case they get a hole in one.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What did one eye say to the other? “Between us, something smells.”",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why are shopping centers boring? Because if you've seen one, you've seen the mall.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "My boss told me that there’s no such thing as problems, only opportunities.\nI said: “That’s great. Well, I have a serious drinking opportunity.”",
+   "source": "https://www.boredpanda.com/jokes-about-office/"
+  },
+  {
+   "text": "What do you call a bear with no teeth? A gummy bear.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "A taxi passenger tapped the driver on the shoulder to ask him a question.\nThe driver screamed, lost control of the car, nearly hit a bus, went up on the footpath, and stopped inches from a shop window.\nFor a second, everything was quiet in the cab. Then the driver said, \"Look, mate, don't ever do that again. You scared the living daylights out of me!\"\nThe passenger apologized and said, \"I didn't realize that a little tap would scare you so much.\"\nThe driver replied, \"Sorry, it's not really your fault. Today is my first day as a cab driver — I've been driving a funeral van for the last 25 years.\"",
+   "source": "https://www.boredpanda.com/long-jokes/"
+  },
+  {
+   "text": "Why did the poodle buy a clock? It wanted to be a watch dog.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the computer get glasses? To improve its website.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "George Clooney, Leonardo DiCaprio, and Matthew McConaughey get together to make a movie.\nClooney says, “I’ll direct.”\nDiCaprio says, “I’ll act.”\nMcConaughey says, “I’ll write, I’ll write, I’ll write.”",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "Teacher: \"What is an island?\"\nLittle Johnny: \"A piece of land surrounded by water except on one side.\"\nTeacher: \"On one side?\"\nLittle Johnny: \"Yes, on top!\"",
+   "source": "https://www.boredpanda.com/little-johnny-jokes/"
+  },
+  {
+   "text": "Did you hear about the cat that ate a lemon? Now it’s a sour puss.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What did the beach say when the tide came in? Long time no sea.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the football player hire a lawyer? He needed help with his defense.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Someone, please help me! I’m way too young to be this old already.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "A young boy enters a barber shop and the barber whispers to his customer, \"This is the dumbest kid in the world. Watch while I prove it to you.\"\nThe barber puts a dollar bill in one hand and two quarters in the other, then calls the boy over and asks, \"Which do you want, son?\" The boy takes the quarters and leaves.\n\"What did I tell you?\" said the barber. \"That kid never learns!\"\nLater, when the customer leaves, he sees the same young boy coming out of the ice cream parlor.\n\"Hey, son! May I ask you a question? Why did you take the quarters instead of the dollar bill?\"\nThe boy licked his cone and replied:\n\"Because the day I take the dollar the game is over!\"",
+   "source": "https://www.boredpanda.com/long-jokes/"
+  },
+  {
+   "text": "What do you call a potato wearing glasses? A spec-tater.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What kind of sandals do frogs wear? Open-toad.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Do mood swings count as exercise?",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "Did you hear about the broken guitar for sale? It comes with no strings attached.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I wonder how many miles I've scrolled with my thumb.",
+   "source": "https://www.boredpanda.com/travel-jokes/"
+  },
+  {
+   "text": "What do you call a Spanish man who has lost his car?\nCarlos.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "Why did the baseball player get arrested? He stole third base.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the Energizer Bunny go to jail? He was charged with battery.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Bacon and eggs walk into a restaurant. The host says, “Sorry, we don’t serve breakfast here.”",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I’m quite smart and intelligent. Most of the time, I don’t even understand a single word of what I’m talking about.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "The Boss always insisted that only Abdul should serve his coffee, but yesterday, this conversation happened.\nBoss: \"Abdul, for the last 8 years you have brought me coffee filled to the brim without spilling even a drop. How do you manage that over these stairs?\"\nAbdul: \"Sir, just before I climb up the stairs, I take a big sip. As I get upstairs, I put it back.\"\nToday is Abdul's farewell party.",
+   "source": "https://www.boredpanda.com/boss-jokes/"
+  },
+  {
+   "text": "Why did the nose feel sad? It was always getting picked on.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Two eggs went to a party. They had a shell of a time.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why are pigs bad drivers? They hog the road.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call a rude cow? Beef jerky.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Guy pulls up to a gas station, and the attendant notices there are 5 penguins in the back seat.\nAttendant says, \"You have 5 penguins in your back seat.\"\n\"I KNOW!\" the guy says, \"They jumped in at the light, and now I don't know what to do.\"\nAttendant thinks for a second and says, \"I'll tell you what I'd do - I'd take them to the zoo.\"\n\"That's a great idea!\" says the driver.\nA week later, same driver pulls in with the same 5 penguins, only now they're wearing sunglasses.\n\"What are you doing - I thought I told you to take those penguins to the zoo!\" exclaims the attendant.\n\"We did go! We had a great time! Today we're going to the beach!\"",
+   "source": "https://www.boredpanda.com/funny-hilarious-jokes/"
+  },
+  {
+   "text": "A guy is in for a job interview, and the interviewer asks him “What would you consider to be your biggest weakness?” The guy replies “Honesty. I’m honest with everyone; I don’t know how to be anything other than completely honest with every single person I meet.” The interviewer says “I don’t really see how honesty could be considered a weakness? In fact, I think honesty is a great strength!” To which the guy replies “I don’t really give a s**t what you think.”",
+   "source": "https://www.boredpanda.com/people-share-funniest-jokes/"
+  },
+  {
+   "text": "During the concert little Johnny sits in the front row waiting for the concert to begin.\nA friend asks: \"Johnny, how did you manage to get a ticket to the concert?\"\nJohnny replies: \"I got a ticket from my sister.\"\nThe friend asks: \"And where is your sister?\"\nJohnny says: \"Back at home, looking for her ticket.\"",
+   "source": "https://www.boredpanda.com/little-johnny-jokes/"
+  },
+  {
+   "text": "What do you call an acid with an attitude?\nA mean-o-acid!",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "What did the duck say to the waiter when he brought the check? “Put it on my bill.”",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "A man sits at a bar and orders 10 beers and drinks them one after the other. He then orders nine beers and drinks them as well, and this goes on and on. So he orders seven beers and drinks them, six beers and drinks them, five beers and drinks them, and then finally four beers. After drinking these last four beers, he says to the bartender: 'I don’t understand this. The less beers I drink, the more drunk I get.'",
+   "source": "https://www.boredpanda.com/people-share-funniest-jokes/"
+  },
+  {
+   "text": "Why shouldn’t you argue with a T-Rex? You’ll get jurass-kicked.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Little Johnny’s new sibling was crying and screaming for hours. He asked his parents where they got him from. They reply, “Oh, we got him straight from heaven.” Johnny said, “Jeez. I see why they kicked him out of there.”",
+   "source": "https://www.boredpanda.com/little-johnny-jokes/"
+  },
+  {
+   "text": "What do you call the security guards outside the Samsung factory?\nThe guardians of the galaxy.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "What did the fish say after swimming into a cement wall? “Dam.”",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What is a Karen called in Europe?\nAn American.",
+   "source": "https://www.boredpanda.com/funny-hilarious-jokes/"
+  },
+  {
+   "text": "What do pigs use to clean up? Hogwash.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "A guy said to God, \"God, is it true that to you a billion years is like a second?\"\nGod said yes.\nThe guy said, \"God, is it true that to you a billion dollars is like a penny?\"\nGod said yes.\nThe guy said, \"God, can I have a penny?\"\nGod said, \"Sure, just a second.\"",
+   "source": "https://www.boredpanda.com/long-jokes/"
+  },
+  {
+   "text": "Why did the dinosaur cross the road?\nChickens hadn’t evolved yet.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "How did the farmer fix his torn overalls? With a cabbage patch.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What's the best way to catch a fish? Ask someone to throw it to you.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I don’t mind coming to work, it’s the eight-hour wait to go home I can’t stand.",
+   "source": "https://www.boredpanda.com/jokes-about-office/"
+  },
+  {
+   "text": "What’s a zebra? A couple sizes bigger than an A.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the phone wear glasses? Because it lost all its contacts.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Little Johnny is back at school after the holidays. After a few days, his teacher calls up Little Johnny's dad to report that Johnny has been behaving badly at school. His dad says to the teacher \"Hang on a minute, I had Johnny at home with me for 2 months and I never phoned you once when he misbehaved.\"",
+   "source": "https://www.boredpanda.com/little-johnny-jokes/"
+  },
+  {
+   "text": "What do you call a French gentleman who is wearing flip-flops?\nPhilippe Philoppe.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "At the park with my girls: \"Dad, can we go play?\"\nMe: \"Sure, just stay away from those trees over there.\"\nGirls: \"Umm... Ok, why?\"\nMe: \"I don’t know... They look a little shady to me.\"",
+   "source": "https://www.boredpanda.com/funny-dad-jokes-puns/"
+  },
+  {
+   "text": "A man was driving down the road when a policeman stopped him. The officer looked in the back of the man’s truck and said, “Why are these penguins in your truck?”\nThe man replied, “These are my penguins. They belong to me.”\n“You need to take them to the zoo,” the policeman said.\nThe next day, the officer saw the same guy driving down the road. He pulled him over again. He saw the penguins were still in the truck, but they were wearing sunglasses this time. “I thought I told you to take these penguins to the zoo!”, the officer said.\n“I did,” the man replied. “And today I’m taking them to the beach.\"",
+   "source": "https://www.boredpanda.com/long-jokes/"
+  },
+  {
+   "text": "What do you call malware on a Kindle?\nA bookworm.",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "Do you wanna box for your leftovers? No, but I’ll wrestle you for them.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "Did you hear about the fire at the shoe factory? Many soles were lost.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How much does it cost Santa to park his sleigh? Nothing, it’s on the house.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "What do you call an anxious fly? A jitterbug.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why do bananas wear sunscreen? Because they peel.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What’s the one thing in life you can actually always count on?\nA calculator.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "\"Racism isn't born, folks, it's taught. I have a two-year-old son. You know what he hates? Naps. End of list.\" — Denis Leary",
+   "source": "https://www.boredpanda.com/stand-up-comedy-jokes/"
+  },
+  {
+   "text": "What do you call someone who can’t stick to a diet? A desserter.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Someone once asked me if I would shoot my boss for $50,000... I said yes, I would definitely do that, but it's going to take me a while to come up with $50,000.",
+   "source": "https://www.boredpanda.com/boss-jokes/"
+  },
+  {
+   "text": "Why did the cake cross the road? It saw a fork up ahead.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I told my friend ten jokes to make him laugh.\nSadly, no pun in ten did.",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "Why are most people tired on April 1? They've just finished a 31-day March.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What happens when doctors get frustrated? They lose their patients.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How do you make holy water? You boil the hell out of it.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "I told my mom I'd call her later, but she said she prefers “Mom.”",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Every day is Friday when you’re unemployed.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "What’s brown and sticky? A stick.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the girl bring a ladder on the bus? She wanted to go to high school.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "The teacher asked the class to stand up if they ever feel stupid. Johnny groaned before standing. She asked, “So Johnny feels stupid occasionally?” To which he replied, “No, but it must be hard for you to stand alone.”",
+   "source": "https://www.boredpanda.com/little-johnny-jokes/"
+  },
+  {
+   "text": "My favourite childhood memory is my parents paying for my holidays.",
+   "source": "https://www.boredpanda.com/travel-jokes/"
+  },
+  {
+   "text": "Once I read a book about glue. I couldn’t put it down.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I spent a lot of time, money, and effort childproofing my house… But the kids still get in.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "Why can't leopards play hide-and-seek? Because they're always spotted.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call a girl in the middle of a tennis court? Annette.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How do you fix a broken tomato? With tomato paste.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What kind of cereal do leprechauns eat? Lucky Charms.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How does Darth Vader like his bagels? On the dark side.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I told a joke during our video call today. It wasn’t even remotely funny.",
+   "source": "https://www.boredpanda.com/jokes-about-office/"
+  },
+  {
+   "text": "Why did the pony ask for a glass of water? Because it was a little horse.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the drum go to bed? It was beat.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "\"What do travelers like best about Switzerland?\"\n\"I’m not sure, but the flag’s a big plus.\"",
+   "source": "https://www.boredpanda.com/travel-jokes/"
+  },
+  {
+   "text": "One day Max went to see Carl. Carl had a big swollen nose.\n“Whoa, what happened, Carl?”, Max asked.\n“I sniffed a brose,” Carl replied.\n“What?”, Max said. “There’s no ‘b’ in rose!”\nCarl replied, “There was in this one!”",
+   "source": "https://www.boredpanda.com/long-jokes/"
+  },
+  {
+   "text": "What’s the best air to breathe if you want to be rich? Millionaire.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Did you hear about the king that went to the dentist? He needed to get a crown.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Most people are shocked when they find out how bad I am as an electrician.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "What’s the best way to get the hospital after breaking your foot? Tow truck.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Teacher: “If you got ten dollars from ten people, what would you have?”\nJohnny: “A new bike.”",
+   "source": "https://www.boredpanda.com/little-johnny-jokes/"
+  },
+  {
+   "text": "You know, it was so cold in D.C. the other day, I saw a politician with his hands in his own pockets.",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "I don't tell dad jokes that often. But when I do, he laughs.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What did the horse say after he tripped? “I’ve fallen and I can’t giddy up.”",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "When I die, I want to die like my grandfather who died peacefully in his sleep. Not screaming like all the passengers in his car.",
+   "source": "https://www.boredpanda.com/dark-jokes/"
+  },
+  {
+   "text": "I'm at a really low point right now, but the good news is that the worst is still to come.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "Why shouldn't you play poker in the jungle? Too many cheetahs.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Is there anything worse than when it’s raining cats and dogs? Yes, hailing taxis.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I bought some shoes from a drug dealer. I don't know what he laced them with, but I was tripping all day!",
+   "source": "https://www.boredpanda.com/funny-dad-jokes-puns/"
+  },
+  {
+   "text": "Why do dragons sleep during the day? Because they like to fight knights.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I haven’t talked to my wife in a week. I didn’t want to interrupt her.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "A middle-aged woman had a heart attack and was sent to the hospital. While on the operating table, she came very close to death and had the opportunity to speak with God.\n“Is my time up?” she asked him.\n“No,” God answered, “you still have 40 years, 5 months, and 3 days to live.”\nUpon recovery, the woman decided that if she had so much time left to live, she might as well make the most of it. So she had a facelift, a tummy tuck, and dyed her hair before leaving the hospital.\nWhile crossing the street on the way out, she was hit by a car and immediately died.\nWhen arriving in front of God, the woman asked, “I thought you said I had another 40 years?! Why didn’t you save me?”\n“I didn’t recognize you,” God replied.",
+   "source": "https://www.boredpanda.com/medical-jokes/"
+  },
+  {
+   "text": "Maybe if we start telling people their brain is an app, they’ll want to use it.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "After a lengthy call with a customer who had been having difficulties with a computer program, a support technician turned in his report: “The problem resides between the keyboard and the chair.”",
+   "source": "https://www.boredpanda.com/jokes-about-office/"
+  },
+  {
+   "text": "The wife and I took a long, leisurely drive out to the country and pulled over to fill up our car's gas tank and tires... She was surprised to see that the station had a fee to fill the tires and asked me, \"Why in the world do they charge for AIR?!\"\nI responded, \"Inflation.\"",
+   "source": "https://www.boredpanda.com/long-jokes/"
+  },
+  {
+   "text": "What did the Dalmatian say after dinner? That hit the spot.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I wanted to make a joke about time travel, but you guys didn’t like it.",
+   "source": "https://www.boredpanda.com/travel-jokes/"
+  },
+  {
+   "text": "Why'd the roofer go to the doctor? He had shingles.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "“Google Earth is amazing. They’ve photographed every road in the world and put them on the computer. You just type it in and you go there. You sit in front of the computer and you think, ‘I can go anywhere in the world. Where shall I go?’ And we all come to the same conclusion: ‘My house.’” — Michael McIntyre",
+   "source": "https://www.boredpanda.com/stand-up-comedy-jokes/"
+  },
+  {
+   "text": "My elderly relatives liked to tease me at weddings, saying, “You’ll be next!” They soon stopped though, once I started doing the same to them at funerals.",
+   "source": "https://www.boredpanda.com/dark-jokes/"
+  },
+  {
+   "text": "Why does a chicken coop only have two doors? Because if it had four it would be a sedan.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Me: I’d like to travel.\nMy bank account: To work?",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "Don't you hate it when someone answers their own questions? I do.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "Did you hear the story about the claustrophobic astronaut?\nHe just needed some space.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "How can you tell if a pig is hot? It's bacon.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I just realized that my life can’t fall apart if I never had it together in the first place.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "Did you hear the rumor about butter? Everyone is spreading it.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Little Johnny's teacher is doing her rounds at lunchtime when she sees little Johnny pulling faces at another child. She starts to talk sternly to Little Johnny and says \"Johnny, when I was a young girl I was told that if I made ugly faces and the wind changed, my face would stay that way.\"\nLittle Johnny looks up to her and says \"Well miss, you can't say that you weren't warned.\"",
+   "source": "https://www.boredpanda.com/little-johnny-jokes/"
+  },
+  {
+   "text": "Did you hear about the bossy man at the bar? He ordered everyone around.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Some people eat snails. They must not like fast food.",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "My wife called out to me from the other room: “Do you ever get a shooting pain across your chest… like someone’s got a voodoo doll of you and they're stabbing it?”\nI said “No?!”\nShe said: “…How about now?”",
+   "source": "https://www.boredpanda.com/people-share-funniest-jokes/"
+  },
+  {
+   "text": "What do dentists call their x-rays?\nTooth pics!",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "I asked my boss if I can come to work a little late today. He said \"Dream on.\" I think that was really nice of him.",
+   "source": "https://www.boredpanda.com/boss-jokes/"
+  },
+  {
+   "text": "We are all time travelers moving at the speed of exactly 60 minutes per hour.",
+   "source": "https://www.boredpanda.com/travel-jokes/"
+  },
+  {
+   "text": "A man walks into a library and asks the librarian for books about paranoia. She whispers, \"They're right behind you!\"",
+   "source": "https://www.boredpanda.com/stand-up-comedy-jokes/"
+  },
+  {
+   "text": "“According to most studies, people’s number one fear is public speaking. Number two is death. Death is number two. Does that sound right? This means to the average person, if you go to a funeral, you’re better off in the casket than doing the eulogy.” — Jerry Seinfeld",
+   "source": "https://www.boredpanda.com/stand-up-comedy-jokes/"
+  },
+  {
+   "text": "My nagging wife died suddenly on a trip to Jerusalem. Funeral director, \"Sir, it would cost about $45,000 if we send her home back to the states or $500 if we bury her here in Jerusalem.\"\nMe: \"Ship her home.\"\nFuneral director: \"But sir, why don't you bury her here in the Holy Land and you can save money.\"\nMe: \"A long time ago a man was buried here and 3 days later he rose from the dead, I can't take that chance.\"",
+   "source": "https://www.boredpanda.com/long-jokes/"
+  },
+  {
+   "text": "How do you stop a bull from charging? You cancel its credit card.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call a South American woman who is always in a hurry?\nAn Urgent Tina.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "I’m proud to say that I never make the same mistake twice. I commit my mistakes more than twice just to make sure.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "Did you hear about the 12-inch dog? It was a foot long.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I'm very familiar with paranormal activity. I keep getting ghosted.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "A time traveller goes back to ancient Rome and immediately starts looking for local clothing.\nHe finds a tailor's shop and says \"Hey, could I have a toga please?\"\n\"Sure, what size?\" says the shopkeeper.\n\"I don't know. Let's try an L.\"\nThe shopkeeper hands him a toga, the time traveller tries it on, then he says \"It's a bit tight. Could I try an XL, please?\"\nAnd the shopkeeper says \"What's the point of asking for a smaller one?\"",
+   "source": "https://www.boredpanda.com/funny-hilarious-jokes/"
+  },
+  {
+   "text": "Probably only Brits will get this: I was having a meal in an Indian restaurant. I was just finishing up and thinking about getting the bill when this little old lady came up to my table. She said: “You are such a lovely boy, with beautiful manners. You are a credit to your mum and dad.” Then off she toddled.\nI said to the waiter: “Excuse me, but who was that?”\nHe said: “Ah yes sir: that’s your complimentary nan…”",
+   "source": "https://www.boredpanda.com/people-share-funniest-jokes/"
+  },
+  {
+   "text": "What did the janitor say when he jumped out of the closet? Supplies!",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Teacher: “If you had one dollar and you asked your father for another, how many dollars would you have?”\nJohnny: “One dollar.”\nTeacher: “You don’t know your arithmetic.”\nJohnny: “And you don’t know my father!”",
+   "source": "https://www.boredpanda.com/little-johnny-jokes/"
+  },
+  {
+   "text": "I was digging in our garden when I found a chest full of gold coins. I was about to run straight home to tell my wife about it, but then I remembered why I was digging in our garden.",
+   "source": "https://www.boredpanda.com/dark-jokes/"
+  },
+  {
+   "text": "What do you call a herd of sheep falling down a hill? A lambslide.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What is a calendar’s favorite food? Dates.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Boss: \"Why should we hire you as a reverse psychologist?\"\nMe: \"You shouldn’t.\"",
+   "source": "https://www.boredpanda.com/boss-jokes/"
+  },
+  {
+   "text": "250 lbs here on Earth is 94.5 lbs on Mercury. No, I'm not fat. I’m just not on the right planet.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "Geology rocks, but geography’s where it’s at.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "I used to work at a fire hydrant company. I quit after I couldn't find parking.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "The flight attendant on our trip was handing out plastic pilot wings to some kids. As I stepped forward, she jokingly offered me one, but I passed. Pointing to the Airborne wings on my Army uniform, I explained, \"The last time someone gave me wings, I had to jump out of the airplane.\"",
+   "source": "https://www.boredpanda.com/travel-jokes/"
+  },
+  {
+   "text": "Why did the employee go to work on stilts? He wanted a raise.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I have more conversations with the voices in my head than I do with actual people.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "The last thing I want to do is hurt you; but it’s still on the list.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "What do cats eat for breakfast? Mice Krispies.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How much money does a skunk have? Just one scent.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "A grasshopper sits down at a bar. The bartender says, \"We have a drink named after you!\" The grasshopper replies, \"Who names a drink 'Steve'?\"",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "Will glass coffins be a success? Remains to be seen.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "Why did the pasta go to the dermatologist? It had a big ziti.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I love when flies won’t leave my car on long road trips. Have fun moving to Kansas, tiny pest.",
+   "source": "https://www.boredpanda.com/travel-jokes/"
+  },
+  {
+   "text": "Why did police arrest the turkey? They suspected fowl play.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "When does Friday come before Thursday? In the dictionary.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Where do birds stay when they travel? Someplace cheep.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How does a penguin build a house? Igloos it together.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "To the powers that be, if it’s inevitable that something bad must happen to me, at least make it funny.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "I've never been a fan of facial hair. But it's starting to grow on me.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I asked what I should bring to the party.\nThe hosts said, “Nothing, just bring a happy face.”\nI had to cancel.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "How do you get a squirrel's attention? Act like a nut.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call a snobby criminal walking down the steps?\nA condescending con descending!",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "\"Isaac Newton died a virgin. That means I have one up on history's greatest scientific genius. Because I am NOT dead.\" — Kevin Schwartz",
+   "source": "https://www.boredpanda.com/stand-up-comedy-jokes/"
+  },
+  {
+   "text": "Did you hear about the girl who ate a frog? They say she's going to croak.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I'd like to have kids one day. I don't think I could stand them any longer than that, though.",
+   "source": "https://www.boredpanda.com/dark-jokes/"
+  },
+  {
+   "text": "What happens when you wear a watch on a plane?\nTime flies!",
+   "source": "https://www.boredpanda.com/travel-jokes/"
+  },
+  {
+   "text": "Why did the frog take the bus to work? His car got toad.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What did the hamburger name its baby? Patty.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Did you hear about the guy who's afraid of escalators? He takes steps to avoid them.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What has four wheels and flies? A garbage truck.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the orchestra get struck by lightning? It had a conductor.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What’s the difference between an outlaw and an in-law? Outlaws are wanted.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "Before the EU, a German tourist was entering France, when the border agent asked:\nAgent: “Name?”\nGerman: “Heinrich Gruber.”\nAgent: “City of residence?”\nGerman: “Frankfurt.”\nAgent: “Occupation?”\nGerman: “No, just visiting.”",
+   "source": "https://www.boredpanda.com/people-share-funniest-jokes/"
+  },
+  {
+   "text": "How do trees get on the internet? They log in.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call birds that stick together? Velcrows.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Humpty Dumpty had a great fall. Summer wasn’t too bad either.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What concert only costs 45 cents?\n50 Cent featuring Nickelback.",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "I hate Russian dolls, they're so full of themselves.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "What do you call a dog magician?\nA labracadabrador.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "What do you call a dinosaur fart?\nA blast from the past.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "The doctor told his patient to stop using a Q-Tip, but it went in one ear and out the other.",
+   "source": "https://www.boredpanda.com/medical-jokes/"
+  },
+  {
+   "text": "Boss: \"This is the third time you've been late to work this week. Do you know what that means?\"\nMe: \"It's Wednesday?\"",
+   "source": "https://www.boredpanda.com/boss-jokes/"
+  },
+  {
+   "text": "What’s a witch’s favorite subject in school? Spelling.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do cake and baseball have in common? They both need a batter.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What's the difference between ignorance and apathy? I don’t know and I don’t care.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "What's a pirate's favorite letter? You'd think it's the \"R,\" but it's really the \"C.\"",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Old courtroom transcript reads like a joke. This actually happened...\nATTORNEY: Doctor, before you performed the autopsy, did you check for a pulse?\nWITNESS: No.\nATTORNEY: Did you check for blood pressure?\nWITNESS: No.\nATTORNEY: Did you check for breathing?\nWITNESS: No.\nATTORNEY: So, then it is possible that the patient was alive when you began the autopsy?\nWITNESS: No.\nATTORNEY: How can you be so sure, Doctor?\nWITNESS: Because his brain was sitting on my desk in a jar.\nATTORNEY: But could the patient have still been alive, nevertheless?\nWITNESS: Yes, it is possible that he could have been alive and practicing law.",
+   "source": "https://www.boredpanda.com/funny-hilarious-jokes/"
+  },
+  {
+   "text": "Where do surfers go for an education? Boarding school.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Waiting for election results is like waiting for a grade on a group project.\nI know I did my part right, but I am worried the rest of you messed it up.",
+   "source": "https://www.boredpanda.com/funny-hilarious-jokes/"
+  },
+  {
+   "text": "Is this pool safe for diving? It deep ends.",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "Today I decided to go visit my childhood home. I asked the residents if I could come inside because I was feeling nostalgic, but they refused and slammed the door on my face. My parents are the worst.",
+   "source": "https://www.boredpanda.com/dark-jokes/"
+  },
+  {
+   "text": "Why did the gym go out of business? It didn’t work out.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the snowman buy a bag of carrots? He wanted to pick his nose.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "A brunette and a blond meet on opposite sides of a river. The brunette calls out across the gap, “How do I get to the other side of the river?” The blond responds, “You are on the other side of the river.”",
+   "source": "https://www.boredpanda.com/people-share-funniest-jokes/"
+  },
+  {
+   "text": "Why did the whale blush? It saw the ocean’s bottom.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How many tickles does it take to make an octopus laugh? Ten-tickles.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "\"My mom said she learned how to swim when someone took her out in the lake and threw her off the boat. I said, \"Mom, they weren’t trying to teach you how to swim.\"\" — Paula Poundstone",
+   "source": "https://www.boredpanda.com/stand-up-comedy-jokes/"
+  },
+  {
+   "text": "How do you get an astronaut’s baby to stop crying? You rocket.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why do bees have sticky hair? Because they use honey combs.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call a farm that grows bad jokes?\nCorny.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "How do you make a robot angry? Keep pushing his buttons.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "My granddad always used to say, “As one door closes another one opens.”\nLovely man.\nTerrible cabinet maker.",
+   "source": "https://www.boredpanda.com/funny-hilarious-jokes/"
+  },
+  {
+   "text": "People think \"icy\" is the easiest word to spell. Come to think of it, I see why.",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "“Disney is creating live-action versions of their films, and everyone from my high school is having kids. Unnecessary remakes of something I grew up with are being shown to unnecessary remakes of something I grew up with.” — Nat Baimel",
+   "source": "https://www.boredpanda.com/stand-up-comedy-jokes/"
+  },
+  {
+   "text": "What do you call the month that soldiers hate most?\nMarch.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "Why did the belt get arrested? It held up a pair of pants.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Putin is held hostage by a terrorist. A Russian truckdriver stops at the back of a long queue on the motorway. He sees a policeman walking down the line of stopped cars to briefly talk to the drivers. As the policeman approaches the truck, the truckdriver rolls down his window and asks, \"What's going on?\"\nPoliceman: \"A terrorist is holding Putin hostage in a car. He's demanding 10 million rubles, or he'll douse Putin in petrol and set him on fire. So we're asking drivers for donations.\"\nDriver: \"Oh, ok. How much do people donate on average.\"\nPoliceman: \"About a gallon.\"",
+   "source": "https://www.boredpanda.com/long-jokes/"
+  },
+  {
+   "text": "What happens when ice cream gets angry? It has a meltdown.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Feel free to use me as a bad example. That way, I won’t be totally useless.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "How do you find a cheetah in the dark? Use a spotlight.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why shouldn’t you trust trees? They seem shady.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call a sad coffee?\nDepresso.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "Why did the chicken cross the playground? To get to the other slide.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do lawyers wear to work? Law suits.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What sits on the seabed and has anxiety? A nervous wreck.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "“The worst time to have a heart attack is during a game of charades.” — Demetri Martin",
+   "source": "https://www.boredpanda.com/stand-up-comedy-jokes/"
+  },
+  {
+   "text": "The teacher was terrified to hear Little Johnny swear. “I never want you to use language like that again. Where on earth did you pick it up?” “From my father,” said Johnny. “Well, he should be ashamed of himself. And it’s no reason for you to talk like that. You don’t even know what it means.” “I do,” said Johnny. “It means the car won’t start.”",
+   "source": "https://www.boredpanda.com/little-johnny-jokes/"
+  },
+  {
+   "text": "What did one toilet say to the other? You appear a bit flushed.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the girl toss a clock out the window? She wanted to see time fly.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why was the traffic light late to work? It took too long to change.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What's the difference between a piano and a fish? You can tune a piano but you can't tuna fish.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What did one wall say to the other? I’ll meet you at the corner.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I broke my finger last week.\nOn the other hand, I’m okay.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "Where do sheep go on vacation? The Baaaa-hamas.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Little Johnny asks the teacher, “Can I be punished for something I haven’t done?”\nThe teacher is shocked. “Of course not, Johnny! That would be very unfair!”\nJohnny is relieved. “That’s good to know,” he says, “Because I haven’t done my homework.”",
+   "source": "https://www.boredpanda.com/little-johnny-jokes/"
+  },
+  {
+   "text": "Today, my son asked \"Can I have a book mark?\" and I burst into tears. 11 years old and he still doesn't know my name is Brian.",
+   "source": "https://www.boredpanda.com/funny-dad-jokes-puns/"
+  },
+  {
+   "text": "Who do you call to clean the ocean? Mermaids.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the cookie go to the doctor? It was feeling crumby.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why do melons have weddings? Because they cantaloupe.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Teacher: \"How much is half of 8?\"\nLittle Johnny: \"Up and down or across?\"\nTeacher: \"What do you mean?\"\nLittle Johnny: \"Well, up and down makes a 3, or across the middle leaves a 0!\"",
+   "source": "https://www.boredpanda.com/little-johnny-jokes/"
+  },
+  {
+   "text": "Teacher: \"Now Little Johnny, be honest, do you say your prayers every night before dinner?\"\nJohnny: \"No miss, my mother is a really good cook.\"",
+   "source": "https://www.boredpanda.com/little-johnny-jokes/"
+  },
+  {
+   "text": "All my imaginary friends tell me that I need therapy.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "Boss: \"You called in sick yesterday and said you had the Coronavirus. You can't be here until you get tested.\"\nMe: \"I said I had a case of Corona and I wasn't coming in to work. I never said anything about a virus.\"",
+   "source": "https://www.boredpanda.com/boss-jokes/"
+  },
+  {
+   "text": "I got excited when my son joined the cross-country team. But then I learned they don't cross the country and are back home in a few hours.",
+   "source": "https://www.boredpanda.com/travel-jokes/"
+  },
+  {
+   "text": "Woman on the phone: \"My husband accidentally swallowed an Aspirin, what should I do now?\"\n“Give him a headache!” says the doctor.",
+   "source": "https://www.boredpanda.com/medical-jokes/"
+  },
+  {
+   "text": "If a child refuses to sleep during nap time, are they guilty of resisting a rest?",
+   "source": "https://www.boredpanda.com/funny-dad-jokes-puns/"
+  },
+  {
+   "text": "When the class was asked what they would do if they won the lottery, Johnny didn’t say anything and laid back in his seat. He said that if he won the lottery, then he would have a secretary to answer the question.",
+   "source": "https://www.boredpanda.com/little-johnny-jokes/"
+  },
+  {
+   "text": "Just got fired from my job as a set designer. I left without making a scene.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "During my check-up I asked the Doctor, \"Do you think I'll live a long and healthy life then?\"\nHe replied, \"I doubt it somehow. Mercury is in Uranus right now.\"\nI said, \"I don't go in for any of that astrology nonsense.\"\nHe replied, \"Neither do I. My thermometer just broke.\"",
+   "source": "https://www.boredpanda.com/long-jokes/"
+  },
+  {
+   "text": "What did E.T.'s mother say to him when he got home?\n“Where on Earth have you been?”",
+   "source": "https://www.boredpanda.com/travel-jokes/"
+  },
+  {
+   "text": "If you see a crime at an Apple store, are you an iWitness?",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "What do you call a medieval lamp? A knight light.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Did you hear about the guy who was addicted to the hokey pokey? He turned himself around.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I’m on my 36th selfie attempt, and I’m still refusing to acknowledge that this isn’t my day.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "Someone broke in last night and stole all my anti-depressants. I hope they’re happy.",
+   "source": "https://www.boredpanda.com/funny-dad-jokes-puns/"
+  },
+  {
+   "text": "Not to brag, but I haven’t had a mood swing in, like, 7 minutes.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "\"Mom? Don't freak out, but I'm in the hospital...\"\n\"Jeremy, you've been a doctor for over 8 years now, please stop starting every phone conversation we have with that.\"",
+   "source": "https://www.boredpanda.com/medical-jokes/"
+  },
+  {
+   "text": "Why did the rabbit go to the salon? It was having a bad hare day.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Where do boats go when they’re sick? To the dock.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "\"If there are any idiots in the room, will they please stand up\", said the sarcastic teacher.\nAfter a long silence, one freshman rose to his feet.\n\"Now then mister, why do you consider yourself an idiot?\", inquired the teacher with a sneer.\n\"Well, actually I don't,\" said the student, \"but I hate to see you standing up there all by yourself.\"",
+   "source": "https://www.boredpanda.com/long-jokes/"
+  },
+  {
+   "text": "Where do armies belong? In your sleevies.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call a happy cowboy? A jolly rancher.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What's the best way to make a bandstand? Take away their chairs.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How do you light up a sports stadium? With a soccer match.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Some of the older neighbourhood boys have been making fun of Little Johnny lately. Their latest trick is to offer Johnny his choice between a nickel and a dime. Johnny always takes the nickel and the older boys laugh at him.\nOne day a neighbor sees what is going on and approaches Little Johnny and says \"Those boys are making fun of you Johnny, don't you realise that a dime is bigger than a nickel?\"\nJohnny smiles and says \"Yes I realise that, but if I took the dime they would stop doing it and I am up 20 bucks so far.\"",
+   "source": "https://www.boredpanda.com/little-johnny-jokes/"
+  },
+  {
+   "text": "Where did people hang out during medieval times? At knight clubs.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How do you make an eggroll? You push it.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I got fired from my job at the coffee factory. My boss said it was because I had no filter.",
+   "source": "https://www.boredpanda.com/boss-jokes/"
+  },
+  {
+   "text": "Why did the tailor get fired? He wasn’t a good fit.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What kind of underpants do lawyers wear? Briefs.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Doctor: I have good news and bad news.\nPatient: OK, first, what's the good news?\nDoctor: You have 24 hours to live.\nPatient: Oh god, just 24 hours to live, that is good news? I can't imagine what the bad news is going to be.\nDoctor: I forgot to phone you yesterday.",
+   "source": "https://www.boredpanda.com/people-share-funniest-jokes/"
+  },
+  {
+   "text": "How do you make a tissue dance? Put a little boogie in it.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "My husband is mad that I have no sense of direction. So I packed up my stuff and right.",
+   "source": "https://www.boredpanda.com/dark-jokes/"
+  },
+  {
+   "text": "Why did the watch go on vacation? To unwind.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What month has 28 days? All of them.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How does a dog stop a video? By hitting the paws button!",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "Phil walks into his boss's office one day and says, \"Sir, I'll be honest with you. I know the economy isn't great, but I've got three companies after me, and I'd like to ask for a raise, respectfully.\" After a few minutes of haggling, the boss finally agrees to give him a 5 percent raise, and he happily gets up to leave. \"By the way,\" the boss asks as Phil leaves his office, \"which three companies are after you?\" Phil replies, \"The electric company, water company, and phone company.\"",
+   "source": "https://www.boredpanda.com/jokes-about-office/"
+  },
+  {
+   "text": "What kind of felines can bowl? Alley cats.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "My boss told me to have a good day.\nSo I went home.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "What do you call a guy who doesn’t have shins? Tony.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Did you hear about the guy who drank invisible ink? He's at the hospital waiting to be seen.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "The other day, my wife asked me to pass her lipstick but I accidentally passed her a glue stick. She still isn't talking to me.",
+   "source": "https://www.boredpanda.com/dark-jokes/"
+  },
+  {
+   "text": "Why did the duck fall on the sidewalk? He tripped on a quack.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I need six months of vacation, twice a year.",
+   "source": "https://www.boredpanda.com/travel-jokes/"
+  },
+  {
+   "text": "“Twenty years ago we had Johnny Cash, Bob Hope and Steve Jobs. Now we have no Cash, no Hope and no Jobs. Please don’t let Kevin Bacon die.” — Bill Murray",
+   "source": "https://www.boredpanda.com/stand-up-comedy-jokes/"
+  },
+  {
+   "text": "The boss asked Mark to start the presentation with a joke. He shared his paycheck as the first slide.",
+   "source": "https://www.boredpanda.com/jokes-about-office/"
+  },
+  {
+   "text": "Where do rainbows go after being arrested? Prism.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Two guys walk into a bar. The third one ducked.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call it when a cow grows facial hair? A moo-stache.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Do you want to know what always makes me smile?\nFace muscles.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "It was an emotional wedding. Even the cake was in tiers.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "When life gives you melons, you might be dyslexic.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "Halfway between New York City and Washington, D.C., the train's engine fell silent. \"I've got good news and bad news,\" the conductor announced. \"The bad news is we lost power.\" My fellow passengers groaned. \"The good news,\" he added, \"is we weren't cruising at 30,000 feet.\"",
+   "source": "https://www.boredpanda.com/travel-jokes/"
+  },
+  {
+   "text": "Why don't astronauts like gravity? It brings them down.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "My wife told me she'll slam my head on the keyboard if I don't get off the computer. I'm not too worried, I think she's jokinlkjhfakljn m,.nbziyoao78yv87dfaoyuofaytdf.",
+   "source": "https://www.boredpanda.com/dark-jokes/"
+  },
+  {
+   "text": "What do you call a tiny mother?\nA minimum!",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "What did the mama cow say to the baby cow? It’s pasture bed time.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "You don’t need a parachute to go skydiving. You need a parachute to go skydiving twice.",
+   "source": "https://www.boredpanda.com/dark-jokes/"
+  },
+  {
+   "text": "What do cows like to read? Cattle-logs.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "A little old lady goes to her doctor for a checkup. The doctor asks her if she is having any problems.\n“Yes doctor I have a problem. I have to fart a lot. I fart all the time. Fortunately no one can hear them or smell them. In fact I have farted twice just since you came in. I bet you couldn’t hear or smell them, could you.”\nThe doctor gives her an examination and says to her, “I can treat this problem with an over-the-counter medication, a prescription, and a referral. The over-the-counter medication will help your body produce less gas, the prescription medication will help you recover your sense of smell, and I am giving you a referral to an Audiologist to see if they can help you to hear better.”",
+   "source": "https://www.boredpanda.com/people-share-funniest-jokes/"
+  },
+  {
+   "text": "Why are libraries so tall? Because they have many stories.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What did one volcano say to the other? I lava you.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Dogs can’t operate MRI machines — but cats-can.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why is no one friends with Dracula? Because he's a pain in the neck.",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "What does an evil hen lay? Deviled eggs.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "On vacation in Hawaii, my stepmom, Sandy, called a café to make reservations for 7 p.m. Checking her book, the cheery young hostess said, \"I'm sorry, all we have is 6:45. Would you like that?\"\n\"That's fine,\" Sandy said.\n\"Okay,\" the woman confirmed. Then she added, \"Just be advised you may have to wait 15 minutes for your table.\"",
+   "source": "https://www.boredpanda.com/travel-jokes/"
+  },
+  {
+   "text": "Two fish are in a tank. One turns to the other and says, “Any idea how to drive this thing?”",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "An MIT linguistics professor was lecturing his class the other day. \"In English,\" he said, \"A double negative forms a positive. However, in some languages, such as Russian, a double negative remains a negative. But there isn't a single language, not one, in which a double positive can express a negative.\"\nA voice from the back of the room said, \"Yeah, right.\"",
+   "source": "https://www.boredpanda.com/long-jokes/"
+  },
+  {
+   "text": "Have you ever heard of “quiet tennis?” It's the same as regular tennis but without the racket.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Give a man a match, and he’ll be warm for a few hours.\nSet him on fire, and he will be warm for the rest of his life.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "The doctor gave me one year to live, so I shot him. The judge gave me 15 years. Problem solved.",
+   "source": "https://www.boredpanda.com/dark-jokes/"
+  },
+  {
+   "text": "How did the computer catch cold? It left a window open.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What kind of music should you listen to while fishing? Something catchy!",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call a shoe made out of a banana? A slipper.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "My 7 year old nephew showed me with pride the \"telephone\" he had just made from a string and two tin cans. I pulled out my iPhone and said, \"That's nice, but...\"\n\"Look at what kids your age make in China!\"",
+   "source": "https://www.boredpanda.com/funny-hilarious-jokes/"
+  },
+  {
+   "text": "I’m only posting on social media so everyone else can feel better about themselves. You’re welcome.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "“I used to work at McDonald’s making minimum wage. You know what that means when someone pays you minimum wage? You know what your boss was trying to say? ‘Hey, if I could pay you less, I would, but it’s against the law.’” — Chris Rock",
+   "source": "https://www.boredpanda.com/stand-up-comedy-jokes/"
+  },
+  {
+   "text": "A guy is skydiving. He pulls the ripcord and nothing happens. He pulls the reserve and nothing happens.\nHe is beginning to panic when he notices a guy coming up towards him at an alarming rate. He shouts ‘Do you know anything about parachutes?’\nGuy answers, ‘No… do you know anything about gas BBQs?’",
+   "source": "https://www.boredpanda.com/people-share-funniest-jokes/"
+  },
+  {
+   "text": "So what if I don't know what \"Armageddon\" means? It's not the end of the world.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "A woman holding her little baby in her arms gets onto a bus. The driver says, “Wow, that’s an ugly baby!”\nThe woman is outraged, but says nothing. As she walks back to an open seat, another passenger sees that she is upset, and asks why. She says, “That bus driver was so rude and insulting!”\nThe passenger says, “Why, you just go right back and give the driver a piece of your mind! Here, I’ll hold your monkey.”",
+   "source": "https://www.boredpanda.com/people-share-funniest-jokes/"
+  },
+  {
+   "text": "Why shouldn't you argue with a skunk? It'll cause a stink.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why aren’t lobsters generous? Because they’re shellfish.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "To make an error is human, to blame it on someone else shows management potential.",
+   "source": "https://www.boredpanda.com/jokes-about-office/"
+  },
+  {
+   "text": "Someone stole my mood ring yesterday.\nI still don’t know how I feel about that.",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "Did you hear about the walnut and cashew that threw a party? It was nuts.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Scientist: \"My findings are meaningless if taken out of context.\"\nMedia: Scientist claims \"Findings are meaningless.\"",
+   "source": "https://www.boredpanda.com/funny-hilarious-jokes/"
+  },
+  {
+   "text": "I was going to tell a sodium joke, then I thought, “Na.”",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Did you hear about the queen who's only 12 inches tall? She's a great ruler.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I’ve been a dad for 26 years, so this is the real deal: I was abducted by a group of mimes. They did unspeakable things to me.",
+   "source": "https://www.boredpanda.com/funny-dad-jokes-puns/"
+  },
+  {
+   "text": "Why are fish so smart? Because they swim in schools.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Today’s a really wonderful day. I don’t trust it.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "I’m the human equivalent of a typo.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "What should you do if you meet a giant? Use big words.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "They say dress for the job you want, not the job you have. My boss still didn’t think a spacesuit was “appropriate work attire.”",
+   "source": "https://www.boredpanda.com/boss-jokes/"
+  },
+  {
+   "text": "Watch me make bad decisions even without the influence of alcohol.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "What do clouds wear beneath their pants? Thunderwear.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What did the blanket say to the bed? I’ve got you covered.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call a key that opens the door on Thanksgiving?\nA turkey.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "How do you fix a broken pumpkin? With a pumpkin patch.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "The man who invented knock-knock jokes should get a no bell prize.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "Did you hear about the wig thief who escaped from prison? Police are combing the area to find him.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "My girlfriend’s dog died, so I tried to cheer her up by getting her an identical one. It just made her more upset. She screamed at me and said, “What am I supposed to do with two dead dogs?”",
+   "source": "https://www.boredpanda.com/dark-jokes/"
+  },
+  {
+   "text": "I told my boss that I wanted an increase in my paycheck. My next one had a larger font.",
+   "source": "https://www.boredpanda.com/boss-jokes/"
+  },
+  {
+   "text": "I have an inferiority complex, but it’s not a very good one.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How do birds learn to fly? They wing it.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I went to the doctor with hearing problems. He asked, \"Can you describe the symptoms?\" So, I replied, \"Homer's fat, and Marge has blue hair.\"",
+   "source": "https://www.boredpanda.com/medical-jokes/"
+  },
+  {
+   "text": "You know what they say?\nWords.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "At my boss's funeral, kneeling and whispering at the coffin: \"Who's thinking outside the box now, Gary?\"",
+   "source": "https://www.boredpanda.com/boss-jokes/"
+  },
+  {
+   "text": "What do you call an American bee?\nUSB.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "I taught my kids about democracy tonight by having them vote on what movie to watch and pizza to order.\nAnd then I picked the movie and pizza I wanted because I'm the one with the money.",
+   "source": "https://www.boredpanda.com/funny-hilarious-jokes/"
+  },
+  {
+   "text": "What did one hat say to the other? You go on ahead.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "When does a joke become a dad joke? When the punchline becomes apparent.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why don't aliens visit our planet?\nIt has terrible ratings. One star.",
+   "source": "https://www.boredpanda.com/travel-jokes/"
+  },
+  {
+   "text": "Do you know what they say about a clean desk? It's a sure sign of a cluttered desk drawer.",
+   "source": "https://www.boredpanda.com/jokes-about-office/"
+  },
+  {
+   "text": "How do bees get to school? On the school buzz.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "My wife told me to stop impersonating a flamingo. I had to put my foot down.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "What do you give the dentist of the year? A little plaque.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Jesus was walking around Heaven one day. In a small, secluded garden He saw an old man, crying. Alarmed, Jesus ran up to him and said, “Hey, now, what’s all this? This is paradise. There should be no tears or sorrow.”\nThe old man wiped away his tears and said, “Oh, I know. I’m sorry. But… well, many years ago, a son came to me through… well, let’s say ‘mysterious circumstances’. After many trials he went through a miraculous transformation, and a book was written about him that became known the world over. I thought I would find him here, but I haven’t. I’m afraid I’ll never see him again.”\nWide-eyed, Jesus looked at the man and said, “Wait a minute… You weren’t, by any chance… a carpenter, were you?”\nThe man looked up in surprise. “Why, yes. Yes, I was!”\nJesus burst into tears of joy and held out His arms saying, “Father!”\nThe man cocked his head doubtfully and said, “Pinocchio???”",
+   "source": "https://www.boredpanda.com/people-share-funniest-jokes/"
+  },
+  {
+   "text": "Did you hear about the stolen dog collar? Police are looking for leads.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "You’ve never felt true fear until your passport isn’t where you think you left it.",
+   "source": "https://www.boredpanda.com/travel-jokes/"
+  },
+  {
+   "text": "What kind of bug can tell time? A clock-roach.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Teacher: \"Can you tell me something important that didn't exist 100 years ago?\"\nLittle Johnny: \"Me!\"",
+   "source": "https://www.boredpanda.com/little-johnny-jokes/"
+  },
+  {
+   "text": "How much does it cost to swim with sharks? An arm and a leg.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How did the dog get all A’s on its report card? It was the teacher’s pet.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What is the worst combination of illnesses? Alzheimer’s and diarrhea. You’re running but can’t remember where.",
+   "source": "https://www.boredpanda.com/dark-jokes/"
+  },
+  {
+   "text": "A horse walks into a bar. The bartender says, \"Why the long face?\"",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I googled “Rorschach test.”\nBut for some reason, all that came up were pictures of my parents fighting.",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "Yesterday, the doctor told me I was colorblind. The diagnosis came completely out of the purple.",
+   "source": "https://www.boredpanda.com/medical-jokes/"
+  },
+  {
+   "text": "What did the buffalo say to her son on the first day of school? “Bison.”",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I used to be addicted to soap, but I’m clean now.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "What do you call two ducks and a cow? Quackers and milk.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I miss the times when I was working at the zoo. My boss fired me just because I left the lion's gate open. I mean, who would steal a lion?",
+   "source": "https://www.boredpanda.com/boss-jokes/"
+  },
+  {
+   "text": "I adopted a dog from a blacksmith. As soon as I brought him home, he made a bolt for the door.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Tim decided to tie the knot with his long time girlfriend. One evening, after the honeymoon, he was organizing his golfing equipment. His wife was standing nearby watching him. After a long period of silence she finally speaks: \"Tim, I've been thinking, now that we're married maybe it's time you quit golfing. You spend so much time on the course. You could probably get a good price for your clubs.\"\nTim gets this horrified look on his face.\nShe says, \"Darling, what's wrong?\"\n\"For a minute there you were beginning to sound like my ex-wife.\"\n\"Ex-wife!\" she screams, \"I didn't know you were married before!\"\n\"I wasn't,\" he replied.",
+   "source": "https://www.boredpanda.com/long-jokes/"
+  },
+  {
+   "text": "What kind of tree fits in your hand? A palm tree.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Doctor: \"You are very ill.\"\nPatient: \"Is it okay if I get a second opinion?\"\nDoctor: \"Of course! You are very ugly too.\"",
+   "source": "https://www.boredpanda.com/medical-jokes/"
+  },
+  {
+   "text": "What did the roof say to the shingle? The first one’s on the house.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Where do books hide when they’re afraid? Under their covers.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the Oreo go to the dentist? It lost its filling.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you get when you cross an ornery sheep with a crabby cow? A real baa-d moo-d.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Waitress: \"Ok, well if you need anything, my name’s Jennifer.\"\nMe: \"What’s your name if we don’t need anything?\"",
+   "source": "https://www.boredpanda.com/funny-dad-jokes-puns/"
+  },
+  {
+   "text": "A man is walking through the woods when he sees a bear charging at him.\nHe books it, but he knows he can't outrun a bear for long, so he starts praying, \"Dear Lord, I beseech thee. Please, o Lord, please let this bear be a Christian!\"\nThe bear catches up to him, knocks him down on the ground, then gets on its knees and says, \"Dear Lord, thank you for this food I am about to receive...\"",
+   "source": "https://www.boredpanda.com/long-jokes/"
+  },
+  {
+   "text": "It's always windy in a sports arena. All those fans...",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "Why doesn’t it hurt if someone throws a can of Coke at your head? Because it’s a soft drink.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why was the broom late? It over-swept.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the guy get fired from the calendar factory? He took a day off.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the car take a nap? It was tired.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I used to think I was indecisive. But now I’m not so sure.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "I always arrive late to work. But I make up for it by leaving early.",
+   "source": "https://www.boredpanda.com/jokes-about-office/"
+  },
+  {
+   "text": "Where do fingers grow? On palm trees.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What did one leaf say to the other? I’m falling for you.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why do ducks have feathers on their tails? To hide their butt-quacks.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call a cow with two legs? Lean beef.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Where’s the one place you should never take your dog? The flea market.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "If I remember correctly, the last time that I was someone’s type was when I was donating blood in the blood drive.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "What do French hedgehogs see on Groundhog Day? Their chateau.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "A guy is sitting at home when he hears a knock at the door. He opens the door and sees a snail on the porch. He picks up the snail and throws it as far as he can.\nA year later, there’s another knock at the door. He opens it and sees the same snail. The snail says, “What was that all about?”",
+   "source": "https://www.boredpanda.com/long-jokes/"
+  },
+  {
+   "text": "What do horses do when it's time for bed? Hit the hay.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why didn’t the sun go to college? It already had a million degrees.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Patient: “Please help me! I can’t stop my hands from shaking.”\nDoctor: “Do you drink often?”\nPatient: “Not really, I end up spilling most of it.”",
+   "source": "https://www.boredpanda.com/medical-jokes/"
+  },
+  {
+   "text": "Our vacuum cleaner is getting old. It's just gathering dust.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you call a cold puppy? A chili dog.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How do you make people think you’re the boss?\nStand around and do nothing.",
+   "source": "https://www.boredpanda.com/boss-jokes/"
+  },
+  {
+   "text": "What kind of jewelry do rabbits wear? 14 carrot gold.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Adam & Eve were the first ones to ignore the Apple terms and conditions.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "How many feet are in a yard? It depends on how many people are standing there.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you get when you cross a fish with an elephant? Swimming trunks.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How many apples can you grow on a tree? All of them.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What sounds like a sneeze and is made of leather? A shoe.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do we want?\nLow-flying airplane noises!\nWhen do we want them?\nNnnnneeeeeeeeeeoooooooooow!",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "What did the pirate say on his birthday? “Aye, matey!”",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I used to be a banker, but I lost interest.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "The past, present and future walked into a bar. It was tense.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I went for a job interview. The interviewer told me I'd start on $2,000 a month, and then after six months, I'd be on $2,500 a month. I told them I would start in 6 months.",
+   "source": "https://www.boredpanda.com/jokes-about-office/"
+  },
+  {
+   "text": "Right before surgery the surgeon says, \"Relax, Jim. It's just a small scalpel incision. No reason to panic.\"\nThe patient replies, \"But, Doctor, my name is not Jim.\"\nThe surgeon responds, \"I know. I'm Jim.\"",
+   "source": "https://www.boredpanda.com/medical-jokes/"
+  },
+  {
+   "text": "What do you call it when a baby does not believe in Santa?\nA rebel without a claus.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "What do you give a scientist with bad breath? Experi-mints.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How many people work in my company?\nAbout half.",
+   "source": "https://www.boredpanda.com/jokes-about-office/"
+  },
+  {
+   "text": "Why can’t you trust a balloon? It’s full of hot air.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Dad: \"Did you know that the people living nearby actually can’t be buried in that cemetery?\"\nKid: \"Why?\"\nDad: \"Because they’re not dead yet.\"",
+   "source": "https://www.boredpanda.com/funny-dad-jokes-puns/"
+  },
+  {
+   "text": "Did you hear about the archeologist that got fired? His career is in ruins.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "“So what have you been doing at school today, Johnny?”\n“I don’t really want to talk about it, mom. You’ll see it later on the news, anyways.”",
+   "source": "https://www.boredpanda.com/little-johnny-jokes/"
+  },
+  {
+   "text": "Why shouldn't you tell secrets in a cornfield? Too many ears around.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why do bakers work so hard? Because they knead the dough.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "A salesperson came into an office one day and said \"This computer will cut your workload by 50%!\" The office manager replied \"Great, I'll take two of them!\"",
+   "source": "https://www.boredpanda.com/jokes-about-office/"
+  },
+  {
+   "text": "The scene is a funeral wake. Several people have given moving tributes to the deceased, and now the grieving widow asks if anybody else would like to add anything. A man stands up.\n‘May I say a word?’ he asks.\n‘Of course,’ says the widow.\n‘Plethora,’ says the man.\n‘Thank you: that means a lot to me,’ replies the widow.",
+   "source": "https://www.boredpanda.com/people-share-funniest-jokes/"
+  },
+  {
+   "text": "Why did the deer go to the dentist? It had buck teeth.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I question my sanity a lot of times. Every now and then, it replies.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "Job interviewer: Where do you see yourself in 5 years?\nMe: I would say my biggest weakness is listening.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "Parallel lines have so much in common.\nIt’s a shame they’ll never meet.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "Why did the toilet paper roll down the hill? It wanted to get to the bottom.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "English teacher asks the class: “Which tense is the sentence ‘I AM BEAUTIFUL’?”\nLittle Johnny replies, “Clearly, past tense.”",
+   "source": "https://www.boredpanda.com/little-johnny-jokes/"
+  },
+  {
+   "text": "Why did the professor go to the eye doctor? He was missing a pupil.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What’s the similarity between a broken pencil and my life? They’re both pointless.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "Why did the orange stop halfway across the road? It ran out of juice.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Did you hear about the cleaners who went to space? They ended up scrubbing the mission.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I told a bad chemistry joke once. I got no reaction.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I went to buy some camo pants but couldn’t find any.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "What do you call a cute door?\nAdorable.",
+   "source": "https://www.boredpanda.com/what-do-you-call-jokes/"
+  },
+  {
+   "text": "What do you call a fly without wings? A walk.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I ordered a chicken and an egg from Amazon.\nI'll let you know.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "An employee is getting to know her new coworkers when the topic of her last job comes up. One coworker asks why she left that job.\n“It was something my boss said,” the woman replied.\n“Why? What did he say?” the coworker asked.\n“He said: ‘You’re fired.’”",
+   "source": "https://www.boredpanda.com/jokes-about-office/"
+  },
+  {
+   "text": "Why didn’t the skeleton go to the dance?\nBecause he had no body to go with.",
+   "source": "https://www.boredpanda.com/clean-jokes/"
+  },
+  {
+   "text": "Where does a sheep go to get a haircut? The baa baa shop.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "A wife got so mad at her husband she packed his bags and told him to get out. As he walked to the door she yelled, \"I hope you die a long, slow, painful death.\"\nHe turned around and said, \"So, you want me to stay?\"",
+   "source": "https://www.boredpanda.com/long-jokes/"
+  },
+  {
+   "text": "Why don't lions eat clowns? Because they taste funny.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I was wondering why the frisbee kept getting bigger and bigger, but then it hit me.",
+   "source": "https://www.boredpanda.com/one-liner-jokes/"
+  },
+  {
+   "text": "How can you tell the difference between a dog and tree? By their bark.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the picture go to jail? He was framed.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How do you hire a horse? Put up a ladder.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What sort of dad tells jokes even though he doesn't have kids? A faux pas.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What kind of bagel can travel? A plain bagel.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I said “hello” to darkness my old friend, and it told me that it doesn’t want to be my friend.",
+   "source": "https://www.boredpanda.com/self-deprecating-jokes/"
+  },
+  {
+   "text": "My boss was honest with me today. He pulled up to work with his sweet new car this morning and I complimented him on it. He replied, \"Well, if you work hard, set goals, stay determined and put in long hours, I can get an even better one next year.\"",
+   "source": "https://www.boredpanda.com/long-jokes/"
+  },
+  {
+   "text": "\"And remember,\" said the boss, \"There's no I in TEAM!\"\n\"Yeah,\" muttered one of the peons, \"And there's not much sign of U in it either.\"",
+   "source": "https://www.boredpanda.com/boss-jokes/"
+  },
+  {
+   "text": "Did you hear about the kidnapping at school? They woke him up.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Dad at lunch: \"Do you have anything cheap? I’m not that hungry.\"\nWaiter: \"Well, maybe the chicken strips for $6.\"\nDad: \"Well, maybe it does, but that doesn’t help my hunger.\"",
+   "source": "https://www.boredpanda.com/funny-dad-jokes-puns/"
+  },
+  {
+   "text": "Where do you learn to make ice cream? Sundae school.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How do you cook an alligator? With a croc-pot.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Where do penguins go to vote? The North Poll.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "How do you organize a space party? You planet.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I can't stand kleptomaniacs.\nThey take things literally.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "How did the piano get locked out of its car? It lost its keys.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why do birds fly south? Because it’s too far to walk.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why did the computer go to bed? It needed to crash.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "People who use selfie sticks really need to have a good, long look at themselves.",
+   "source": "https://www.boredpanda.com/dry-humor-jokes/"
+  },
+  {
+   "text": "A polar bear was driving along the road when his car broke down. He called the recovery service who arrived within a short time. The mechanic said he would need about an hour to fix it. The polar bear walked to the nearest supermarket, where he bought himself an ice-cream. He ate it as he walked back to the car, but smeared some of it around his mouth.\nAs he got back to the car, the mechanic looks up at the polar bear and says 'it looks like you've blown a seal'. The polar bear looks embarrassed, wipes his mouth, and says 'No I haven't, it's just ice-cream’!",
+   "source": "https://www.boredpanda.com/people-share-funniest-jokes/"
+  },
+  {
+   "text": "I put my old car in reverse and thought, “Wow, this really takes me back.”",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Iamonthemoonandthereisnowheretogetabeer.\nThereisnospacebar.",
+   "source": "https://www.boredpanda.com/funny-hilarious-jokes/"
+  },
+  {
+   "text": "How do mice floss their teeth? With string cheese.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What’s the best way to get straight A’s in school? Use a ruler.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "What do you get when you cross a Smurf and a cow? Blue cheese.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "I wondered why the baseball was getting closer and closer. Then it hit me.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Why are frogs good at baseball? They know how to catch fly balls.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  },
+  {
+   "text": "Patient: “Doctor, doctor, I stood on a LEGO!”\nDoctor: “Try to block out the pain.”",
+   "source": "https://www.boredpanda.com/medical-jokes/"
+  },
+  {
+   "text": "\"My friends will ask me, \"Hey, since you were adopted, would you ever consider adoption?\" I'm like, “Yes. Absolutely. If I ever have kids, I want them to go to a good home.\"\" — Jamie Ward",
+   "source": "https://www.boredpanda.com/stand-up-comedy-jokes/"
+  },
+  {
+   "text": "What's the easiest building to lift? A lighthouse.",
+   "source": "https://www.today.com/life/dad-jokes-rcna27325"
+  }
+ ]
+}
