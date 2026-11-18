@@ -1,4 +1,4 @@
-name: UK Morning Digest
+name: Morning Digest
 
 # Основний запуск: cron-job.org о 08:00 за Києвом викликає workflow_dispatch через GitHub API
 #   (GitHub-овий schedule на безкоштовному тарифі запізнюється на 6-8 годин).
@@ -35,7 +35,7 @@ jobs:
         with:
           python-version: '3.12'
 
-      - run: pip install google-genai feedparser requests yfinance
+      - run: pip install google-genai feedparser requests yfinance beautifulsoup4
 
       - run: python send_digest.py
         env:
