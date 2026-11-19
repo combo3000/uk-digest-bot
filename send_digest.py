@@ -31,7 +31,9 @@ except ImportError:
 
 KYIV = ZoneInfo("Europe/Kyiv")
 USED_FILE = "used.json"
-MODELS = ["gemini-2.5-flash", "gemini-flash-latest", "gemini-flash-lite-latest"]
+# 2.5-flash — найграмотніша українська; при перевантаженні (503) пробуємо його ще раз
+# після паузи і лише потім беремо lite-модель, яка частіше помиляється в мові
+MODELS = ["gemini-2.5-flash", "gemini-flash-latest", "gemini-2.5-flash", "gemini-flash-lite-latest"]
 HISTORY_LIMITS = {"jokes": 200, "facts": 120, "numbers": 60,
                   "bp_jokes": 3000}  # id жартів з Bored Panda, щоб не повторюватись
 PER_SOURCE = 12                 # скільки статей з одного видання показуємо моделі
@@ -244,20 +246,35 @@ def weather_icon(code):
 
 
 def get_weather(lat, lon, city):
+    """Open-Meteo з повторами (зранку сервіс іноді не відповідає вчасно), запасне джерело — wttr.in."""
+    for attempt in range(1, 4):
+        try:
+            r = requests.get(
+                "https://api.open-meteo.com/v1/forecast",
+                params={"latitude": lat, "longitude": lon, "current": "temperature_2m,weather_code",
+                        "daily": "temperature_2m_max", "forecast_days": 1, "timezone": "auto"},
+                timeout=20,
+            )
+            r.raise_for_status()
+            d = r.json()
+            temp = round(d["current"]["temperature_2m"])
+            tmax = round(d["daily"]["temperature_2m_max"][0])
+            return f"{city}: {temp}°C {weather_icon(d['current']['weather_code'])} (вдень до {tmax}°)"
+        except Exception as e:
+            print(f"⚠️ Погода {city} (Open-Meteo, спроба {attempt}): {e}")
+            if attempt < 3:
+                time.sleep(5 * attempt)
     try:
-        r = requests.get(
-            "https://api.open-meteo.com/v1/forecast",
-            params={"latitude": lat, "longitude": lon, "current": "temperature_2m,weathercode",
-                    "daily": "temperature_2m_max", "forecast_days": 1, "timezone": "auto"},
-            timeout=10,
-        )
+        r = requests.get(f"https://wttr.in/{lat},{lon}", params={"format": "j1"},
+                         headers=HTTP_HEADERS, timeout=20)
+        r.raise_for_status()
         d = r.json()
-        temp = round(d["current"]["temperature_2m"])
-        tmax = round(d["daily"]["temperature_2m_max"][0])
-        return f"{city}: {temp}°C {weather_icon(d['current']['weathercode'])} (вдень до {tmax}°)"
+        temp = round(float(d["current_condition"][0]["temp_C"]))
+        tmax = round(float(d["weather"][0]["maxtempC"]))
+        return f"{city}: {temp}°C 🌡️ (вдень до {tmax}°)"
     except Exception as e:
-        print(f"⚠️ Погода {city}: {e}")
-        return f"{city}: недоступно"
+        print(f"⚠️ Погода {city} (wttr.in): {e}")
+    return f"{city}: недоступно"
 
 
 def get_stock(ticker, label, currency):
@@ -430,6 +447,7 @@ def build_prompt(articles, hist, joke_format, joke_topic, fact_theme, potd):
     facts = "; ".join(hist["facts"][-40:]) or "немає"
     numbers = "; ".join(hist["numbers"][-15:]) or "немає"
     return f"""Ти — редактор ранкового дайджесту для українського бізнесмена (фарма, експорт, геополітика, економіка, технології, наука, культура). Пишеш українською: живо, стисло, з цифрами, без води і канцеляриту. Без markdown.
+Грамотність понад усе: пиши як досвідчений український редактор — без орфографічних помилок, без русизмів і калькованих зворотів, лише справжні усталені слова й терміни (бейсбол, локаут, мімікрія). Не вигадуй слів і не складай дивних словосполучень; якщо не впевнений у терміні — скажи простіше.
 
 Нижче {len(articles)} свіжих статей з провідних видань (англійською, німецькою, іспанською — пиши все українською). У кожної є номер [id].
 
@@ -489,6 +507,60 @@ def potd_task(potd):
 """
 
 
+PROOFREAD_PROMPT = """Ти — прискіпливий коректор українського видання. Нижче JSON з текстами ранкового дайджесту.
+Виправ у кожному тексті:
+• орфографічні, граматичні й пунктуаційні помилки, одруківки (наприклад «Бейбольна» → «Бейсбольна», «локакаут» → «локаут»);
+• русизми, кальки та неіснуючі або безглузді слова й словосполучення («виражений мімікрійний трюк» → «мімікрія»);
+• неприродні звороти — заміни на звичайну живу українську.
+НЕ змінюй зміст, факти, цифри, імена й назви, не додавай нічого нового, не скорочуй без потреби.
+Якщо текст уже бездоганний — поверни його без змін.
+Поверни ТІЛЬКИ JSON з тими самими ключами і виправленими текстами.
+
+"""
+
+
+def proofread(client, config, data):
+    """Друга прохідка: Gemini-коректор виправляє описки в українських текстах дайджесту.
+    Якщо щось пішло не так — лишаємо тексти як були."""
+    texts = {}
+    for key in ("top", "sport", "culture", "crazy"):
+        for i, c in enumerate(data.get(key) or []):
+            if isinstance(c, dict) and str(c.get("text", "")).strip():
+                texts[f"{key}.{i}"] = c["text"]
+    num = data.get("number")
+    if isinstance(num, dict) and num.get("text"):
+        texts["number"] = num["text"]
+    for key in ("fact", "potd_caption"):
+        if isinstance(data.get(key), str) and data[key].strip():
+            texts[key] = data[key]
+    if not texts:
+        return
+    fixed = ask_gemini(client, config, PROOFREAD_PROMPT + json.dumps(texts, ensure_ascii=False, indent=1),
+                       required=(next(iter(texts)),))
+    if not fixed:
+        print("⚠️ Коректура не вдалася — лишаю тексти без змін")
+        return
+    changed = 0
+    for k, old in texts.items():
+        new = fixed.get(k)
+        # захист: коректор не мав переписати текст — лише виправити (довжина приблизно та сама)
+        if not isinstance(new, str) or not new.strip() or not 0.6 <= len(new) / len(old) <= 1.4:
+            continue
+        new = new.strip()
+        if new == old.strip():
+            continue
+        changed += 1
+        print(f"✏️ {k}: {old[:70]} → {new[:70]}")
+        if "." in k:
+            sect, i = k.split(".")
+            data[sect][int(i)]["text"] = new
+        elif k == "number":
+            data["number"]["text"] = new
+        else:
+            data[k] = new
+    print(f"✏️ Коректура: виправлено текстів — {changed}")
+
+
 def make_client():
     from google import genai
     from google.genai import types
@@ -506,7 +578,11 @@ def parse_json(txt):
 
 
 def ask_gemini(client, config, prompt, required):
+    tried = set()
     for model in MODELS:
+        if model in tried:                       # повторний захід на ту саму модель — даємо їй «видихнути»
+            time.sleep(30)
+        tried.add(model)
         for attempt in range(1, 3):
             try:
                 # друга спроба — без JSON-режиму (промпт і так просить JSON, parse_json його витягне)
@@ -810,11 +886,18 @@ def main():
         prompt = build_prompt(articles, hist, rnd.choice(JOKE_FORMATS), rnd.choice(JOKE_TOPICS),
                               rnd.choice(FACT_THEMES), potd)
         data = ask_gemini(client, config, prompt, required=("top",))
+        if data:
+            proofread(client, config, data)
 
         # Жарт дня: 1) наступний з черги jokes_queue.json; 2) коли черга скінчиться —
         # свіжий з Bored Panda; 3) якщо сайт недоступний — жарт від Gemini
         bp_joke = None
         queue = load_json(JOKE_QUEUE_FILE, {}).get("jokes", [])
+        # пропускаємо жарти з черги, які вже колись були в дайджесті (захист від повторів)
+        sent_heads = {norm(j.partition(" | ")[2] or j) for j in hist["jokes"]}
+        while queue_pos < len(queue) and norm(queue[queue_pos]["text"][:60]) in sent_heads:
+            print(f"🔁 Жарт {queue_pos + 1} з черги вже був — пропускаю")
+            queue_pos += 1
         if data and queue_pos < len(queue):
             q = queue[queue_pos]
             data["joke"], data["joke_key"], data["joke_url"] = q["text"], "queue", q.get("source")
@@ -866,7 +949,15 @@ def main():
     print(f"Надіслано {sent}/{len(recipients)}")
 
     if test:
-        print("🧪 Тестовий режим — історію не зберігаю.")
+        # Тест не чіпає історію, але жарт з черги вважаємо використаним — інакше
+        # наступного ранку підписники отримали б той самий жарт, що й у тесті.
+        if sent and data and data.get("joke_from_queue"):
+            used["joke_queue_pos"] = queue_pos + 1
+            used.setdefault("jokes", []).append(f"queue | {data['joke'][:60]}")
+            save_and_push(used, f"{date_str}, тест")
+            print("🧪 Тестовий режим — історію не зберігаю, лише позицію в черзі жартів.")
+        else:
+            print("🧪 Тестовий режим — історію не зберігаю.")
         return
     if not sent:
         sys.exit("❌ Нікому не вдалося надіслати")
