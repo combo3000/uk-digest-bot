@@ -1,6 +1,6 @@
 {
-  "last_sent": "2026-11-23",
-  "joke_queue_pos": 5,
+  "last_sent": "2026-11-24",
+  "joke_queue_pos": 6,
   "jokes": [
     "Why did the scarecrow win an award? Because he was outstandi",
     "Why don't scientists trust atoms? Because they make up every",
@@ -35,7 +35,8 @@
     "queue | My buddy got arrested on drug charges and because it was his",
     "queue | Our computers went down at work today, so we had to do every",
     "queue | When I see the names of lovers engraved on a tree, I don't f",
-    "queue | Patient says, \"Doctor, I have pain in my eye whenever I drin"
+    "queue | Patient says, \"Doctor, I have pain in my eye whenever I drin",
+    "queue | Why do turkeys play percussion? They have drumsticks."
   ],
   "facts": [
     "Ворони відомі своїм винятковим інтелектом та вражаючими зд",
@@ -68,7 +69,8 @@
     "Маяки як навігаційні споруди",
     "Мушлі каурі як перша валюта",
     "Формування галактик у Всесвіті",
-    "Сталість швидкості світла"
+    "Сталість швидкості світла",
+    "Маріанська западина та глибина океану"
   ],
   "numbers": [
     "107 000 видів — Стільки видів тварин і рослин, згідно з новим дослідженням, ",
@@ -81,7 +83,8 @@
     "$2,3 млрд — Саме стільки, за оцінками, сягнули продажі гри «GTA 6» одраз",
     "800 000 — Саме стільки чіпів для ШІ компанії Nvidia дозволили продати ",
     "$3,8 млрд — Саме такої позначки сягнули продажі відеогри Grand Theft Aut",
-    "1 з 3 — Саме стільки літніх пацієнтів, за новим дослідженням, стають"
+    "1 з 3 — Саме стільки літніх пацієнтів, за новим дослідженням, стають",
+    "445% — Саме на стільки зросла кількість бомбардувань дронами в Колу"
   ],
   "bp_jokes": []
 }
