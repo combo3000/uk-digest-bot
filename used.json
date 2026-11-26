@@ -1,6 +1,6 @@
 {
-  "last_sent": "2026-11-25",
-  "joke_queue_pos": 7,
+  "last_sent": "2026-11-26",
+  "joke_queue_pos": 8,
   "jokes": [
     "Why did the scarecrow win an award? Because he was outstandi",
     "Why don't scientists trust atoms? Because they make up every",
@@ -37,7 +37,8 @@
     "queue | When I see the names of lovers engraved on a tree, I don't f",
     "queue | Patient says, \"Doctor, I have pain in my eye whenever I drin",
     "queue | Why do turkeys play percussion? They have drumsticks.",
-    "queue | What’s more unbelievable than a talking dog? A spelling bee."
+    "queue | What’s more unbelievable than a talking dog? A spelling bee.",
+    "queue | Boss: \"How is it that you are always sick on weekdays?\"\nMe: "
   ],
   "facts": [
     "Ворони відомі своїм винятковим інтелектом та вражаючими зд",
@@ -72,7 +73,8 @@
     "Формування галактик у Всесвіті",
     "Сталість швидкості світла",
     "Маріанська западина та глибина океану",
-    "Склад крові та функції імунітету"
+    "Склад крові та функції імунітету",
+    "Океанські течії та клімат"
   ],
   "numbers": [
     "107 000 видів — Стільки видів тварин і рослин, згідно з новим дослідженням, ",
@@ -87,7 +89,8 @@
     "$3,8 млрд — Саме такої позначки сягнули продажі відеогри Grand Theft Aut",
     "1 з 3 — Саме стільки літніх пацієнтів, за новим дослідженням, стають",
     "445% — Саме на стільки зросла кількість бомбардувань дронами в Колу",
-    "40% — Саме стільки молодих індіанців залишаються безробітними, поп"
+    "40% — Саме стільки молодих індіанців залишаються безробітними, поп",
+    "470 млн євро — Єврокомісія оштрафувала трьох найбільших виробників парфумер"
   ],
   "bp_jokes": []
 }
